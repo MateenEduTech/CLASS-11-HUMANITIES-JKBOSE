@@ -1,0 +1,2907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0a0a1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="JKBOSE Class 11 History Interactive Learning App by Mateen Yousuf">
+<title>JKBOSE Class 11 History</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --gold: #c9a227;
+  --gold-light: #f0c84a;
+  --gold-dark: #8b6914;
+  --deep: #0a0a1a;
+  --deep2: #0f0f2a;
+  --deep3: #141430;
+  --surface: #1a1a35;
+  --surface2: #222244;
+  --border: rgba(201,162,39,0.25);
+  --text: #e8e0cc;
+  --text-dim: #a09070;
+  --accent: #8b3a3a;
+  --accent2: #2a5a8b;
+  --green: #2a8b5a;
+  --red: #8b2a2a;
+  --radius: 12px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.6);
+  --glow: 0 0 20px rgba(201,162,39,0.3);
+}
+
+/* ===== RESET & BASE ===== */
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: var(--deep);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+/* ===== SCREENS ===== */
+.screen { display:none; min-height:100vh; }
+.screen.active { display:block; }
+
+/* ===== SPLASH SCREEN ===== */
+#splash {
+  background: radial-gradient(ellipse at 30% 20%, #1a1a35 0%, #0a0a1a 50%, #050510 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.splash-bg {
+  position: absolute; inset:0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Decorative SVG monuments in background */
+.splash-monument {
+  position: absolute;
+  opacity: 0.07;
+}
+
+.splash-stars {
+  position: absolute; inset:0;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,200,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,200,0.6) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,200,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 30%, rgba(255,255,200,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 60%, rgba(255,255,200,0.5) 0%, transparent 100%),
+    radial-gradient(2px 2px at 15% 70%, rgba(255,255,200,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 80%, rgba(255,255,200,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 20%, rgba(255,255,200,0.7) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 60% 65%, rgba(255,255,200,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 90%, rgba(255,255,200,0.6) 0%, transparent 100%);
+}
+
+.splash-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+  animation: splashFadeIn 1.2s ease-out forwards;
+}
+
+@keyframes splashFadeIn {
+  from { opacity:0; transform:translateY(30px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.splash-emblem {
+  width: 120px; height: 120px;
+  margin: 0 auto 1.5rem;
+  animation: emblemSpin 0.8s ease-out 0.3s both;
+}
+
+@keyframes emblemSpin {
+  from { opacity:0; transform: scale(0.5) rotate(-20deg); }
+  to   { opacity:1; transform: scale(1) rotate(0deg); }
+}
+
+.splash-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  animation: fadeSlide 0.8s ease-out 0.5s both;
+}
+
+.splash-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 6vw, 3.2rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  animation: fadeSlide 0.8s ease-out 0.7s both;
+}
+
+.splash-class {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  margin-bottom: 2rem;
+  animation: fadeSlide 0.8s ease-out 0.9s both;
+}
+
+@keyframes fadeSlide {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* Timeline decoration */
+.splash-timeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 1.5rem auto;
+  width: min(400px, 90vw);
+  animation: fadeSlide 0.8s ease-out 1.1s both;
+}
+
+.tl-node {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.tl-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+}
+
+.tl-era {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  color: var(--gold-dark);
+  letter-spacing: 0.05em;
+  padding: 0 6px;
+  white-space: nowrap;
+}
+
+/* Author card */
+.splash-author {
+  background: rgba(201,162,39,0.08);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 2rem;
+  margin: 1.5rem auto;
+  width: min(340px, 90vw);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: fadeSlide 0.8s ease-out 1.3s both;
+}
+
+.author-avatar {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.author-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.author-info { text-align:left; }
+.author-name {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gold);
+}
+.author-role {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+.btn-start {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 1rem 3rem;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  color: var(--deep);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  box-shadow: var(--glow), 0 4px 20px rgba(0,0,0,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeSlide 0.8s ease-out 1.5s both, pulse 2s ease-in-out 3s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { box-shadow: var(--glow), 0 4px 20px rgba(0,0,0,0.4); }
+  50% { box-shadow: 0 0 35px rgba(201,162,39,0.6), 0 4px 20px rgba(0,0,0,0.4); }
+}
+
+.btn-start:hover { transform:scale(1.04); box-shadow:0 0 40px rgba(201,162,39,0.7), 0 8px 30px rgba(0,0,0,0.5); }
+.btn-start:active { transform:scale(0.97); }
+
+/* ===== TOP NAV ===== */
+.top-nav {
+  background: rgba(10,10,26,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-back {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--gold);
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.nav-back:hover { background: rgba(201,162,39,0.15); }
+
+.nav-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gold);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-badge {
+  background: var(--gold-dark);
+  color: var(--deep);
+  font-size: 0.65rem;
+  font-family: 'Cinzel', serif;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ===== DASHBOARD ===== */
+#dashboard {
+  background: var(--deep);
+}
+
+.dash-hero {
+  background: linear-gradient(180deg, var(--deep2) 0%, var(--deep) 100%);
+  padding: 1.5rem 1rem 1rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.dash-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -20%;
+  width: 140%; height: 200%;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,162,39,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.dash-greeting {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  font-family: 'Cinzel', serif;
+}
+
+.dash-headline {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 4vw, 1.7rem);
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0.3rem 0 1rem;
+  line-height: 1.2;
+}
+
+/* Progress bar */
+.overall-progress {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 0.6rem;
+  font-family: 'Cinzel', serif;
+}
+
+.progress-track {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+
+/* Quick stats */
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.8rem 0.5rem;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.stat-lbl {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  margin-top: 0.2rem;
+}
+
+/* Sections */
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+  padding: 1.2rem 1rem 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-title::after {
+  content:'';
+  flex:1;
+  height:1px;
+  background: var(--border);
+  margin-left: 0.5rem;
+}
+
+/* Feature tiles grid */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  padding: 0 1rem;
+}
+
+.feature-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-tile::before {
+  content: '';
+  position: absolute;
+  top:0; left:0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--gold-light), var(--gold-dark));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.feature-tile:hover::before,
+.feature-tile:active::before { opacity:1; }
+
+.feature-tile:hover { transform:translateY(-2px); border-color:var(--gold-dark); box-shadow:var(--glow); }
+.feature-tile:active { transform:scale(0.97); }
+
+.feature-tile.wide { grid-column: span 2; }
+
+.tile-icon {
+  font-size: 2rem;
+  margin-bottom: 0.6rem;
+  display: block;
+  line-height: 1;
+}
+
+.tile-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+
+.tile-desc {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+/* ===== CHAPTER LIST ===== */
+#chapters-screen {
+  background: var(--deep);
+}
+
+.chapter-search {
+  padding: 1rem;
+  position: sticky;
+  top: 57px;
+  background: var(--deep);
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+}
+
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 0.7rem 1.2rem;
+  color: var(--text);
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus { border-color: var(--gold); }
+.search-input::placeholder { color: var(--text-dim); }
+
+.chapters-list {
+  padding: 0.5rem 1rem 2rem;
+}
+
+.chapter-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.chapter-card:hover { border-color: var(--gold-dark); transform:translateX(4px); box-shadow: var(--glow); }
+
+.chapter-num {
+  width: 42px; height: 42px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: var(--deep);
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  display: flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+}
+
+.chapter-info { flex:1; min-width:0; }
+.chapter-title-text {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chapter-era {
+  font-size: 0.75rem;
+  color: var(--gold-dark);
+  letter-spacing: 0.05em;
+}
+
+.chapter-status {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+}
+
+/* ===== CHAPTER DETAIL ===== */
+#chapter-detail {
+  background: var(--deep);
+}
+
+.chapter-hero {
+  background: linear-gradient(135deg, var(--deep3) 0%, var(--deep2) 100%);
+  padding: 1.5rem 1rem 1rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.chapter-hero-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.chapter-hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+}
+
+.chapter-hero-desc {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* Tab bar */
+.tab-bar {
+  display: flex;
+  background: var(--deep2);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display:none; }
+
+.tab-btn {
+  flex-shrink: 0;
+  padding: 0.8rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-dim);
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+.tab-btn:hover { color: var(--text); }
+
+.tab-content { display: none; padding: 1rem; }
+.tab-content.active { display: block; }
+
+/* Content blocks */
+.content-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.content-block h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.content-block p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 0.8rem;
+}
+
+.content-block ul {
+  list-style: none;
+  margin-left: 0;
+}
+
+.content-block ul li {
+  padding: 0.4rem 0 0.4rem 1.2rem;
+  position: relative;
+  font-size: 0.92rem;
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.content-block ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 0.8rem;
+}
+
+/* Timeline items */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content:'';
+  position:absolute;
+  left:10px; top:0; bottom:0;
+  width:2px;
+  background: linear-gradient(180deg, var(--gold-dark), transparent);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 1.2rem;
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+}
+
+.tl-item::before {
+  content:'';
+  position:absolute;
+  left:-1.55rem; top:1rem;
+  width:10px; height:10px;
+  border-radius:50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.tl-year {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  color: var(--gold);
+  margin-bottom: 0.2rem;
+  font-weight: 700;
+}
+
+.tl-event {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Personality cards */
+.personalities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+}
+
+.person-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+}
+
+.person-avatar {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.person-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+
+.person-role {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+/* Map view */
+.map-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.map-svg-wrapper {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #0d1a2e;
+}
+
+.map-caption {
+  padding: 0.8rem;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-align: center;
+  font-style: italic;
+  border-top: 1px solid var(--border);
+}
+
+/* ===== QUIZ ===== */
+#quiz-screen { background: var(--deep); }
+
+.quiz-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--deep2);
+}
+
+.quiz-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.quiz-chapter-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  color: var(--gold-dark);
+}
+
+.quiz-score-live {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.85rem;
+  color: var(--gold);
+  background: rgba(201,162,39,0.1);
+  padding: 2px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+.quiz-progress-bar {
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.quiz-body {
+  padding: 1.2rem 1rem;
+}
+
+.question-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.question-text {
+  font-size: 1.1rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.options-list { display:flex; flex-direction:column; gap:0.7rem; }
+
+.option-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.2rem;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.2s;
+}
+
+.option-btn:hover:not(:disabled) { border-color: var(--gold-dark); background: var(--surface2); }
+.option-btn.correct { background: rgba(42,139,90,0.2); border-color: var(--green); color: #6dffb8; }
+.option-btn.wrong { background: rgba(139,42,42,0.2); border-color: var(--red); color: #ff8080; }
+
+.option-letter {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex; align-items:center; justify-content:center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  flex-shrink: 0;
+}
+
+.correct .option-letter { background: var(--green); border-color:var(--green); color:#fff; }
+.wrong .option-letter { background: var(--red); border-color:var(--red); color:#fff; }
+
+.feedback-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  display: none;
+}
+.feedback-box.show { display:block; }
+.feedback-box.correct-fb { background: rgba(42,139,90,0.15); border:1px solid var(--green); color:#6dffb8; }
+.feedback-box.wrong-fb { background: rgba(139,42,42,0.15); border:1px solid var(--red); color:#ff8080; }
+
+.btn-next-q {
+  width: 100%;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: var(--deep);
+  border: none;
+  border-radius: 50px;
+  padding: 0.9rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  display: none;
+  transition: transform 0.2s;
+}
+.btn-next-q.show { display:block; }
+.btn-next-q:hover { transform:scale(1.02); }
+
+/* Quiz results */
+.quiz-result {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.result-emoji { font-size: 4rem; margin-bottom: 1rem; }
+.result-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.result-score {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 3rem;
+  color: var(--gold-light);
+  margin: 1rem 0;
+}
+
+.result-msg {
+  font-size: 1rem;
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.result-actions { display:flex; gap:0.8rem; flex-wrap:wrap; justify-content:center; }
+
+.btn-secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { border-color:var(--gold-dark); color:var(--gold); }
+
+/* ===== SIMULATIONS ===== */
+#simulations-screen { background: var(--deep); }
+
+.sim-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  padding: 1rem;
+}
+
+.sim-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.sim-card:hover { border-color:var(--gold-dark); transform:translateY(-2px); box-shadow:var(--glow); }
+.sim-card.wide { grid-column: span 2; }
+
+.sim-icon { font-size: 2.5rem; margin-bottom: 0.6rem; }
+.sim-name { font-family:'Cinzel',serif; font-size:0.85rem; font-weight:700; color:var(--gold); margin-bottom:0.3rem; }
+.sim-desc { font-size:0.72rem; color:var(--text-dim); line-height:1.4; }
+
+/* ===== SIMULATION SCREENS ===== */
+#sim-timeline-screen,
+#sim-empire-screen,
+#sim-trade-screen,
+#sim-city-screen,
+#sim-industrial-screen { background: var(--deep); }
+
+/* Timeline simulation */
+.timeline-sim-container {
+  padding: 1rem;
+}
+
+.timeline-era-selector {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  scrollbar-width: none;
+}
+.timeline-era-selector::-webkit-scrollbar { display:none; }
+
+.era-pill {
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.era-pill.active { background:var(--gold-dark); border-color:var(--gold); color:var(--deep); font-weight:700; }
+
+.timeline-scroll {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.timeline-scroll::before {
+  content: '';
+  position: absolute;
+  left: 18px; top:0; bottom:0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 50%, transparent 100%);
+  border-radius: 2px;
+}
+
+.tl-event-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  animation: slideIn 0.4s ease-out both;
+}
+
+@keyframes slideIn {
+  from { opacity:0; transform:translateX(-20px); }
+  to { opacity:1; transform:translateX(0); }
+}
+
+.tl-event-card::before {
+  content: '';
+  position: absolute;
+  left: -1.85rem; top: 1.1rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: var(--deep);
+  box-shadow: 0 0 10px var(--gold);
+}
+
+.tl-event-date {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.75rem;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.tl-event-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+.tl-event-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.tl-event-tag {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.65rem;
+  background: rgba(201,162,39,0.1);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 8px;
+  color: var(--gold-dark);
+  font-family: 'Cinzel', serif;
+}
+
+/* Empire map simulation */
+.empire-map-wrap {
+  padding: 1rem;
+}
+
+.empire-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.empire-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.empire-btn.active { border-color:var(--gold); color:var(--gold); background:rgba(201,162,39,0.1); }
+
+.empire-info {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.empire-info h3 { font-family:'Cinzel',serif; color:var(--gold); margin-bottom:0.6rem; }
+.empire-info p { font-size:0.9rem; color:var(--text-dim); line-height:1.6; }
+
+/* Trade route simulation */
+.trade-canvas-wrap {
+  padding: 1rem;
+}
+
+/* Industrial simulation */
+.industrial-stages {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  padding: 1rem;
+  scrollbar-width: none;
+}
+.industrial-stages::-webkit-scrollbar { display:none; }
+
+.industry-stage {
+  flex-shrink: 0;
+  width: 160px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 0.8rem;
+  margin-right: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.industry-stage.active { border-color:var(--gold); background:rgba(201,162,39,0.08); }
+.industry-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.industry-name { font-family:'Cinzel',serif; font-size:0.75rem; color:var(--gold); margin-bottom:0.3rem; }
+.industry-year { font-size:0.7rem; color:var(--text-dim); }
+
+.industry-detail {
+  padding: 0 1rem 1rem;
+}
+
+.industry-detail-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+}
+
+/* ===== ARTIFACTS GALLERY ===== */
+#artifacts-screen { background: var(--deep); }
+
+.artifacts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  padding: 1rem;
+}
+
+.artifact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.artifact-card:hover { border-color:var(--gold-dark); transform:scale(1.02); }
+
+.artifact-img {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  background: var(--deep3);
+}
+
+.artifact-info { padding: 0.7rem; }
+.artifact-name { font-family:'Cinzel',serif; font-size:0.8rem; color:var(--gold); margin-bottom:0.2rem; }
+.artifact-period { font-size:0.7rem; color:var(--text-dim); }
+
+/* ===== PROGRESS SCREEN ===== */
+#progress-screen { background: var(--deep); }
+
+.progress-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: 0 1rem 0.8rem;
+}
+
+.pc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.pc-name { font-family:'Cinzel',serif; font-size:0.85rem; color:var(--text); }
+.pc-pct { font-family:'Source Code Pro',monospace; font-size:0.85rem; color:var(--gold); }
+
+.pc-bar { height:5px; background:var(--surface2); border-radius:3px; overflow:hidden; }
+.pc-fill { height:100%; background:linear-gradient(90deg,var(--gold-dark),var(--gold-light)); border-radius:3px; transition:width 0.8s ease; }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 0.7rem 1.5rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  color: var(--gold);
+  z-index: 9999;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left:0; right:0;
+  background: rgba(10,10,26,0.97);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 200;
+}
+
+.bnav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.05em;
+  gap: 0.2rem;
+  transition: color 0.2s;
+}
+
+.bnav-btn span:first-child { font-size: 1.3rem; }
+.bnav-btn.active { color: var(--gold); }
+
+.page-pad { padding-bottom: 70px; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+
+.fade-in { animation: fadeIn 0.4s ease-out both; }
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 480px) {
+  .feature-grid { grid-template-columns: repeat(3, 1fr); }
+  .feature-tile.wide { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== SPLASH SCREEN ===== -->
+<div id="splash" class="screen active">
+  <div class="splash-bg">
+    <div class="splash-stars"></div>
+    <!-- Decorative SVG background monuments -->
+    <svg class="splash-monument" style="bottom:0;left:0;width:200px;" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Pyramid -->
+      <polygon points="100,20 10,280 190,280" fill="none" stroke="#c9a227" stroke-width="1.5"/>
+      <line x1="55" y1="150" x2="145" y2="150" stroke="#c9a227" stroke-width="0.8"/>
+      <line x1="30" y1="210" x2="170" y2="210" stroke="#c9a227" stroke-width="0.8"/>
+    </svg>
+    <svg class="splash-monument" style="bottom:0;right:0;width:180px;" viewBox="0 0 180 350" xmlns="http://www.w3.org/2000/svg">
+      <!-- Column -->
+      <rect x="70" y="20" width="40" height="280" fill="none" stroke="#c9a227" stroke-width="1.5"/>
+      <ellipse cx="90" cy="20" rx="45" ry="10" fill="none" stroke="#c9a227" stroke-width="1.2"/>
+      <ellipse cx="90" cy="300" rx="45" ry="10" fill="none" stroke="#c9a227" stroke-width="1.2"/>
+      <line x1="70" y1="60" x2="110" y2="60" stroke="#c9a227" stroke-width="0.8"/>
+      <line x1="70" y1="100" x2="110" y2="100" stroke="#c9a227" stroke-width="0.8"/>
+      <line x1="70" y1="140" x2="110" y2="140" stroke="#c9a227" stroke-width="0.8"/>
+    </svg>
+    <svg class="splash-monument" style="top:20px;right:30px;width:100px;" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+      <!-- Crescent star -->
+      <path d="M50 20 Q80 50 50 80 Q30 50 50 20" fill="none" stroke="#c9a227" stroke-width="1.2"/>
+      <circle cx="60" cy="45" r="5" fill="none" stroke="#c9a227" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="splash-content">
+    <!-- Emblem -->
+    <div class="splash-emblem">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="embGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f0c84a"/>
+            <stop offset="100%" stop-color="#8b6914"/>
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="56" fill="none" stroke="url(#embGrad)" stroke-width="2"/>
+        <circle cx="60" cy="60" r="48" fill="none" stroke="url(#embGrad)" stroke-width="0.8" stroke-dasharray="4 4"/>
+        <!-- Open book -->
+        <path d="M25 50 Q60 40 95 50 L95 80 Q60 70 25 80 Z" fill="rgba(201,162,39,0.15)" stroke="#c9a227" stroke-width="1.5"/>
+        <line x1="60" y1="42" x2="60" y2="78" stroke="#c9a227" stroke-width="1.5"/>
+        <!-- Crown above -->
+        <path d="M42 36 L48 28 L54 36 L60 24 L66 36 L72 28 L78 36" fill="none" stroke="#c9a227" stroke-width="1.5" stroke-linejoin="round"/>
+        <!-- Stars -->
+        <circle cx="30" cy="60" r="2" fill="#f0c84a"/>
+        <circle cx="90" cy="60" r="2" fill="#f0c84a"/>
+        <text x="60" y="100" text-anchor="middle" font-family="serif" font-size="8" fill="#c9a227" letter-spacing="2">JKBOSE</text>
+      </svg>
+    </div>
+
+    <div class="splash-subtitle">जम्मू और कश्मीर • Jammu & Kashmir</div>
+    <div class="splash-title">CLASS XI<br>HISTORY</div>
+    <div class="splash-class">Interactive Learning App</div>
+
+    <!-- Timeline decoration -->
+    <div class="splash-timeline">
+      <div class="tl-node"></div>
+      <div class="tl-line"></div>
+      <div class="tl-era">Ancient</div>
+      <div class="tl-line"></div>
+      <div class="tl-node"></div>
+      <div class="tl-line"></div>
+      <div class="tl-era">Medieval</div>
+      <div class="tl-line"></div>
+      <div class="tl-node"></div>
+      <div class="tl-line"></div>
+      <div class="tl-era">Modern</div>
+      <div class="tl-line"></div>
+      <div class="tl-node"></div>
+    </div>
+
+    <!-- Author card -->
+    <div class="splash-author">
+      <div class="author-avatar" id="authorAvatar">
+        <img src="author.jpg" alt="Mateen Yousuf" onerror="this.parentElement.innerHTML='<span style=\'font-size:1.8rem\'>👨‍🏫</span>'">
+      </div>
+      <div class="author-info">
+        <div class="author-name">Mateen Yousuf</div>
+        <div class="author-role">Teacher<br>School Education Department<br>Jammu & Kashmir</div>
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="startApp()">📜 START LEARNING</button>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="dashboard" class="screen page-pad">
+  <div class="dash-hero">
+    <div class="dash-greeting">JKBOSE • CLASS XI</div>
+    <div class="dash-headline">History Dashboard</div>
+
+    <div class="overall-progress">
+      <div class="progress-label">
+        <span>Overall Progress</span>
+        <span id="overallPct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="overallBar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="quick-stats">
+      <div class="stat-card">
+        <div class="stat-num" id="statChapters">0</div>
+        <div class="stat-lbl">Chapters<br>Done</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statQuiz">0</div>
+        <div class="stat-lbl">Quizzes<br>Passed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statScore">0</div>
+        <div class="stat-lbl">Best<br>Score %</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">📚 Learn</div>
+  <div class="feature-grid">
+    <div class="feature-tile" onclick="showScreen('chapters-screen')">
+      <span class="tile-icon">📖</span>
+      <div class="tile-name">Chapters</div>
+      <div class="tile-desc">All 11 JKBOSE chapters</div>
+    </div>
+    <div class="feature-tile" onclick="showScreen('simulations-screen')">
+      <span class="tile-icon">🗺️</span>
+      <div class="tile-name">Simulations</div>
+      <div class="tile-desc">Interactive history labs</div>
+    </div>
+    <div class="feature-tile" onclick="showScreen('artifacts-screen')">
+      <span class="tile-icon">🏺</span>
+      <div class="tile-name">Artifacts</div>
+      <div class="tile-desc">Historical objects gallery</div>
+    </div>
+    <div class="feature-tile" onclick="showScreen('quiz-select-screen')">
+      <span class="tile-icon">🎯</span>
+      <div class="tile-name">Quick Quiz</div>
+      <div class="tile-desc">Test your knowledge</div>
+    </div>
+    <div class="feature-tile wide" onclick="showScreen('sim-timeline-screen');loadTimelineSim()">
+      <span class="tile-icon">⏳</span>
+      <div class="tile-name">World History Timeline</div>
+      <div class="tile-desc">Scroll through 3 million years of human civilization</div>
+    </div>
+  </div>
+
+  <div class="section-title">📊 Track</div>
+  <div class="feature-grid">
+    <div class="feature-tile" onclick="showScreen('progress-screen')">
+      <span class="tile-icon">📈</span>
+      <div class="tile-name">My Progress</div>
+      <div class="tile-desc">Track your learning</div>
+    </div>
+    <div class="feature-tile" onclick="showMapLab()">
+      <span class="tile-icon">🌍</span>
+      <div class="tile-name">Map Lab</div>
+      <div class="tile-desc">Historical world maps</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHAPTERS LIST ===== -->
+<div id="chapters-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('dashboard')">←</button>
+    <div class="nav-title">All Chapters</div>
+    <div class="nav-badge">CLASS 11</div>
+  </div>
+  <div class="chapter-search">
+    <input type="text" class="search-input" placeholder="🔍 Search chapters..." oninput="filterChapters(this.value)" id="chapterSearch">
+  </div>
+  <div class="chapters-list" id="chaptersList"></div>
+</div>
+
+<!-- ===== CHAPTER DETAIL ===== -->
+<div id="chapter-detail" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('chapters-screen')">←</button>
+    <div class="nav-title" id="detailNavTitle">Chapter</div>
+    <button class="nav-back" onclick="startQuiz(currentChapter)" title="Quiz" style="margin-left:auto">🎯</button>
+  </div>
+  <div id="chapterDetailContent"></div>
+</div>
+
+<!-- ===== QUIZ SELECT ===== -->
+<div id="quiz-select-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('dashboard')">←</button>
+    <div class="nav-title">Choose Quiz Chapter</div>
+  </div>
+  <div class="section-title" style="padding-top:1rem">Select a Chapter</div>
+  <div class="chapters-list" id="quizSelectList"></div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div id="quiz-screen" class="screen">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('chapters-screen')">←</button>
+    <div class="nav-title" id="quizNavTitle">Quiz</div>
+  </div>
+  <div id="quizContent"></div>
+</div>
+
+<!-- ===== SIMULATIONS ===== -->
+<div id="simulations-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('dashboard')">←</button>
+    <div class="nav-title">Simulation Lab</div>
+    <div class="nav-badge">INTERACTIVE</div>
+  </div>
+  <div class="section-title" style="padding-top:1rem">Choose a Simulation</div>
+  <div class="sim-grid">
+    <div class="sim-card wide" onclick="showScreen('sim-timeline-screen');loadTimelineSim()">
+      <div class="sim-icon">⏳</div>
+      <div class="sim-name">World History Timeline Explorer</div>
+      <div class="sim-desc">Scroll through major events from prehistoric times to the modern era</div>
+    </div>
+    <div class="sim-card" onclick="showScreen('sim-empire-screen');loadEmpireSim()">
+      <div class="sim-icon">👑</div>
+      <div class="sim-name">Empire Map Simulator</div>
+      <div class="sim-desc">View the expansion of major empires</div>
+    </div>
+    <div class="sim-card" onclick="showScreen('sim-trade-screen');loadTradeSim()">
+      <div class="sim-icon">🚢</div>
+      <div class="sim-name">Trade Route Explorer</div>
+      <div class="sim-desc">Silk Road & maritime routes</div>
+    </div>
+    <div class="sim-card" onclick="showScreen('sim-city-screen');loadCitySim()">
+      <div class="sim-icon">🏛️</div>
+      <div class="sim-name">Ancient City Explorer</div>
+      <div class="sim-desc">Explore ancient cities visually</div>
+    </div>
+    <div class="sim-card" onclick="showScreen('sim-industrial-screen');loadIndustrialSim()">
+      <div class="sim-icon">⚙️</div>
+      <div class="sim-name">Industrial Revolution</div>
+      <div class="sim-desc">Visualize technological changes</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TIMELINE SIM ===== -->
+<div id="sim-timeline-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('simulations-screen')">←</button>
+    <div class="nav-title">Timeline Explorer</div>
+  </div>
+  <div class="timeline-sim-container">
+    <div class="timeline-era-selector" id="eraSelector"></div>
+    <div class="timeline-scroll" id="timelineScroll"></div>
+  </div>
+</div>
+
+<!-- ===== EMPIRE SIM ===== -->
+<div id="sim-empire-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('simulations-screen')">←</button>
+    <div class="nav-title">Empire Map Simulator</div>
+  </div>
+  <div class="empire-map-wrap">
+    <div class="empire-selector" id="empireSelector"></div>
+    <div class="map-container">
+      <div class="map-svg-wrapper">
+        <canvas id="empireCanvas" style="width:100%;height:100%"></canvas>
+      </div>
+    </div>
+    <div class="empire-info" id="empireInfo">
+      <h3>Select an Empire</h3>
+      <p>Choose an empire above to see its map and information.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TRADE SIM ===== -->
+<div id="sim-trade-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('simulations-screen')">←</button>
+    <div class="nav-title">Trade Route Explorer</div>
+  </div>
+  <div class="trade-canvas-wrap">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:0.8rem;margin-bottom:1rem;">
+      <div style="font-family:'Cinzel',serif;font-size:0.75rem;color:var(--gold-dark);margin-bottom:0.5rem;letter-spacing:0.1em;">SELECT ROUTE</div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;" id="routeSelector"></div>
+    </div>
+    <div class="map-container">
+      <div class="map-svg-wrapper" style="position:relative;">
+        <canvas id="tradeCanvas" style="width:100%;height:100%;display:block;"></canvas>
+      </div>
+    </div>
+    <div id="tradeRouteInfo" class="empire-info" style="margin-top:1rem;">
+      <h3>Trade Routes</h3>
+      <p>Ancient trade routes connected civilizations across Asia, Africa, and Europe.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CITY SIM ===== -->
+<div id="sim-city-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('simulations-screen')">←</button>
+    <div class="nav-title">Ancient City Explorer</div>
+  </div>
+  <div style="padding:1rem;">
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;" id="citySelector"></div>
+    <div class="map-container">
+      <div class="map-svg-wrapper" id="citySvgWrap"></div>
+    </div>
+    <div id="cityInfo" class="empire-info" style="margin-top:1rem;">
+      <h3>Select a City</h3>
+      <p>Choose an ancient city to explore its layout and history.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INDUSTRIAL SIM ===== -->
+<div id="sim-industrial-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('simulations-screen')">←</button>
+    <div class="nav-title">Industrial Revolution</div>
+  </div>
+  <div class="section-title" style="padding-top:1rem">Timeline of Inventions</div>
+  <div class="industrial-stages" id="industrialStages"></div>
+  <div class="industry-detail" id="industryDetail"></div>
+</div>
+
+<!-- ===== ARTIFACTS ===== -->
+<div id="artifacts-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('dashboard')">←</button>
+    <div class="nav-title">Artifact Gallery</div>
+  </div>
+  <div class="section-title" style="padding-top:1rem">Historical Objects</div>
+  <div class="artifacts-grid" id="artifactsGrid"></div>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div id="progress-screen" class="screen page-pad">
+  <div class="top-nav">
+    <button class="nav-back" onclick="showScreen('dashboard')">←</button>
+    <div class="nav-title">My Progress</div>
+  </div>
+  <div class="section-title" style="padding-top:1rem">Chapter Progress</div>
+  <div id="progressList"></div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<div class="bottom-nav" id="bottomNav" style="display:none;">
+  <button class="bnav-btn active" id="bnav-dash" onclick="showScreen('dashboard');updateBNav('dash')">
+    <span>🏠</span><span>Home</span>
+  </button>
+  <button class="bnav-btn" id="bnav-chapters" onclick="showScreen('chapters-screen');updateBNav('chapters')">
+    <span>📖</span><span>Chapters</span>
+  </button>
+  <button class="bnav-btn" id="bnav-sim" onclick="showScreen('simulations-screen');updateBNav('sim')">
+    <span>🗺️</span><span>Labs</span>
+  </button>
+  <button class="bnav-btn" id="bnav-quiz" onclick="showScreen('quiz-select-screen');updateBNav('quiz')">
+    <span>🎯</span><span>Quiz</span>
+  </button>
+  <button class="bnav-btn" id="bnav-progress" onclick="showScreen('progress-screen');updateBNav('progress')">
+    <span>📈</span><span>Progress</span>
+  </button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== DATA =====
+const chaptersData = [
+  {
+    id: 1,
+    title: "From the Beginning of Time",
+    era: "Prehistoric • 3 Million – 10,000 BCE",
+    icon: "🦴",
+    overview: "This chapter explores the long journey of human evolution over millions of years. It begins with early hominids in Africa and traces the development of Homo sapiens, the emergence of language, art, and social organization, and the spread of humans across the globe.",
+    keyFacts: [
+      "Earliest hominids appeared in Africa about 3 million years ago",
+      "Homo sapiens evolved approximately 2,00,000 years ago",
+      "Early humans were hunter-gatherers who moved in small bands",
+      "Cave paintings at Altamira and Lascaux show early artistic expression",
+      "The Neolithic Revolution (c. 10,000 BCE) marked the shift to agriculture",
+      "Stone Age tools evolved from Palaeolithic to Mesolithic to Neolithic"
+    ],
+    timeline: [
+      { year: "~3 Million BCE", event: "Australopithecus (earliest hominid) appears in Africa" },
+      { year: "~2 Million BCE", event: "Homo habilis — first tool-making human ancestor" },
+      { year: "~1.5 Million BCE", event: "Homo erectus spreads from Africa to Asia and Europe" },
+      { year: "~2,00,000 BCE", event: "Homo sapiens evolves in Africa" },
+      { year: "~50,000 BCE", event: "Great Migration — humans spread to all continents" },
+      { year: "~35,000 BCE", event: "Cave paintings appear (Chauvet Cave, France)" },
+      { year: "~10,000 BCE", event: "Neolithic Revolution — beginning of agriculture" }
+    ],
+    personalities: [
+      { name: "Homo habilis", role: "First toolmaker — 'Handy Man', used stone tools", emoji: "🦴" },
+      { name: "Homo erectus", role: "First human ancestor to leave Africa; used fire", emoji: "🔥" },
+      { name: "Homo sapiens", role: "Modern humans — developed language and culture", emoji: "🧠" },
+      { name: "Neanderthals", role: "Closely related species; lived in Europe and Asia", emoji: "🪨" }
+    ],
+    mapDesc: "Human migration from Africa across the globe over 50,000 years",
+    caseStudy: "The discovery of cave paintings in Lascaux, France (1940), revealed that early humans had sophisticated artistic and symbolic thinking. The paintings, dated to 17,000 years ago, show horses, deer, and bulls — indicating spiritual beliefs and communication systems.",
+    quiz: [
+      { q: "Where did the earliest hominids appear?", options: ["Africa", "Asia", "Europe", "Australia"], ans: 0, exp: "Africa is the cradle of human evolution. Australopithecus fossils were found in East and South Africa." },
+      { q: "What is the 'Neolithic Revolution'?", options: ["A political revolution", "The shift from hunting to agriculture", "Invention of writing", "Building of cities"], ans: 1, exp: "The Neolithic Revolution (c. 10,000 BCE) marked humanity's transition from nomadic hunter-gatherer lifestyle to settled agricultural communities." },
+      { q: "Which early human was the first to use fire?", options: ["Homo habilis", "Homo sapiens", "Homo erectus", "Neanderthal"], ans: 2, exp: "Homo erectus is credited with the first controlled use of fire, approximately 1 million years ago." },
+      { q: "Lascaux cave paintings are located in:", options: ["Spain", "France", "Germany", "Italy"], ans: 1, exp: "The famous Lascaux cave paintings, dated to ~17,000 years ago, are located in the Dordogne region of France." },
+      { q: "The term 'Palaeolithic' means:", options: ["New Stone Age", "Old Stone Age", "Bronze Age", "Iron Age"], ans: 1, exp: "Palaeolithic (Greek: palaios = old, lithos = stone) refers to the Old Stone Age, spanning ~3 million to 10,000 BCE." }
+    ]
+  },
+  {
+    id: 2,
+    title: "Writing and City Life",
+    era: "3500 – 500 BCE • Mesopotamia & Indus",
+    icon: "📜",
+    overview: "This chapter examines the emergence of urban civilization in Mesopotamia (modern Iraq) and the Indus Valley. It covers the development of writing systems, trade networks, social hierarchy, and the features of early cities like Ur, Uruk, and Mohenjo-daro.",
+    keyFacts: [
+      "Cuneiform was the earliest writing system, developed in Sumer around 3500 BCE",
+      "Mesopotamia means 'land between rivers' (Tigris and Euphrates)",
+      "The Indus Valley Civilization (2600–1900 BCE) had planned cities with drainage systems",
+      "Ziggurats were massive temple towers in Mesopotamian cities",
+      "The Epic of Gilgamesh is one of the world's earliest literary works",
+      "Trade connected Mesopotamia with the Indus Valley and Egypt"
+    ],
+    timeline: [
+      { year: "~3500 BCE", event: "Cuneiform writing develops in Sumer (Mesopotamia)" },
+      { year: "~3000 BCE", event: "City of Uruk becomes world's first major city (50,000 people)" },
+      { year: "~2600 BCE", event: "Indus Valley Civilization flourishes — Mohenjo-daro and Harappa" },
+      { year: "~2100 BCE", event: "Epic of Gilgamesh composed in Sumer" },
+      { year: "~1900 BCE", event: "Decline of Indus Valley Civilization begins" },
+      { year: "~1750 BCE", event: "Hammurabi's Code — earliest comprehensive legal code" }
+    ],
+    personalities: [
+      { name: "Gilgamesh", role: "Legendary king of Uruk; hero of world's oldest epic poem", emoji: "👑" },
+      { name: "Hammurabi", role: "Babylonian king who created the first law code (~1750 BCE)", emoji: "⚖️" },
+      { name: "Enheduanna", role: "World's first named author — Sumerian high priestess", emoji: "✍️" },
+      { name: "Sargon of Akkad", role: "Created world's first empire (~2334 BCE)", emoji: "⚔️" }
+    ],
+    mapDesc: "Ancient Mesopotamia — location of Tigris, Euphrates, and early city-states",
+    caseStudy: "Mohenjo-daro (modern Pakistan) reveals the sophistication of Indus Valley planning: streets laid in grid patterns, multi-storey houses, indoor plumbing, public baths, and a granary. The Great Bath suggests ritual cleanliness was important. Yet the Indus script remains undeciphered.",
+    quiz: [
+      { q: "What does 'Mesopotamia' mean?", options: ["Land of the Pharaohs", "Land between rivers", "Great plain", "River kingdom"], ans: 1, exp: "Mesopotamia is Greek for 'land between rivers' — referring to the Tigris and Euphrates rivers." },
+      { q: "Cuneiform was the writing system of:", options: ["Egypt", "China", "Mesopotamia (Sumer)", "Indus Valley"], ans: 2, exp: "Cuneiform was developed by the Sumerians of Mesopotamia around 3500 BCE, using wedge-shaped marks on clay tablets." },
+      { q: "What was Hammurabi's famous contribution?", options: ["Built pyramids", "Created a law code", "Discovered fire", "Founded Buddhism"], ans: 1, exp: "Hammurabi (r. ~1792–1750 BCE) created one of history's first written law codes, containing 282 laws." },
+      { q: "The Indus Valley Civilization is also called:", options: ["Vedic Civilization", "Harappan Civilization", "Aryan Civilization", "Dravidian Civilization"], ans: 1, exp: "Named after Harappa (discovered 1921), the Indus Valley Civilization is also called the Harappan Civilization." },
+      { q: "Which ancient text is considered the world's oldest epic?", options: ["Iliad", "Mahabharata", "Epic of Gilgamesh", "Ramayana"], ans: 2, exp: "The Epic of Gilgamesh (c. 2100 BCE) from Mesopotamia is considered the world's oldest surviving epic poem." }
+    ]
+  },
+  {
+    id: 3,
+    title: "An Empire Across Three Continents",
+    era: "500 BCE – 600 CE • Roman Empire",
+    icon: "🏛️",
+    overview: "This chapter studies the rise, expansion, and fall of the Roman Empire — one of history's largest polities spanning Europe, North Africa, and West Asia. Topics include Roman governance, economy, army, culture, and the eventual split into Western and Eastern (Byzantine) empires.",
+    keyFacts: [
+      "The Roman Republic became an empire under Augustus Caesar in 27 BCE",
+      "At its peak, Rome controlled 5 million square kilometers",
+      "Roman roads (via) connected all parts of the empire",
+      "Latin was the official language; Roman law influenced modern legal systems",
+      "The Roman army (legion system) was one of the most effective military forces",
+      "Christianity spread rapidly across the Roman Empire after 300 CE"
+    ],
+    timeline: [
+      { year: "509 BCE", event: "Roman Republic established — Senate governs Rome" },
+      { year: "264-146 BCE", event: "Punic Wars — Rome defeats Carthage to control Mediterranean" },
+      { year: "44 BCE", event: "Julius Caesar assassinated; Octavian becomes Augustus (27 BCE)" },
+      { year: "27 BCE", event: "Augustus Caesar — first Roman Emperor; Pax Romana begins" },
+      { year: "73 CE", event: "Destruction of Jerusalem; Jewish diaspora begins" },
+      { year: "313 CE", event: "Edict of Milan — Christianity legalized by Constantine" },
+      { year: "395 CE", event: "Roman Empire splits into Eastern and Western halves" },
+      { year: "476 CE", event: "Fall of Western Roman Empire" }
+    ],
+    personalities: [
+      { name: "Julius Caesar", role: "General and statesman; transformed Rome into an empire", emoji: "⚔️" },
+      { name: "Augustus", role: "First Roman Emperor; established Pax Romana (27 BCE–14 CE)", emoji: "👑" },
+      { name: "Constantine I", role: "First Christian emperor; founded Constantinople (330 CE)", emoji: "✝️" },
+      { name: "Cleopatra", role: "Last pharaoh of Egypt; allied with Caesar and Antony", emoji: "🌹" }
+    ],
+    mapDesc: "The Roman Empire at its maximum extent under Emperor Trajan (117 CE)",
+    caseStudy: "Roman roads were engineering marvels — 400,000 km of roads connected the empire from Britain to Mesopotamia. The saying 'All roads lead to Rome' reflects this. Roads enabled rapid military movement, trade, and cultural exchange, acting as the nervous system of the empire.",
+    quiz: [
+      { q: "Who was the first Roman Emperor?", options: ["Julius Caesar", "Nero", "Augustus Caesar", "Constantine"], ans: 2, exp: "Octavian (later called Augustus) became the first Roman Emperor in 27 BCE after defeating Mark Antony and Cleopatra." },
+      { q: "'Pax Romana' means:", options: ["Roman War", "Roman Peace", "Roman Law", "Roman Roads"], ans: 1, exp: "Pax Romana (Latin: Roman Peace) refers to a ~200-year period of relative stability and prosperity in the Roman Empire (27 BCE – 180 CE)." },
+      { q: "The Roman Empire fell in the year:", options: ["395 CE", "410 CE", "476 CE", "500 CE"], ans: 2, exp: "The Western Roman Empire fell in 476 CE when the last emperor Romulus Augustulus was deposed by Odoacer." },
+      { q: "Which emperor legalized Christianity in the Roman Empire?", options: ["Augustus", "Nero", "Constantine", "Trajan"], ans: 2, exp: "Emperor Constantine I issued the Edict of Milan in 313 CE, legalizing Christianity throughout the Roman Empire." },
+      { q: "Rome's famous road system totaled approximately:", options: ["40,000 km", "80,000 km", "4,00,000 km", "8,00,000 km"], ans: 2, exp: "The Roman road network extended to approximately 4,00,000 km (250,000 miles), connecting the entire empire." }
+    ]
+  },
+  {
+    id: 4,
+    title: "The Central Islamic Lands",
+    era: "600 – 1200 CE • Rise of Islam",
+    icon: "🌙",
+    overview: "This chapter traces the origins of Islam in 7th-century Arabia, the life and teachings of Prophet Muhammad, the rapid spread of Islam across the Middle East, North Africa, and Spain, and the establishment of the Caliphate. It also covers the rich intellectual achievements of the Islamic Golden Age.",
+    keyFacts: [
+      "Prophet Muhammad (570-632 CE) received revelations beginning in 610 CE",
+      "The Hijra (migration to Medina) in 622 CE marks the start of the Islamic calendar",
+      "The five pillars of Islam: Shahada, Salat, Zakat, Sawm, Hajj",
+      "Within 100 years of Muhammad's death, Islam spread from Spain to Central Asia",
+      "Baghdad (founded 762 CE) became the center of the Islamic Golden Age",
+      "Al-Khwarizmi invented algebra; Ibn Sina wrote medical encyclopedias"
+    ],
+    timeline: [
+      { year: "570 CE", event: "Birth of Prophet Muhammad in Mecca" },
+      { year: "610 CE", event: "First revelation of the Quran to Muhammad" },
+      { year: "622 CE", event: "Hijra — Muhammad migrates to Medina; Islamic calendar begins" },
+      { year: "632 CE", event: "Death of Prophet Muhammad; Abu Bakr becomes first Caliph" },
+      { year: "661 CE", event: "Umayyad Caliphate established; capital moves to Damascus" },
+      { year: "711 CE", event: "Islamic armies enter Spain (Al-Andalus)" },
+      { year: "762 CE", event: "Baghdad founded as capital of Abbasid Caliphate" },
+      { year: "830 CE", event: "House of Wisdom (Bayt al-Hikmah) established in Baghdad" },
+      { year: "1258 CE", event: "Mongols destroy Baghdad; end of Abbasid Caliphate" }
+    ],
+    personalities: [
+      { name: "Prophet Muhammad", role: "Founder of Islam; Prophet and political leader of Arabia", emoji: "🌙" },
+      { name: "Caliph Umar", role: "Second Caliph; expanded Islamic territory dramatically", emoji: "⚔️" },
+      { name: "Al-Khwarizmi", role: "Mathematician who invented algebra; 'algorithm' named after him", emoji: "🔢" },
+      { name: "Ibn Sina (Avicenna)", role: "Physician and philosopher; wrote 'Canon of Medicine'", emoji: "⚕️" }
+    ],
+    mapDesc: "Spread of Islam from Arabia across the Middle East, North Africa, and Spain",
+    caseStudy: "The House of Wisdom (Bayt al-Hikmah) in Baghdad was the world's greatest intellectual center from 800-1200 CE. Scholars translated Greek, Persian, and Indian texts into Arabic, preserving classical knowledge. Islamic scholars made major advances in mathematics, astronomy, medicine, and philosophy during the Golden Age.",
+    quiz: [
+      { q: "In which city was Prophet Muhammad born?", options: ["Medina", "Jerusalem", "Mecca", "Baghdad"], ans: 2, exp: "Prophet Muhammad was born in Mecca (modern Saudi Arabia) in 570 CE." },
+      { q: "What is the Hijra?", options: ["A religious festival", "Migration from Mecca to Medina", "A type of prayer", "A holy war"], ans: 1, exp: "The Hijra refers to Prophet Muhammad's migration from Mecca to Medina in 622 CE, which marks Year 1 of the Islamic calendar." },
+      { q: "Al-Khwarizmi is famous for:", options: ["Discovering gravity", "Inventing algebra", "Building mosques", "Writing poetry"], ans: 1, exp: "Al-Khwarizmi (c. 780-850 CE) was a mathematician who wrote 'Al-Kitab al-mukhtasar fi hisab al-jabr' — the origin of the word 'algebra'." },
+      { q: "The Abbasid Caliphate's capital was:", options: ["Damascus", "Cairo", "Baghdad", "Mecca"], ans: 2, exp: "Baghdad, founded in 762 CE on the banks of the Tigris River, was the capital of the Abbasid Caliphate and the largest city of its era." },
+      { q: "The Islamic Golden Age refers to:", options: ["800-1200 CE", "600-700 CE", "1200-1400 CE", "400-600 CE"], ans: 0, exp: "The Islamic Golden Age (roughly 800-1200 CE) was a period of remarkable achievements in science, mathematics, medicine, and philosophy." }
+    ]
+  },
+  {
+    id: 5,
+    title: "Nomadic Empires",
+    era: "1200 – 1400 CE • Mongols & Turks",
+    icon: "🐎",
+    overview: "This chapter focuses on the Mongol Empire founded by Genghis Khan — the largest contiguous land empire in history. It examines nomadic military strategies, the 'Pax Mongolica' trade network, the impact of Mongol invasions on settled civilizations, and the legacy of Timur (Tamerlane).",
+    keyFacts: [
+      "Genghis Khan united Mongol tribes in 1206 and began world conquest",
+      "The Mongol Empire at its peak covered 24 million square kilometers",
+      "Mongols destroyed Baghdad in 1258, ending the Abbasid Caliphate",
+      "The 'Pax Mongolica' enabled safe trade along the Silk Road",
+      "The Black Death spread along Mongol trade routes in the 1340s",
+      "Timur (Tamerlane) revived Central Asian power in the late 1300s"
+    ],
+    timeline: [
+      { year: "1162 CE", event: "Birth of Temujin (later Genghis Khan) in Mongolia" },
+      { year: "1206 CE", event: "Temujin unites Mongol tribes; takes title 'Genghis Khan'" },
+      { year: "1215 CE", event: "Mongols capture Beijing (then Zhongdu)" },
+      { year: "1227 CE", event: "Death of Genghis Khan; empire divided among sons" },
+      { year: "1241 CE", event: "Mongols invade Poland and Hungary; reach the Adriatic" },
+      { year: "1258 CE", event: "Hulagu Khan sacks Baghdad; end of Abbasid Caliphate" },
+      { year: "1279 CE", event: "Kublai Khan completes conquest of China; establishes Yuan Dynasty" },
+      { year: "1336 CE", event: "Birth of Timur (Tamerlane) in Transoxiana (modern Uzbekistan)" }
+    ],
+    personalities: [
+      { name: "Genghis Khan", role: "Founder of Mongol Empire; 'Universal Ruler' of the steppe", emoji: "🐎" },
+      { name: "Kublai Khan", role: "Grandson of Genghis; founded Yuan Dynasty in China", emoji: "👑" },
+      { name: "Marco Polo", role: "Venetian traveler who visited Kublai Khan's court", emoji: "🧭" },
+      { name: "Timur (Tamerlane)", role: "Turco-Mongol conqueror; founded Timurid Empire", emoji: "⚔️" }
+    ],
+    mapDesc: "The Mongol Empire at its greatest extent (1279 CE)",
+    caseStudy: "The Pax Mongolica ('Mongol Peace') from ~1250-1350 CE enabled unprecedented cross-continental trade. The Silk Road, under Mongol protection, allowed merchants like Marco Polo to travel from Italy to China. This exchange of goods, ideas, and diseases (including the Black Death) changed the world forever.",
+    quiz: [
+      { q: "Who founded the Mongol Empire?", options: ["Kublai Khan", "Timur", "Genghis Khan", "Hulagu Khan"], ans: 2, exp: "Genghis Khan (born Temujin, c. 1162-1227) united the Mongol tribes in 1206 and founded the Mongol Empire." },
+      { q: "The Mongol Empire was the world's:", options: ["Oldest empire", "Largest contiguous land empire", "Richest empire", "Longest-lasting empire"], ans: 1, exp: "At its peak (1279 CE), the Mongol Empire covered about 24 million sq km, making it the largest contiguous land empire in history." },
+      { q: "Kublai Khan established which dynasty in China?", options: ["Ming Dynasty", "Tang Dynasty", "Yuan Dynasty", "Song Dynasty"], ans: 2, exp: "Kublai Khan, grandson of Genghis Khan, completed the conquest of China and founded the Yuan Dynasty (1271-1368 CE)." },
+      { q: "The 'Pax Mongolica' refers to:", options: ["Mongol religion", "Period of safe trade under Mongol rule", "Mongol legal code", "Battle tactics"], ans: 1, exp: "The Pax Mongolica ('Mongol Peace') was a period of relative stability under Mongol rule that allowed safe trade along the Silk Road." },
+      { q: "Which city was destroyed by the Mongols in 1258, ending a major caliphate?", options: ["Cairo", "Constantinople", "Baghdad", "Damascus"], ans: 2, exp: "Hulagu Khan's Mongol forces sacked Baghdad in 1258, destroying the Abbasid Caliphate and the House of Wisdom." }
+    ]
+  },
+  {
+    id: 6,
+    title: "The Three Orders",
+    era: "900 – 1400 CE • Medieval Europe",
+    icon: "🏰",
+    overview: "This chapter examines the social structure of medieval European feudal society, divided into three orders: those who pray (clergy), those who fight (knights/nobility), and those who work (peasants). It covers the Church's role, the Crusades, the growth of towns, and the Black Death's impact.",
+    keyFacts: [
+      "Feudalism organized medieval society into a hierarchy of lords and vassals",
+      "The Catholic Church was the most powerful institution in medieval Europe",
+      "The Crusades (1095-1291 CE) were religious wars to control the Holy Land",
+      "The Magna Carta (1215 CE) limited royal power in England",
+      "The Black Death (1347-51) killed one-third of Europe's population",
+      "Gothic cathedrals like Notre Dame represent medieval architectural achievement"
+    ],
+    timeline: [
+      { year: "800 CE", event: "Charlemagne crowned Holy Roman Emperor by Pope Leo III" },
+      { year: "1066 CE", event: "Norman Conquest of England by William the Conqueror" },
+      { year: "1095 CE", event: "Pope Urban II calls the First Crusade to recapture Jerusalem" },
+      { year: "1099 CE", event: "Crusaders capture Jerusalem; Kingdom of Jerusalem established" },
+      { year: "1215 CE", event: "Magna Carta signed — limits power of English monarchy" },
+      { year: "1337 CE", event: "Hundred Years' War begins between England and France" },
+      { year: "1347 CE", event: "Black Death arrives in Europe; kills ~25 million people" },
+      { year: "1431 CE", event: "Joan of Arc burned at the stake during Hundred Years' War" }
+    ],
+    personalities: [
+      { name: "Charlemagne", role: "King of Franks; Holy Roman Emperor; united Western Europe", emoji: "👑" },
+      { name: "Pope Urban II", role: "Called for the First Crusade in 1095 CE", emoji: "✝️" },
+      { name: "Joan of Arc", role: "French heroine who led armies during Hundred Years' War", emoji: "⚔️" },
+      { name: "Thomas Aquinas", role: "Philosopher-theologian; reconciled faith and reason", emoji: "📜" }
+    ],
+    mapDesc: "The Crusader States in the Holy Land and routes of the First Crusade",
+    caseStudy: "The Black Death (1347-1351) devastated Europe, killing 30-60% of the population. It arrived via Mongol trade routes, spread by fleas on rats. The aftermath transformed European society: labor shortages gave serfs more bargaining power, weakening feudalism; the Church's inability to stop the plague reduced its authority; survivors questioned traditional social structures.",
+    quiz: [
+      { q: "What are the 'Three Orders' of medieval society?", options: ["Kings, Nobles, Commoners", "Clergy, Knights, Peasants", "Priests, Merchants, Soldiers", "Pope, King, Peasants"], ans: 1, exp: "Medieval European society was divided into those who pray (clergy), those who fight (knights/nobility), and those who work (peasants)." },
+      { q: "The Magna Carta (1215) was significant because:", options: ["It ended the Crusades", "It limited royal power", "It established Parliament", "It created feudalism"], ans: 1, exp: "The Magna Carta (Great Charter) forced King John to agree that even the king was subject to the law, limiting royal power." },
+      { q: "The First Crusade was called by:", options: ["Charlemagne", "Pope Urban II", "Richard I", "Saladin"], ans: 1, exp: "Pope Urban II called for the First Crusade in 1095 CE at the Council of Clermont, to recapture Jerusalem from Muslim rule." },
+      { q: "The Black Death killed approximately what fraction of Europe's population?", options: ["One-tenth", "One-quarter", "One-third", "Half"], ans: 2, exp: "The Black Death (1347-51) killed an estimated one-third of Europe's population (about 25 million people)." },
+      { q: "Feudalism is best described as:", options: ["A religious system", "A trading system", "A hierarchical land-based political system", "An urban society"], ans: 2, exp: "Feudalism was a social and political system in which land was granted by lords to vassals in exchange for military service and loyalty." }
+    ]
+  },
+  {
+    id: 7,
+    title: "Changing Cultural Traditions",
+    era: "1400 – 1600 CE • Renaissance & Reformation",
+    icon: "🎨",
+    overview: "This chapter covers the Renaissance ('rebirth') in Europe, the Protestant Reformation, humanism, and the transformation of art, science, and thought. It examines how thinkers challenged medieval Church authority, leading to new ideas about the individual, society, and knowledge.",
+    keyFacts: [
+      "The Renaissance began in Florence, Italy in the 14th century",
+      "Humanism placed humans (not God) at the center of intellectual inquiry",
+      "Leonardo da Vinci, Michelangelo, and Raphael were Renaissance masters",
+      "Gutenberg's printing press (1450) revolutionized the spread of ideas",
+      "Martin Luther's 95 Theses (1517) began the Protestant Reformation",
+      "Copernicus proposed that the Earth revolves around the Sun (heliocentrism)"
+    ],
+    timeline: [
+      { year: "1304 CE", event: "Francesco Petrarch born — 'Father of Humanism'" },
+      { year: "1440 CE", event: "Gutenberg invents the movable type printing press" },
+      { year: "1453 CE", event: "Fall of Constantinople; Greek scholars flee to Italy with manuscripts" },
+      { year: "1492 CE", event: "Columbus reaches the Americas; Reconquista ends in Spain" },
+      { year: "1503 CE", event: "Leonardo da Vinci paints the Mona Lisa" },
+      { year: "1512 CE", event: "Michelangelo completes Sistine Chapel ceiling" },
+      { year: "1517 CE", event: "Martin Luther posts 95 Theses — Protestant Reformation begins" },
+      { year: "1543 CE", event: "Copernicus publishes heliocentric theory; Vesalius publishes human anatomy" }
+    ],
+    personalities: [
+      { name: "Leonardo da Vinci", role: "Artist, scientist, inventor — the 'Renaissance Man'", emoji: "🎨" },
+      { name: "Martin Luther", role: "Priest who launched the Protestant Reformation (1517)", emoji: "✝️" },
+      { name: "Copernicus", role: "Astronomer who proved Earth revolves around the Sun", emoji: "🔭" },
+      { name: "Erasmus", role: "Humanist scholar; 'Praise of Folly' criticized Church corruption", emoji: "📚" }
+    ],
+    mapDesc: "Spread of Renaissance ideas from Italy to Northern Europe",
+    caseStudy: "Gutenberg's printing press (c. 1440) was the 'internet of the Renaissance'. Before printing, books were handwritten by monks; one Bible took a year to copy. After printing, thousands of books could be produced quickly. Luther's 95 Theses spread across Germany in weeks. By 1500, over 20 million books had been printed in Europe, democratizing knowledge.",
+    quiz: [
+      { q: "The Renaissance began in which country?", options: ["France", "Germany", "England", "Italy"], ans: 3, exp: "The Renaissance began in the Italian city-states (especially Florence) in the 14th century, before spreading to Northern Europe." },
+      { q: "What did Martin Luther's 95 Theses challenge?", options: ["The Roman Emperor", "Catholic Church practices (especially selling indulgences)", "Islamic expansion", "Scientific discoveries"], ans: 1, exp: "Luther's 95 Theses (1517) criticized the Catholic Church, especially the sale of indulgences (payments to reduce punishment for sins)." },
+      { q: "Gutenberg's most important contribution was:", options: ["Building cathedrals", "Inventing the printing press", "Discovering America", "Writing the Bible"], ans: 1, exp: "Johannes Gutenberg's movable type printing press (c. 1440) revolutionized the spread of information and enabled the Reformation." },
+      { q: "Copernicus is famous for proposing:", options: ["Gravity", "Evolution", "Heliocentrism (Earth revolves around the Sun)", "Atomic theory"], ans: 2, exp: "Nicolaus Copernicus (1473-1543) proposed the heliocentric model — that the Earth and planets orbit the Sun — contradicting Church teaching." },
+      { q: "The term 'Renaissance' means:", options: ["Reformation", "Rebirth", "Revolution", "Religion"], ans: 1, exp: "Renaissance is French for 'rebirth' — referring to the revival of classical Greek and Roman art, literature, and learning in 14th-16th century Europe." }
+    ]
+  },
+  {
+    id: 8,
+    title: "Confrontation of Cultures",
+    era: "1400 – 1600 CE • Age of Exploration",
+    icon: "⛵",
+    overview: "This chapter examines European voyages of exploration, the 'discovery' of the Americas, the Columbian Exchange, and the devastating impact on indigenous peoples. It covers the motivations of European powers, the transatlantic slave trade, and the cultural clashes between Old and New Worlds.",
+    keyFacts: [
+      "Portuguese and Spanish led the Age of Exploration from the 15th century",
+      "Columbus reached the Caribbean in 1492, believing it was Asia",
+      "Vasco da Gama reached India by sea in 1498, breaking Arab trade monopoly",
+      "The Columbian Exchange transferred crops, animals, and diseases between continents",
+      "Smallpox and other diseases killed 90% of indigenous American populations",
+      "The Treaty of Tordesillas (1494) divided the world between Spain and Portugal"
+    ],
+    timeline: [
+      { year: "1415 CE", event: "Portugal captures Ceuta; beginning of Age of Exploration" },
+      { year: "1488 CE", event: "Bartolomeu Dias rounds the Cape of Good Hope" },
+      { year: "1492 CE", event: "Columbus reaches the Bahamas (Caribbean)" },
+      { year: "1494 CE", event: "Treaty of Tordesillas divides the New World between Spain and Portugal" },
+      { year: "1498 CE", event: "Vasco da Gama reaches Calicut (Kozhikode), India" },
+      { year: "1519 CE", event: "Magellan begins first circumnavigation of the globe" },
+      { year: "1521 CE", event: "Hernán Cortés conquers the Aztec Empire" },
+      { year: "1533 CE", event: "Francisco Pizarro conquers the Inca Empire" }
+    ],
+    personalities: [
+      { name: "Christopher Columbus", role: "Genoese explorer who reached the Americas in 1492", emoji: "🧭" },
+      { name: "Vasco da Gama", role: "Portuguese explorer; first to sail from Europe to India", emoji: "⛵" },
+      { name: "Hernán Cortés", role: "Spanish conquistador who defeated the Aztec Empire", emoji: "⚔️" },
+      { name: "Magellan", role: "Led first circumnavigation of the Earth (1519-1522)", emoji: "🌍" }
+    ],
+    mapDesc: "Routes of major European voyages of exploration (1492-1522)",
+    caseStudy: "The Columbian Exchange (named after Columbus) was the largest ecological event in recorded history. Europe sent to the Americas: horses, cattle, wheat, smallpox. The Americas sent to Europe: potatoes, tomatoes, maize, chocolate, tobacco. Smallpox alone killed ~90% of indigenous Americans. The potato changed European nutrition and population growth forever.",
+    quiz: [
+      { q: "Columbus reached the Americas in:", options: ["1488", "1492", "1498", "1519"], ans: 1, exp: "Christopher Columbus reached the Bahamas (Caribbean) on October 12, 1492, believing he had reached Asia." },
+      { q: "Vasco da Gama is famous for:", options: ["Discovering America", "First sea route from Europe to India", "First circumnavigation", "Conquering the Aztecs"], ans: 1, exp: "Vasco da Gama completed the first direct sea voyage from Europe to India (1497-98), arriving at Calicut (Kozhikode) in modern Kerala." },
+      { q: "The 'Columbian Exchange' refers to:", options: ["Trade treaty", "Exchange of goods, plants, animals, and diseases between Old and New Worlds", "Columbus's trade agreement", "Gold trade"], ans: 1, exp: "The Columbian Exchange refers to the widespread transfer of plants, animals, culture, diseases, and ideas between the Americas and the Old World." },
+      { q: "Which disease devastated indigenous American populations?", options: ["Malaria", "Plague", "Smallpox", "Cholera"], ans: 2, exp: "Smallpox, brought by European explorers and colonizers, killed an estimated 90% of indigenous American populations due to lack of immunity." },
+      { q: "The Treaty of Tordesillas (1494) was between:", options: ["England and France", "Spain and Portugal", "Portugal and Netherlands", "England and Spain"], ans: 1, exp: "The Treaty of Tordesillas (1494) divided newly discovered lands outside Europe between Spain and Portugal along a meridian line." }
+    ]
+  },
+  {
+    id: 9,
+    title: "The Industrial Revolution",
+    era: "1760 – 1900 CE • Britain & Beyond",
+    icon: "⚙️",
+    overview: "This chapter explores the Industrial Revolution that began in Britain in the late 18th century — the transformation from agricultural to industrial society. It examines the role of coal, steam, iron, and textile industries, the growth of factories and cities, the social impact on workers, and the spread of industrialization to Europe and beyond.",
+    keyFacts: [
+      "The Industrial Revolution began in Britain around 1760",
+      "James Watt's steam engine (1769) was the central invention",
+      "Cotton textiles were the first major industry to be mechanized",
+      "New social classes emerged: the industrial bourgeoisie and the proletariat",
+      "Child labor in factories and mines was widespread and brutal",
+      "Railways transformed transportation and accelerated industrialization"
+    ],
+    timeline: [
+      { year: "1733 CE", event: "Flying shuttle invented by John Kay — accelerates weaving" },
+      { year: "1764 CE", event: "Spinning Jenny invented by James Hargreaves" },
+      { year: "1769 CE", event: "James Watt patents improved steam engine" },
+      { year: "1779 CE", event: "Samuel Crompton invents the Spinning Mule" },
+      { year: "1785 CE", event: "Edmund Cartwright invents the power loom" },
+      { year: "1807 CE", event: "Robert Fulton launches first commercial steamboat" },
+      { year: "1825 CE", event: "First passenger railway opens: Stockton to Darlington" },
+      { year: "1848 CE", event: "Marx and Engels publish The Communist Manifesto" },
+      { year: "1869 CE", event: "First transcontinental railway completed in USA" }
+    ],
+    personalities: [
+      { name: "James Watt", role: "Scottish inventor who perfected the steam engine (1769)", emoji: "⚙️" },
+      { name: "George Stephenson", role: "Built first successful railway locomotive ('Rocket', 1829)", emoji: "🚂" },
+      { name: "Karl Marx", role: "Philosopher who wrote The Communist Manifesto (1848)", emoji: "📖" },
+      { name: "Richard Arkwright", role: "Inventor of the water frame; founder of the factory system", emoji: "🏭" }
+    ],
+    mapDesc: "Industrial centers in Britain and spread of industrialization to Europe",
+    caseStudy: "Friedrich Engels documented the terrible living conditions of English workers in 'The Condition of the Working Class in England' (1845). In Manchester, workers lived in overcrowded slums, worked 14-hour shifts, and child laborers as young as 5 worked in coal mines. This sparked the labor movement and laid the groundwork for trade unions and workers' rights legislation.",
+    quiz: [
+      { q: "The Industrial Revolution began in which country?", options: ["France", "Germany", "USA", "Britain"], ans: 3, exp: "The Industrial Revolution began in Britain around 1760, driven by coal, iron, textiles, and the steam engine." },
+      { q: "James Watt is famous for:", options: ["Inventing the telephone", "Perfecting the steam engine", "Building the first railway", "Discovering electricity"], ans: 1, exp: "James Watt (1736-1819) improved the steam engine in 1769, making it practical for industrial use — the key invention of the Industrial Revolution." },
+      { q: "The Communist Manifesto was written by:", options: ["Adam Smith and Ricardo", "Marx and Engels", "Dickens and Mill", "Watt and Arkwright"], ans: 1, exp: "Karl Marx and Friedrich Engels wrote The Communist Manifesto in 1848, analyzing capitalism and calling for workers to overthrow it." },
+      { q: "Which was the first industry to be fully mechanized?", options: ["Steel", "Cotton textiles", "Railways", "Coal mining"], ans: 1, exp: "Cotton textiles were the first major industry to be mechanized, with inventions like the spinning jenny, water frame, and power loom." },
+      { q: "The first passenger railway in the world opened in:", options: ["1800", "1815", "1825", "1840"], ans: 2, exp: "The Stockton and Darlington Railway opened in 1825 in England — the world's first public railway to use steam locomotives." }
+    ]
+  },
+  {
+    id: 10,
+    title: "Displacing Indigenous Peoples",
+    era: "1600 – 1900 CE • Colonialism",
+    icon: "🌿",
+    overview: "This chapter examines European colonialism in the Americas, Australia, and Africa — focusing on the systematic displacement and destruction of indigenous peoples. It covers settler colonialism, land seizure, forced assimilation, the Australian Aboriginal experience, the Trail of Tears, and resistance movements.",
+    keyFacts: [
+      "European colonization led to the near-extinction of many indigenous peoples",
+      "The Trail of Tears (1838-39) forcibly relocated Native Americans in the USA",
+      "Australia was claimed by Britain in 1788 under the doctrine of 'terra nullius'",
+      "The Scramble for Africa (1880s) divided the continent among European powers",
+      "Indigenous peoples were stripped of land, language, and cultural practices",
+      "Resistance movements like the Mau Mau Uprising (Kenya) challenged colonial rule"
+    ],
+    timeline: [
+      { year: "1607 CE", event: "First permanent English settlement in Jamestown, Virginia" },
+      { year: "1788 CE", event: "Britain establishes colony in Australia; Aboriginal displacement begins" },
+      { year: "1830 CE", event: "Indian Removal Act passed in USA; Trail of Tears follows" },
+      { year: "1838 CE", event: "Trail of Tears — Cherokee forced march; 4,000+ deaths" },
+      { year: "1884 CE", event: "Berlin Conference — European powers divide Africa" },
+      { year: "1890 CE", event: "Wounded Knee Massacre — last major armed conflict in USA" },
+      { year: "1905 CE", event: "Herero genocide in German South West Africa" }
+    ],
+    personalities: [
+      { name: "Sitting Bull", role: "Lakota Sioux leader who resisted US government expansion", emoji: "🪶" },
+      { name: "Yaa Asantewaa", role: "Ashanti queen who led resistance against British rule in Ghana", emoji: "⚔️" },
+      { name: "Chief Seattle", role: "Suquamish leader; famous speech on land and nature", emoji: "🌲" },
+      { name: "Jomo Kenyatta", role: "Kenyan nationalist leader; led Kenya to independence", emoji: "🌍" }
+    ],
+    mapDesc: "European colonial territories in the Americas, Africa, and Australia",
+    caseStudy: "The Trail of Tears (1838-39) was the forced relocation of approximately 60,000 Native Americans from their ancestral lands in the southeastern United States to 'Indian Territory' (Oklahoma). The Cherokee alone lost over 4,000 people to cold, disease, and starvation during the forced march. The Supreme Court had ruled in their favor, but President Jackson defied the ruling.",
+    quiz: [
+      { q: "What was the Trail of Tears?", options: ["A trade route", "Forced relocation of Native Americans", "A river in America", "A military campaign"], ans: 1, exp: "The Trail of Tears (1838-39) was the forced relocation of approximately 60,000 Native Americans to Oklahoma, resulting in thousands of deaths." },
+      { q: "'Terra nullius' means:", options: ["Land of the natives", "No man's land (empty land)", "Fertile land", "Sacred land"], ans: 1, exp: "Terra nullius (Latin: 'nobody's land') was the legal doctrine used by Britain to claim Australia in 1788, ignoring Aboriginal ownership." },
+      { q: "The Berlin Conference (1884-85) was about:", options: ["Ending World War I", "Dividing Africa among European powers", "Trade with Asia", "The Industrial Revolution"], ans: 1, exp: "The Berlin Conference (1884-85) was where European powers (Britain, France, Germany, etc.) divided Africa among themselves without consulting Africans." },
+      { q: "Which US president signed the Indian Removal Act?", options: ["Abraham Lincoln", "Thomas Jefferson", "Andrew Jackson", "George Washington"], ans: 2, exp: "President Andrew Jackson signed the Indian Removal Act in 1830, authorizing the forced removal of Native American tribes from the eastern United States." },
+      { q: "Australia was colonized by:", options: ["France", "Spain", "Portugal", "Britain"], ans: 3, exp: "Britain established its first colony in Australia at Botany Bay (New South Wales) in 1788, beginning the systematic displacement of Aboriginal peoples." }
+    ]
+  },
+  {
+    id: 11,
+    title: "Paths to Modernisation",
+    era: "1860 – 1950 CE • Japan, China & India",
+    icon: "🏙️",
+    overview: "This chapter compares different paths to modernization in Asia — Japan's rapid Meiji Modernization, China's struggle with Western imperialism and internal revolution, and India under British colonial rule. It examines how non-Western societies responded to Western dominance through reform, resistance, and revolution.",
+    keyFacts: [
+      "Japan's Meiji Restoration (1868) led to rapid modernization within 50 years",
+      "Japan defeated Russia in 1905 — first Asian victory over a European power",
+      "China was weakened by Opium Wars and the Boxer Rebellion",
+      "The Chinese Communist Revolution (1949) established the People's Republic",
+      "India's Independence Movement was led by Gandhi through non-violent resistance",
+      "World War II accelerated decolonization across Asia and Africa"
+    ],
+    timeline: [
+      { year: "1853 CE", event: "Commodore Perry's 'Black Ships' force Japan to open to trade" },
+      { year: "1868 CE", event: "Meiji Restoration — Japan begins rapid modernization" },
+      { year: "1895 CE", event: "Japan defeats China in First Sino-Japanese War" },
+      { year: "1905 CE", event: "Japan defeats Russia — shocks European world" },
+      { year: "1911 CE", event: "Chinese Revolution — Qing Dynasty falls; Republic established" },
+      { year: "1919 CE", event: "May Fourth Movement in China; Gandhi leads Non-Cooperation Movement" },
+      { year: "1942 CE", event: "Quit India Movement launched by Gandhi" },
+      { year: "1947 CE", event: "India and Pakistan gain independence from Britain" },
+      { year: "1949 CE", event: "Mao Zedong establishes People's Republic of China" }
+    ],
+    personalities: [
+      { name: "Emperor Meiji", role: "Japanese emperor who led modernization of Japan (1868-1912)", emoji: "🏯" },
+      { name: "Mahatma Gandhi", role: "Led India's independence through non-violent resistance", emoji: "🕊️" },
+      { name: "Mao Zedong", role: "Led Chinese Communist Revolution; founded People's Republic", emoji: "⭐" },
+      { name: "Sun Yat-sen", role: "First president of Republic of China; father of the nation", emoji: "🇨🇳" }
+    ],
+    mapDesc: "Asia in the early 20th century — colonial territories and modernizing nations",
+    caseStudy: "Japan's Meiji Modernization (1868-1912) is one of history's most remarkable transformations. Within 50 years, Japan went from a feudal society to an industrialized nation that defeated major European powers. The government sent students to Europe to learn science, engineering, and law; built railways and industries; and created a modern army modeled on European forces. By 1905, Japan was a major world power.",
+    quiz: [
+      { q: "The Meiji Restoration occurred in:", options: ["1840", "1858", "1868", "1905"], ans: 2, exp: "The Meiji Restoration of 1868 restored imperial rule in Japan and initiated rapid modernization of Japanese society, economy, and military." },
+      { q: "Japan's defeat of Russia in 1905 was significant because:", options: ["It gave Japan more land", "It was the first Asian victory over a European power", "It ended World War I", "It led to democracy in Japan"], ans: 1, exp: "Japan's victory in the Russo-Japanese War (1904-05) shocked the world — it was the first time in modern history an Asian nation had defeated a major European power." },
+      { q: "Mahatma Gandhi's main method of resistance was:", options: ["Armed revolution", "Non-violent civil disobedience", "Diplomacy", "Economic sanctions"], ans: 1, exp: "Gandhi developed Satyagraha (non-violent resistance) — using peaceful non-cooperation, civil disobedience, and boycotts to oppose British rule." },
+      { q: "The People's Republic of China was founded by:", options: ["Sun Yat-sen", "Chiang Kai-shek", "Mao Zedong", "Deng Xiaoping"], ans: 2, exp: "Mao Zedong proclaimed the People's Republic of China on October 1, 1949, after the Communist Party defeated the Nationalist forces." },
+      { q: "India gained independence from Britain in:", options: ["1945", "1947", "1950", "1952"], ans: 1, exp: "India gained independence from British rule on August 15, 1947, following decades of nationalist struggle led by the Indian National Congress and figures like Gandhi and Nehru." }
+    ]
+  }
+];
+
+// Historical timeline data
+const timelineEras = [
+  { id: 'prehistoric', label: 'Prehistoric', events: [
+    { date: '3,000,000 BCE', title: 'First Hominids', desc: 'Australopithecus appears in East Africa — earliest human ancestor', tag: 'Evolution' },
+    { date: '2,000,000 BCE', title: 'Homo habilis', desc: 'First stone tool users in Africa — "Handy Man"', tag: 'Technology' },
+    { date: '1,500,000 BCE', title: 'Homo erectus', desc: 'First human ancestors to migrate out of Africa; discovered fire', tag: 'Migration' },
+    { date: '2,00,000 BCE', title: 'Homo sapiens', desc: 'Modern humans evolve in Africa; language and complex thought develop', tag: 'Evolution' },
+    { date: '50,000 BCE', title: 'Great Migration', desc: 'Modern humans migrate across all continents including Australia and Americas', tag: 'Migration' },
+    { date: '35,000 BCE', title: 'Cave Art', desc: 'Earliest known cave paintings appear — Chauvet Cave, France', tag: 'Culture' },
+    { date: '10,000 BCE', title: 'Agricultural Revolution', desc: 'Neolithic Revolution — humans begin farming; first permanent settlements', tag: 'Society' }
+  ]},
+  { id: 'ancient', label: 'Ancient', events: [
+    { date: '3500 BCE', title: 'Cuneiform Writing', desc: 'Sumerians invent writing in Mesopotamia — first writing system', tag: 'Culture' },
+    { date: '3000 BCE', title: 'Egyptian Civilization', desc: 'Unification of Upper and Lower Egypt; pyramids begin construction', tag: 'Civilization' },
+    { date: '2600 BCE', title: 'Indus Valley', desc: 'Mohenjo-daro and Harappa flourish with planned cities and drainage', tag: 'Civilization' },
+    { date: '1750 BCE', title: "Hammurabi's Code", desc: 'First comprehensive written legal code in Babylon', tag: 'Society' },
+    { date: '509 BCE', title: 'Roman Republic', desc: 'Romans overthrow Etruscan kings; establish Senate-led republic', tag: 'Politics' },
+    { date: '327 BCE', title: 'Alexander the Great', desc: 'Macedonian king conquers from Greece to India — spreading Hellenism', tag: 'Empire' },
+    { date: '221 BCE', title: 'Qin Dynasty', desc: 'China unified under Emperor Qin Shi Huang; Great Wall construction begins', tag: 'Empire' }
+  ]},
+  { id: 'medieval', label: 'Medieval', events: [
+    { date: '610 CE', title: 'Rise of Islam', desc: 'Prophet Muhammad receives first revelation; Islam founded in Arabia', tag: 'Religion' },
+    { date: '711 CE', title: 'Islamic Spain', desc: 'Muslim armies cross into Spain — beginning of Al-Andalus', tag: 'Expansion' },
+    { date: '800 CE', title: 'Holy Roman Empire', desc: 'Charlemagne crowned Holy Roman Emperor by Pope Leo III in Rome', tag: 'Politics' },
+    { date: '1095 CE', title: 'First Crusade', desc: 'Pope Urban II calls for holy war to recapture Jerusalem from Muslims', tag: 'Religion' },
+    { date: '1206 CE', title: 'Mongol Empire', desc: 'Genghis Khan unites Mongol tribes; begins world conquest', tag: 'Empire' },
+    { date: '1215 CE', title: 'Magna Carta', desc: 'English barons force King John to sign charter limiting royal power', tag: 'Society' },
+    { date: '1347 CE', title: 'Black Death', desc: 'Bubonic plague devastates Europe — kills one-third of the population', tag: 'Disaster' }
+  ]},
+  { id: 'modern', label: 'Modern', events: [
+    { date: '1440 CE', title: "Gutenberg's Press", desc: 'Movable type printing press enables spread of books and ideas', tag: 'Technology' },
+    { date: '1492 CE', title: 'Columbus Reaches Americas', desc: 'Christopher Columbus reaches the Caribbean, connecting Old and New Worlds', tag: 'Exploration' },
+    { date: '1517 CE', title: 'Protestant Reformation', desc: 'Martin Luther posts 95 Theses — challenges Catholic Church authority', tag: 'Religion' },
+    { date: '1769 CE', title: "Watt's Steam Engine", desc: 'James Watt patents improved steam engine — powers Industrial Revolution', tag: 'Technology' },
+    { date: '1789 CE', title: 'French Revolution', desc: 'Storming of the Bastille; monarchy overthrown; Declaration of Rights', tag: 'Politics' },
+    { date: '1868 CE', title: 'Meiji Restoration', desc: 'Japan begins rapid modernization — from feudal society to industrial power', tag: 'Society' },
+    { date: '1947 CE', title: 'Indian Independence', desc: 'India gains independence from Britain — largest decolonization event', tag: 'Politics' }
+  ]}
+];
+
+// Artifacts data
+const artifactsData = [
+  { name: "Rosetta Stone", period: "196 BCE • Egypt", emoji: "🪨", desc: "Key to deciphering Egyptian hieroglyphics; trilingual decree of Ptolemy V" },
+  { name: "Dead Sea Scrolls", period: "150 BCE–70 CE • Judea", emoji: "📜", desc: "Ancient Hebrew biblical manuscripts found in caves near Dead Sea" },
+  { name: "Terracotta Army", period: "210 BCE • China", emoji: "🏺", desc: "8,000 clay soldiers buried with Emperor Qin Shi Huang" },
+  { name: "Antikythera Mechanism", period: "~100 BCE • Greece", emoji: "⚙️", desc: "World's oldest analog computer — tracked astronomical positions" },
+  { name: "Lascaux Cave Paintings", period: "17,000 BCE • France", emoji: "🎨", desc: "Prehistoric art showing horses, deer, and bulls — earliest human expression" },
+  { name: "Gutenberg Bible", period: "1455 CE • Germany", emoji: "📖", desc: "First major book printed with movable type — changed communication forever" },
+  { name: "Magna Carta", period: "1215 CE • England", emoji: "📋", desc: "Charter limiting royal power; foundation of constitutional government" },
+  { name: "Silk Road Artifacts", period: "200 BCE–1400 CE", emoji: "🧵", desc: "Goods exchanged along the ancient trade routes connecting East and West" }
+];
+
+// ===== STATE =====
+let currentScreen = 'splash';
+let currentChapter = null;
+let quizState = { chapter: null, qIndex: 0, score: 0, answered: false };
+let progress = JSON.parse(localStorage.getItem('history-progress') || '{}');
+let scores = JSON.parse(localStorage.getItem('history-scores') || '{}');
+
+// ===== NAVIGATION =====
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  currentScreen = id;
+  const mainScreens = ['dashboard', 'chapters-screen', 'simulations-screen', 'quiz-select-screen', 'progress-screen'];
+  document.getElementById('bottomNav').style.display = mainScreens.includes(id) ? 'flex' : 'none';
+  window.scrollTo(0, 0);
+}
+
+function updateBNav(active) {
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('bnav-' + active);
+  if (el) el.classList.add('active');
+}
+
+function startApp() {
+  showScreen('dashboard');
+  document.getElementById('bottomNav').style.display = 'flex';
+  renderChaptersList();
+  renderQuizSelect();
+  renderArtifacts();
+  updateDashboardStats();
+}
+
+// ===== DASHBOARD =====
+function updateDashboardStats() {
+  const completed = Object.values(progress).filter(v => v >= 1).length;
+  const quizPassed = Object.keys(scores).length;
+  const bestScore = Object.values(scores).length > 0 ? Math.max(...Object.values(scores)) : 0;
+  const pct = Math.round((completed / chaptersData.length) * 100);
+
+  document.getElementById('statChapters').textContent = completed;
+  document.getElementById('statQuiz').textContent = quizPassed;
+  document.getElementById('statScore').textContent = bestScore;
+  document.getElementById('overallPct').textContent = pct + '%';
+  document.getElementById('overallBar').style.width = pct + '%';
+}
+
+// ===== CHAPTERS =====
+function renderChaptersList() {
+  const list = document.getElementById('chaptersList');
+  list.innerHTML = chaptersData.map(ch => `
+    <div class="chapter-card" onclick="openChapter(${ch.id})">
+      <div class="chapter-num">${ch.id}</div>
+      <div class="chapter-info">
+        <div class="chapter-title-text">${ch.title}</div>
+        <div class="chapter-era">${ch.era}</div>
+      </div>
+      <div class="chapter-status">${progress[ch.id] ? '✅' : '📖'}</div>
+    </div>
+  `).join('');
+}
+
+function filterChapters(val) {
+  const list = document.getElementById('chaptersList');
+  const filtered = chaptersData.filter(ch =>
+    ch.title.toLowerCase().includes(val.toLowerCase()) ||
+    ch.era.toLowerCase().includes(val.toLowerCase())
+  );
+  list.innerHTML = filtered.map(ch => `
+    <div class="chapter-card" onclick="openChapter(${ch.id})">
+      <div class="chapter-num">${ch.id}</div>
+      <div class="chapter-info">
+        <div class="chapter-title-text">${ch.title}</div>
+        <div class="chapter-era">${ch.era}</div>
+      </div>
+      <div class="chapter-status">${progress[ch.id] ? '✅' : '📖'}</div>
+    </div>
+  `).join('');
+}
+
+function openChapter(id) {
+  currentChapter = id;
+  const ch = chaptersData.find(c => c.id === id);
+  document.getElementById('detailNavTitle').textContent = `Ch. ${ch.id}: ${ch.title}`;
+  renderChapterDetail(ch);
+  showScreen('chapter-detail');
+  // Mark chapter as read
+  progress[id] = 1;
+  localStorage.setItem('history-progress', JSON.stringify(progress));
+  updateDashboardStats();
+}
+
+function renderChapterDetail(ch) {
+  const content = document.getElementById('chapterDetailContent');
+  content.innerHTML = `
+    <div class="chapter-hero">
+      <div class="chapter-hero-num">CHAPTER ${ch.id} • ${ch.icon}</div>
+      <div class="chapter-hero-title">${ch.title}</div>
+      <div class="chapter-hero-desc">${ch.era}</div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(this,'tab-overview')">Overview</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab-timeline')">Timeline</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab-people')">People</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab-map')">Map</button>
+      <button class="tab-btn" onclick="switchTab(this,'tab-case')">Case Study</button>
+    </div>
+
+    <!-- Overview Tab -->
+    <div class="tab-content active" id="tab-overview">
+      <div class="content-block">
+        <h3>📖 Historical Overview</h3>
+        <p>${ch.overview}</p>
+      </div>
+      <div class="content-block">
+        <h3>🔑 Key Facts</h3>
+        <ul>${ch.keyFacts.map(f => `<li>${f}</li>`).join('')}</ul>
+      </div>
+      <button onclick="startQuiz(${ch.id})" class="btn-start" style="width:100%;margin:0;border-radius:8px;font-size:0.9rem;padding:0.8rem;">🎯 Take Chapter Quiz</button>
+    </div>
+
+    <!-- Timeline Tab -->
+    <div class="tab-content" id="tab-timeline">
+      <div class="content-block" style="padding:1rem;">
+        <h3>⏳ Chapter Timeline</h3>
+      </div>
+      <div class="timeline" style="padding:0 1rem 1rem 3rem;">
+        ${ch.timeline.map(t => `
+          <div class="tl-item">
+            <div class="tl-year">${t.year}</div>
+            <div class="tl-event">${t.event}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- People Tab -->
+    <div class="tab-content" id="tab-people">
+      <div class="content-block">
+        <h3>👥 Key Personalities</h3>
+      </div>
+      <div class="personalities-grid" style="padding:0 1rem 1rem;">
+        ${ch.personalities.map(p => `
+          <div class="person-card">
+            <div class="person-avatar">${p.emoji}</div>
+            <div class="person-name">${p.name}</div>
+            <div class="person-role">${p.role}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Map Tab -->
+    <div class="tab-content" id="tab-map">
+      <div class="map-container" style="margin:1rem;">
+        <div class="map-svg-wrapper">${generateMapSVG(ch.id)}</div>
+        <div class="map-caption">📍 ${ch.mapDesc}</div>
+      </div>
+    </div>
+
+    <!-- Case Study Tab -->
+    <div class="tab-content" id="tab-case">
+      <div class="content-block">
+        <h3>🔬 Case Study</h3>
+        <p>${ch.caseStudy}</p>
+      </div>
+      <div class="content-block" style="background:rgba(201,162,39,0.06);border-color:var(--gold-dark);">
+        <h3>💡 Reflection Questions</h3>
+        <ul>
+          <li>What were the main causes of the events in this chapter?</li>
+          <li>How did this period affect ordinary people's lives?</li>
+          <li>What connections can you see with events in other chapters?</li>
+          <li>What lessons can we learn from this history today?</li>
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+function switchTab(btn, tabId) {
+  const tabBar = btn.closest('.tab-bar');
+  tabBar.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const detail = btn.closest('.screen') || document;
+  detail.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+}
+
+// ===== QUIZ =====
+function renderQuizSelect() {
+  const list = document.getElementById('quizSelectList');
+  list.innerHTML = chaptersData.map(ch => `
+    <div class="chapter-card" onclick="startQuiz(${ch.id})">
+      <div class="chapter-num">${ch.id}</div>
+      <div class="chapter-info">
+        <div class="chapter-title-text">${ch.title}</div>
+        <div class="chapter-era">${ch.quiz.length} Questions • ${scores[ch.id] ? `Best: ${scores[ch.id]}%` : 'Not taken'}</div>
+      </div>
+      <div class="chapter-status">${scores[ch.id] >= 80 ? '🏆' : scores[ch.id] ? '📝' : '🎯'}</div>
+    </div>
+  `).join('');
+}
+
+function startQuiz(chapterId) {
+  currentChapter = chapterId;
+  const ch = chaptersData.find(c => c.id === chapterId);
+  quizState = { chapter: chapterId, qIndex: 0, score: 0, answered: false };
+  document.getElementById('quizNavTitle').textContent = `Quiz: ${ch.title}`;
+  renderQuizQuestion();
+  showScreen('quiz-screen');
+}
+
+function renderQuizQuestion() {
+  const ch = chaptersData.find(c => c.id === quizState.chapter);
+  const q = ch.quiz[quizState.qIndex];
+  const total = ch.quiz.length;
+  const pct = (quizState.qIndex / total) * 100;
+
+  document.getElementById('quizContent').innerHTML = `
+    <div class="quiz-header">
+      <div class="quiz-meta">
+        <div class="quiz-chapter-name">${ch.title}</div>
+        <div class="quiz-score-live">Score: ${quizState.score}/${quizState.qIndex}</div>
+      </div>
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" style="width:${pct}%"></div>
+      </div>
+    </div>
+    <div class="quiz-body">
+      <div class="question-num">Question ${quizState.qIndex + 1} of ${total}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options-list">
+        ${q.options.map((opt, i) => `
+          <button class="option-btn" onclick="answerQuiz(${i})" id="opt-${i}">
+            <span class="option-letter">${String.fromCharCode(65+i)}</span>
+            ${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="feedback-box" id="feedbackBox"></div>
+      <button class="btn-next-q" id="btnNext" onclick="nextQuestion()">
+        ${quizState.qIndex + 1 < total ? 'Next Question →' : 'See Results 🏆'}
+      </button>
+    </div>
+  `;
+}
+
+function answerQuiz(idx) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  const ch = chaptersData.find(c => c.id === quizState.chapter);
+  const q = ch.quiz[quizState.qIndex];
+  const isCorrect = idx === q.ans;
+  if (isCorrect) quizState.score++;
+
+  document.querySelectorAll('.option-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('correct');
+    else if (i === idx && !isCorrect) btn.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('feedbackBox');
+  fb.className = 'feedback-box show ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+  fb.innerHTML = (isCorrect ? '✅ Correct! ' : '❌ Incorrect. ') + q.exp;
+
+  document.getElementById('btnNext').classList.add('show');
+}
+
+function nextQuestion() {
+  const ch = chaptersData.find(c => c.id === quizState.chapter);
+  quizState.qIndex++;
+  quizState.answered = false;
+
+  if (quizState.qIndex >= ch.quiz.length) {
+    showQuizResult();
+  } else {
+    renderQuizQuestion();
+  }
+}
+
+function showQuizResult() {
+  const ch = chaptersData.find(c => c.id === quizState.chapter);
+  const pct = Math.round((quizState.score / ch.quiz.length) * 100);
+  const stored = scores[quizState.chapter] || 0;
+  if (pct > stored) {
+    scores[quizState.chapter] = pct;
+    localStorage.setItem('history-scores', JSON.stringify(scores));
+  }
+  updateDashboardStats();
+
+  let emoji, msg;
+  if (pct >= 80) { emoji = '🏆'; msg = 'Excellent! You are a History master!'; }
+  else if (pct >= 60) { emoji = '👍'; msg = 'Good work! Review the chapter once more.'; }
+  else { emoji = '📖'; msg = 'Keep studying! Read the chapter carefully.'; }
+
+  document.getElementById('quizContent').innerHTML = `
+    <div class="quiz-result fade-in">
+      <div class="result-emoji">${emoji}</div>
+      <div class="result-title">Quiz Complete!</div>
+      <div class="result-score">${pct}%</div>
+      <div class="result-msg">${msg}<br><small>You scored ${quizState.score} out of ${ch.quiz.length}</small></div>
+      <div class="result-actions">
+        <button class="btn-start" style="font-size:0.85rem;padding:0.7rem 1.5rem;border-radius:50px;" onclick="startQuiz(${quizState.chapter})">🔁 Retry Quiz</button>
+        <button class="btn-secondary" onclick="openChapter(${quizState.chapter})">📖 Review Chapter</button>
+        <button class="btn-secondary" onclick="showScreen('quiz-select-screen');updateBNav('quiz')">📋 All Chapters</button>
+      </div>
+    </div>
+  `;
+}
+
+// ===== SIMULATIONS =====
+function loadTimelineSim() {
+  const eraContainer = document.getElementById('eraSelector');
+  eraContainer.innerHTML = timelineEras.map(era => `
+    <button class="era-pill ${era.id === 'prehistoric' ? 'active' : ''}" onclick="showEra('${era.id}', this)">${era.label}</button>
+  `).join('');
+  showEra('prehistoric', eraContainer.querySelector('.era-pill.active'));
+}
+
+function showEra(eraId, btn) {
+  document.querySelectorAll('.era-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const era = timelineEras.find(e => e.id === eraId);
+  const container = document.getElementById('timelineScroll');
+  container.innerHTML = era.events.map((e, i) => `
+    <div class="tl-event-card" style="animation-delay:${i*0.08}s">
+      <div class="tl-event-date">${e.date}</div>
+      <div class="tl-event-title">${e.title}</div>
+      <div class="tl-event-desc">${e.desc}</div>
+      <span class="tl-event-tag">${e.tag}</span>
+    </div>
+  `).join('');
+}
+
+function loadEmpireSim() {
+  const empires = [
+    { name: 'Roman Empire', color:'#cc4444', cx:290, cy:160, rx:80, ry:60, info:'The Roman Empire (27 BCE – 476 CE) stretched from Britain to Mesopotamia. At its peak under Trajan (117 CE) it covered 5 million sq km spanning Europe, North Africa, and West Asia.' },
+    { name: 'Mongol Empire', color:'#44aa44', cx:400, cy:120, rx:120, ry:80, info:'The Mongol Empire (1206-1368 CE) was the largest contiguous land empire in history, covering 24 million sq km across Asia and Eastern Europe under Genghis Khan and his successors.' },
+    { name: 'Islamic Caliphate', color:'#4444cc', cx:320, cy:170, rx:100, ry:50, info:'At its height (750 CE), the Umayyad and Abbasid Caliphates stretched from Spain to Central Asia — one of the largest empires in history.' },
+    { name: 'Ottoman Empire', color:'#cc8800', cx:300, cy:155, rx:70, ry:55, info:'The Ottoman Empire (1299-1922 CE) at its peak controlled Southeastern Europe, Western Asia, and North Africa — lasting over 600 years.' }
+  ];
+
+  const selector = document.getElementById('empireSelector');
+  selector.innerHTML = empires.map((e, i) => `
+    <button class="empire-btn" onclick="showEmpire(${i})" style="border-left:3px solid ${e.color}">${e.name}</button>
+  `).join('');
+  showEmpire(0);
+}
+
+function showEmpire(idx) {
+  const empires = [
+    { name: 'Roman Empire', color:'#cc4444', cx:290, cy:160, rx:80, ry:60, info:'The Roman Empire (27 BCE – 476 CE) stretched from Britain to Mesopotamia. At its peak under Trajan (117 CE) it covered 5 million sq km spanning Europe, North Africa, and West Asia.' },
+    { name: 'Mongol Empire', color:'#44aa44', cx:400, cy:120, rx:120, ry:80, info:'The Mongol Empire (1206-1368 CE) was the largest contiguous land empire in history, covering 24 million sq km across Asia and Eastern Europe under Genghis Khan and his successors.' },
+    { name: 'Islamic Caliphate', color:'#4444cc', cx:320, cy:170, rx:100, ry:50, info:"At its height (750 CE), the Umayyad and Abbasid Caliphates stretched from Spain to Central Asia — one of the largest empires in history." },
+    { name: 'Ottoman Empire', color:'#cc8800', cx:300, cy:155, rx:70, ry:55, info:'The Ottoman Empire (1299-1922 CE) at its peak controlled Southeastern Europe, Western Asia, and North Africa — lasting over 600 years.' }
+  ];
+
+  document.querySelectorAll('.empire-btn').forEach((b,i) => b.classList.toggle('active', i === idx));
+  const e = empires[idx];
+  const canvas = document.getElementById('empireCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth || 500;
+  canvas.height = canvas.offsetHeight || 280;
+  const w = canvas.width, h = canvas.height;
+
+  // Background
+  ctx.fillStyle = '#0d1a2e';
+  ctx.fillRect(0,0,w,h);
+
+  // Simple world outline
+  ctx.strokeStyle = '#1a3a5c';
+  ctx.lineWidth = 1;
+  // Rough continent outlines
+  drawSimpleMap(ctx, w, h);
+
+  // Empire territory
+  ctx.save();
+  ctx.scale(w/600, h/300);
+  ctx.beginPath();
+  ctx.ellipse(e.cx, e.cy, e.rx, e.ry, 0, 0, Math.PI*2);
+  ctx.fillStyle = e.color + '44';
+  ctx.fill();
+  ctx.strokeStyle = e.color;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = e.color;
+  ctx.font = 'bold 11px Cinzel, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(e.name, e.cx, e.cy + 4);
+  ctx.restore();
+
+  document.getElementById('empireInfo').innerHTML = `<h3>${e.name}</h3><p>${e.info}</p>`;
+}
+
+function drawSimpleMap(ctx, w, h) {
+  const sx = w/600, sy = h/300;
+  ctx.save();
+  ctx.scale(sx, sy);
+  ctx.strokeStyle = '#2a4a6a';
+  ctx.lineWidth = 1.5;
+
+  // Europe
+  ctx.beginPath();
+  ctx.moveTo(240,80); ctx.lineTo(260,70); ctx.lineTo(290,75); ctx.lineTo(310,90);
+  ctx.lineTo(320,110); ctx.lineTo(300,120); ctx.lineTo(270,115); ctx.lineTo(250,100);
+  ctx.closePath();
+  ctx.stroke();
+
+  // Africa
+  ctx.beginPath();
+  ctx.moveTo(260,130); ctx.lineTo(310,125); ctx.lineTo(330,150);
+  ctx.lineTo(320,210); ctx.lineTo(290,230); ctx.lineTo(260,210);
+  ctx.lineTo(245,170); ctx.closePath();
+  ctx.stroke();
+
+  // Asia
+  ctx.beginPath();
+  ctx.moveTo(320,80); ctx.lineTo(420,70); ctx.lineTo(500,90);
+  ctx.lineTo(520,120); ctx.lineTo(480,150); ctx.lineTo(420,160);
+  ctx.lineTo(380,145); ctx.lineTo(340,130); ctx.lineTo(325,105);
+  ctx.closePath();
+  ctx.stroke();
+
+  // Americas
+  ctx.beginPath();
+  ctx.moveTo(100,80); ctx.lineTo(130,75); ctx.lineTo(145,100);
+  ctx.lineTo(140,140); ctx.lineTo(125,180); ctx.lineTo(120,230);
+  ctx.lineTo(110,250); ctx.lineTo(100,230); ctx.lineTo(95,180);
+  ctx.lineTo(90,140); ctx.lineTo(95,100); ctx.closePath();
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+function loadTradeSim() {
+  const routes = [
+    { name: 'Silk Road', color:'#ffd700', points:[[100,120],[150,130],[200,125],[280,110],[360,100],[430,110],[480,120]], info:'The Silk Road (200 BCE–1450 CE) connected China to the Mediterranean. Goods exchanged: silk, spices, glass, gold. Ideas also traveled: Buddhism, Islam, and the plague.' },
+    { name: 'Maritime Spice Route', color:'#00bcd4', points:[[490,150],[440,170],[380,180],[320,175],[260,170],[200,165],[150,160],[100,155]], info:'The maritime spice route connected Southeast Asia to India, Arabia, and East Africa. Arab, Indian, and Chinese merchants dominated this trade.' },
+    { name: 'Trans-Saharan Route', color:'#ff8c00', points:[[200,100],[210,140],[215,180],[220,220],[225,250]], info:'The Trans-Saharan trade routes connected Sub-Saharan Africa (gold, slaves, ivory) with North Africa and Mediterranean ports.' }
+  ];
+
+  const selector = document.getElementById('routeSelector');
+  selector.innerHTML = routes.map((r,i) => `
+    <button class="era-pill" onclick="showRoute(${i})" style="border-color:${r.color}">${r.name}</button>
+  `).join('');
+  showRoute(0);
+}
+
+function showRoute(idx) {
+  const routes = [
+    { name: 'Silk Road', color:'#ffd700', points:[[100,120],[150,130],[200,125],[280,110],[360,100],[430,110],[480,120]], info:'The Silk Road (200 BCE–1450 CE) connected China to the Mediterranean. Goods exchanged: silk, spices, glass, gold. Ideas also traveled: Buddhism, Islam, and the plague.' },
+    { name: 'Maritime Spice Route', color:'#00bcd4', points:[[490,150],[440,170],[380,180],[320,175],[260,170],[200,165],[150,160],[100,155]], info:'The maritime spice route connected Southeast Asia to India, Arabia, and East Africa. Arab, Indian, and Chinese merchants dominated this trade.' },
+    { name: 'Trans-Saharan Route', color:'#ff8c00', points:[[200,100],[210,140],[215,180],[220,220],[225,250]], info:'The Trans-Saharan trade routes connected Sub-Saharan Africa (gold, slaves, ivory) with North Africa and Mediterranean ports.' }
+  ];
+
+  document.querySelectorAll('#routeSelector .era-pill').forEach((b,i) => b.classList.toggle('active', i === idx));
+  const r = routes[idx];
+  const canvas = document.getElementById('tradeCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth || 500;
+  canvas.height = canvas.offsetHeight || 280;
+  const w = canvas.width, h = canvas.height;
+  const sx = w/580, sy = h/300;
+
+  ctx.fillStyle = '#0d1a2e';
+  ctx.fillRect(0,0,w,h);
+  drawSimpleMap(ctx, w, h);
+
+  // Draw route
+  ctx.save();
+  ctx.scale(sx, sy);
+  ctx.beginPath();
+  ctx.moveTo(r.points[0][0], r.points[0][1]);
+  r.points.forEach(pt => ctx.lineTo(pt[0], pt[1]));
+  ctx.strokeStyle = r.color;
+  ctx.lineWidth = 3;
+  ctx.setLineDash([8,4]);
+  ctx.stroke();
+
+  // Route nodes
+  r.points.forEach(pt => {
+    ctx.beginPath();
+    ctx.arc(pt[0], pt[1], 4, 0, Math.PI*2);
+    ctx.fillStyle = r.color;
+    ctx.fill();
+  });
+  ctx.restore();
+
+  document.getElementById('tradeRouteInfo').innerHTML = `<h3>${r.name}</h3><p>${r.info}</p>`;
+}
+
+function loadCitySim() {
+  const cities = [
+    { name: 'Uruk', period: '3500 BCE', emoji:'🏛️', desc:'World\'s first city in Mesopotamia (modern Iraq). Population: ~50,000. Featured the first writing (cuneiform), temples (ziggurats), and organized trade.' },
+    { name: 'Mohenjo-daro', period: '2600 BCE', emoji:'🏗️', desc:'Indus Valley city with advanced urban planning: grid streets, multi-storey houses, indoor plumbing, and the Great Bath. Population: ~35,000.' },
+    { name: 'Athens', period: '500 BCE', emoji:'🏺', desc:'Birthplace of democracy, philosophy, and theater. Home to Socrates, Plato, and Aristotle. The Parthenon on the Acropolis was its iconic monument.' },
+    { name: 'Baghdad', period: '762 CE', emoji:'🕌', desc:'Founded by Caliph Al-Mansur as the round city. Became the world\'s largest city (~1 million people) and center of the Islamic Golden Age.' }
+  ];
+
+  const selector = document.getElementById('citySelector');
+  selector.innerHTML = cities.map((c,i) => `
+    <button class="era-pill" onclick="showCity(${i})" >${c.name}</button>
+  `).join('');
+  showCity(0);
+}
+
+function showCity(idx) {
+  const cities = [
+    { name: 'Uruk', period: '3500 BCE', emoji:'🏛️', desc:'World\'s first city in Mesopotamia (modern Iraq). Population: ~50,000. Featured the first writing (cuneiform), temples (ziggurats), and organized trade.' },
+    { name: 'Mohenjo-daro', period: '2600 BCE', emoji:'🏗️', desc:'Indus Valley city with advanced urban planning: grid streets, multi-storey houses, indoor plumbing, and the Great Bath. Population: ~35,000.' },
+    { name: 'Athens', period: '500 BCE', emoji:'🏺', desc:'Birthplace of democracy, philosophy, and theater. Home to Socrates, Plato, and Aristotle. The Parthenon on the Acropolis was its iconic monument.' },
+    { name: 'Baghdad', period: '762 CE', emoji:'🕌', desc:'Founded by Caliph Al-Mansur as the round city. Became the world\'s largest city (~1 million people) and center of the Islamic Golden Age.' }
+  ];
+
+  document.querySelectorAll('#citySelector .era-pill').forEach((b,i) => b.classList.toggle('active', i === idx));
+  const c = cities[idx];
+
+  // SVG city layout
+  const svg = `<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <rect width="400" height="250" fill="#0d1a2e"/>
+    <!-- Grid streets -->
+    ${idx === 1 ? /* Mohenjo-daro grid */
+      Array.from({length:5}, (_,i) => `<line x1="50" y1="${80+i*25}" x2="350" y2="${80+i*25}" stroke="#1a3a5c" stroke-width="1"/>`).join('') +
+      Array.from({length:7}, (_,i) => `<line x1="${80+i*40}" y1="50" x2="${80+i*40}" y2="220" stroke="#1a3a5c" stroke-width="1"/>`).join('') : ''}
+    <!-- Central structure -->
+    <rect x="160" y="90" width="80" height="70" fill="none" stroke="#c9a227" stroke-width="2" rx="4"/>
+    <text x="200" y="130" text-anchor="middle" font-size="28">${c.emoji}</text>
+    <!-- City walls -->
+    <rect x="80" y="60" width="240" height="150" fill="none" stroke="#8b6914" stroke-width="2" rx="8" stroke-dasharray="6 3"/>
+    <!-- Label -->
+    <text x="200" y="40" text-anchor="middle" font-family="Cinzel,serif" font-size="14" fill="#c9a227">${c.name}</text>
+    <text x="200" y="58" text-anchor="middle" font-family="serif" font-size="10" fill="#8b6914">${c.period}</text>
+    <!-- Small buildings -->
+    ${Array.from({length:8}, (_,i) => {
+      const x = [100,140,180,270,300,120,260,310][i];
+      const y = [80,180,80,85,170,150,150,100][i];
+      return `<rect x="${x}" y="${y}" width="16" height="12" fill="#1a2a4a" stroke="#2a4a7a" stroke-width="1"/>`;
+    }).join('')}
+    <text x="200" y="240" text-anchor="middle" font-family="serif" font-size="9" fill="#4a6a8a">Schematic layout — not to exact scale</text>
+  </svg>`;
+
+  document.getElementById('citySvgWrap').innerHTML = svg;
+  document.getElementById('cityInfo').innerHTML = `<h3>${c.name} — ${c.period}</h3><p>${c.desc}</p>`;
+}
+
+function loadIndustrialSim() {
+  const stages = [
+    { icon:'🧵', name:'Textile Revolution', year:'1733-1790', color:'#c9a227',
+      detail:'<p>The textile industry was the first to industrialize. Key inventions:</p><ul><li><strong>Flying Shuttle (1733)</strong> — John Kay doubled weaving speed</li><li><strong>Spinning Jenny (1764)</strong> — James Hargreaves spun 8 threads at once</li><li><strong>Water Frame (1769)</strong> — Richard Arkwright used water power to spin cotton</li><li><strong>Power Loom (1785)</strong> — Edmund Cartwright mechanized weaving</li></ul><p>By 1800, cotton textile production had increased 50-fold.</p>' },
+    { icon:'⚙️', name:'Steam Engine', year:'1769-1820', color:'#8b3a3a',
+      detail:'<p>James Watt\'s steam engine revolutionized every industry:</p><ul><li>Converted heat energy to mechanical work efficiently</li><li>Could power factories away from rivers</li><li>Used coal as fuel — drove demand for coal mining</li><li>Later adapted for railways and steamships</li></ul><p>By 1800, over 500 Watt steam engines were operating in Britain.</p>' },
+    { icon:'⛏️', name:'Coal & Iron', year:'1750-1850', color:'#4a4a8a',
+      detail:'<p>Coal and iron were the raw materials of industrialization:</p><ul><li><strong>Coke smelting (1709)</strong> — Abraham Darby used coke instead of charcoal to smelt iron</li><li>Coal became the primary fuel source replacing wood</li><li>Iron production enabled bridges, rails, and machines</li><li>The Bessemer process (1856) created cheap steel</li></ul><p>Britain produced 50% of world\'s iron by 1848.</p>' },
+    { icon:'🚂', name:'Railway Age', year:'1825-1870', color:'#2a7a4a',
+      detail:'<p>Railways transformed Britain and then the world:</p><ul><li>First railway: Stockton to Darlington (1825)</li><li>George Stephenson\'s Rocket locomotive (1829)</li><li>By 1850, Britain had 10,000 km of railway</li><li>Railways enabled cheap transport of coal, iron, and goods</li><li>Created new towns and accelerated urbanization</li></ul>' },
+    { icon:'🏭', name:'Factory System', year:'1800-1900', color:'#8b6914',
+      detail:'<p>The factory system transformed work and society:</p><ul><li>Workers left farms to work in urban factories</li><li>Long working hours (14-16 hours/day), dangerous conditions</li><li>Child labor was widespread in mills and mines</li><li>New social classes: industrial bourgeoisie and proletariat</li><li>Trade unions formed to demand workers\' rights</li><li>Factory Acts (1833, 1844) gradually improved conditions</li></ul>' }
+  ];
+
+  document.getElementById('industrialStages').innerHTML = stages.map((s,i) => `
+    <div class="industry-stage ${i===0?'active':''}" onclick="showIndustryStage(${i})" id="iStage-${i}">
+      <div class="industry-icon">${s.icon}</div>
+      <div class="industry-name">${s.name}</div>
+      <div class="industry-year">${s.year}</div>
+    </div>
+  `).join('');
+  showIndustryStage(0);
+}
+
+function showIndustryStage(idx) {
+  const stages = [
+    { icon:'🧵', name:'Textile Revolution', year:'1733-1790',
+      detail:'<p>The textile industry was the first to industrialize. Key inventions:</p><ul><li><strong>Flying Shuttle (1733)</strong> — John Kay doubled weaving speed</li><li><strong>Spinning Jenny (1764)</strong> — James Hargreaves spun 8 threads at once</li><li><strong>Water Frame (1769)</strong> — Richard Arkwright used water power</li><li><strong>Power Loom (1785)</strong> — Edmund Cartwright mechanized weaving</li></ul><p>By 1800, cotton textile production had increased 50-fold.</p>' },
+    { icon:'⚙️', name:'Steam Engine', year:'1769-1820',
+      detail:'<p>James Watt\'s steam engine (1769) revolutionized every industry:</p><ul><li>Converted heat energy to mechanical work efficiently</li><li>Could power factories away from rivers</li><li>Used coal — drove demand for coal mining</li><li>Later adapted for railways and steamships</li></ul>' },
+    { icon:'⛏️', name:'Coal & Iron', year:'1750-1850',
+      detail:'<p>Coal and iron were the raw materials of industrialization:</p><ul><li>Abraham Darby used coke to smelt iron (1709)</li><li>Coal became the primary fuel replacing wood</li><li>Iron production enabled bridges, rails, and machines</li><li>Bessemer process (1856) created cheap steel</li></ul>' },
+    { icon:'🚂', name:'Railway Age', year:'1825-1870',
+      detail:'<p>Railways transformed Britain and the world:</p><ul><li>First railway: Stockton to Darlington (1825)</li><li>George Stephenson\'s Rocket (1829)</li><li>By 1850, Britain had 10,000 km of railway</li><li>Railways accelerated urbanization and industrialization</li></ul>' },
+    { icon:'🏭', name:'Factory System', year:'1800-1900',
+      detail:'<p>The factory system transformed work and society:</p><ul><li>Workers moved from farms to urban factories</li><li>14-16 hour workdays; dangerous conditions</li><li>Child labor widespread in mills and mines</li><li>New classes: bourgeoisie and proletariat emerged</li><li>Trade unions and Factory Acts brought gradual reform</li></ul>' }
+  ];
+
+  document.querySelectorAll('.industry-stage').forEach((el,i) => el.classList.toggle('active', i === idx));
+  const s = stages[idx];
+  document.getElementById('industryDetail').innerHTML = `
+    <div class="industry-detail-card">
+      <h3 style="font-family:'Cinzel',serif;color:var(--gold);margin-bottom:0.8rem;">${s.icon} ${s.name} <span style="font-size:0.75rem;color:var(--text-dim)">(${s.year})</span></h3>
+      ${s.detail}
+    </div>
+  `;
+}
+
+// ===== ARTIFACTS =====
+function renderArtifacts() {
+  document.getElementById('artifactsGrid').innerHTML = artifactsData.map(a => `
+    <div class="artifact-card" onclick="showArtifactDetail('${a.name}')">
+      <div class="artifact-img">${a.emoji}</div>
+      <div class="artifact-info">
+        <div class="artifact-name">${a.name}</div>
+        <div class="artifact-period">${a.period}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function showArtifactDetail(name) {
+  const a = artifactsData.find(x => x.name === name);
+  showToast(`${a.emoji} ${a.name}: ${a.desc}`);
+}
+
+// ===== PROGRESS =====
+function renderProgress() {
+  const list = document.getElementById('progressList');
+  list.innerHTML = chaptersData.map(ch => {
+    const done = progress[ch.id] ? 100 : 0;
+    const score = scores[ch.id] || 0;
+    return `
+      <div class="progress-card">
+        <div class="pc-header">
+          <span class="pc-name">${ch.icon} Ch.${ch.id}: ${ch.title}</span>
+          <span class="pc-pct">${done ? '✅' : '⬜'}</span>
+        </div>
+        <div class="pc-bar"><div class="pc-fill" style="width:${done}%"></div></div>
+        ${score ? `<div style="font-size:0.75rem;color:var(--gold-dark);margin-top:0.4rem;">Quiz Best: ${score}%</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== MAP LAB =====
+function showMapLab() {
+  showScreen('sim-empire-screen');
+  loadEmpireSim();
+}
+
+// ===== GENERATE MAP SVG =====
+function generateMapSVG(chapterId) {
+  const maps = {
+    1: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+      <rect width="400" height="200" fill="#0d1a2e"/>
+      <text x="200" y="30" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#c9a227">Human Migration from Africa</text>
+      <!-- Africa -->
+      <ellipse cx="200" cy="120" rx="40" ry="50" fill="#1a3a1a" stroke="#2a6a2a" stroke-width="1.5"/>
+      <text x="200" y="125" text-anchor="middle" font-size="10" fill="#4a9a4a">Africa</text>
+      <!-- Migration arrows -->
+      <path d="M215,85 Q260,60 310,70" fill="none" stroke="#ffd700" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arr)"/>
+      <path d="M220,100 Q270,90 340,100" fill="none" stroke="#ffd700" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <path d="M220,130 Q260,140 320,130" fill="none" stroke="#ffd700" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <path d="M185,80 Q150,60 100,70" fill="none" stroke="#ffd700" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="200" y="185" text-anchor="middle" font-size="9" fill="#8b6914">Arrows show migration routes (~50,000 BCE)</text>
+      <circle cx="200" cy="108" r="5" fill="#ff4444"/>
+      <text x="200" y="95" text-anchor="middle" font-size="8" fill="#ff8888">Origin</text>
+    </svg>`,
+    2: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+      <rect width="400" height="200" fill="#0d1a2e"/>
+      <text x="200" y="20" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#c9a227">Mesopotamia &amp; Indus Valley</text>
+      <!-- Tigris & Euphrates -->
+      <path d="M200,40 Q220,80 210,140" fill="none" stroke="#4488cc" stroke-width="2"/>
+      <path d="M215,40 Q240,80 235,140" fill="none" stroke="#4488cc" stroke-width="2"/>
+      <text x="225" y="100" font-size="8" fill="#4488cc">Tigris</text>
+      <!-- Indus -->
+      <path d="M320,30 Q330,80 325,150" fill="none" stroke="#44aacc" stroke-width="2"/>
+      <text x="335" y="90" font-size="8" fill="#44aacc">Indus</text>
+      <!-- Cities -->
+      <circle cx="208" cy="120" r="6" fill="#c9a227"/>
+      <text x="208" y="145" text-anchor="middle" font-size="8" fill="#c9a227">Ur</text>
+      <circle cx="325" cy="100" r="6" fill="#ff9900"/>
+      <text x="325" y="120" text-anchor="middle" font-size="8" fill="#ff9900">Mohenjo-daro</text>
+      <text x="200" y="185" text-anchor="middle" font-size="9" fill="#8b6914">First urban civilizations (3500–1900 BCE)</text>
+    </svg>`,
+    3: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+      <rect width="400" height="200" fill="#0d1a2e"/>
+      <text x="200" y="20" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#c9a227">Roman Empire at its Peak (117 CE)</text>
+      <ellipse cx="200" cy="110" rx="150" ry="70" fill="rgba(204,68,68,0.2)" stroke="#cc4444" stroke-width="2"/>
+      <circle cx="200" cy="105" r="5" fill="#ffd700"/>
+      <text x="200" y="95" text-anchor="middle" font-size="9" fill="#ffd700">ROME</text>
+      <text x="90" y="90" font-size="8" fill="#cc4444">Britain</text>
+      <text x="310" y="110" font-size="8" fill="#cc4444">Mesopotamia</text>
+      <text x="190" y="170" font-size="8" fill="#cc4444">N. Africa</text>
+      <text x="200" y="185" text-anchor="middle" font-size="9" fill="#8b6914">5 million sq km — 3 continents</text>
+    </svg>`
+  };
+  return maps[chapterId] || `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <rect width="400" height="200" fill="#0d1a2e"/>
+    <text x="200" y="100" text-anchor="middle" font-family="Cinzel,serif" font-size="14" fill="#c9a227">${chaptersData.find(c=>c.id===chapterId)?.mapDesc || 'Historical Map'}</text>
+    <text x="200" y="120" text-anchor="middle" font-size="10" fill="#8b6914">Interactive map for Chapter ${chapterId}</text>
+  </svg>`;
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ===== PWA SERVICE WORKER (only register when served from a real server) =====
+if ('serviceWorker' in navigator && location.protocol !== 'blob:' && !location.hostname.includes('claudeusercontent')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+  });
+}
+
+// ===== PROGRESS SCREEN INIT =====
+document.getElementById('bnav-progress').addEventListener('click', renderProgress);
+
+// ===== INITIAL LOAD =====
+// Animate splash elements progressively
+window.addEventListener('load', () => {
+  // Pre-load chapter data into render
+  setTimeout(() => {
+    renderChaptersList();
+    renderQuizSelect();
+    renderArtifacts();
+  }, 100);
+});
+</script>
+</body>
+</html>

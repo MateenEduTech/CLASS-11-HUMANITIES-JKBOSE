@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f0c29">
+<meta name="description" content="JKBOSE Class 11 Psychology Interactive Learning App by Mateen Yousuf">
+<script>if(location.protocol!=='file:'){var l=document.createElement('link');l.rel='manifest';l.href='manifest.json';document.head.appendChild(l);}</script>
+<title>Class 11 Psychology | JKBOSE</title>
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --primary: #6c63ff;
+  --primary-dark: #4b44cc;
+  --secondary: #ff6584;
+  --accent: #43e97b;
+  --accent2: #f9ca24;
+  --bg-dark: #0f0c29;
+  --bg-mid: #16133a;
+  --bg-card: #1e1a4a;
+  --bg-card2: #24205a;
+  --text: #e8e4ff;
+  --text-muted: #9b97cc;
+  --border: rgba(108,99,255,0.3);
+  --shadow: 0 8px 32px rgba(108,99,255,0.25);
+  --radius: 16px;
+  --radius-sm: 8px;
+  --font-display: 'Georgia', serif;
+  --font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ===== RESET & BASE ===== */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--bg-dark);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg-dark);}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:3px;}
+
+/* ===== SCREENS ===== */
+.screen{display:none;min-height:100vh;animation:fadeIn 0.5s ease;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== SPLASH SCREEN ===== */
+#splash{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;
+  background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);
+  position:relative;overflow:hidden;
+}
+.splash-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 20%, rgba(108,99,255,0.15) 0%, transparent 50%),
+             radial-gradient(circle at 70% 80%, rgba(255,101,132,0.1) 0%, transparent 50%);
+}
+/* Animated neural network SVG background */
+.neural-bg{position:absolute;inset:0;opacity:0.15;}
+.splash-content{position:relative;z-index:2;text-align:center;padding:2rem;}
+.brain-svg-container{width:200px;height:200px;margin:0 auto 2rem;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);}}
+.splash-title{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:700;
+  background:linear-gradient(135deg,#a78bfa,#ec4899,#f9ca24);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:0.5rem;
+  text-shadow:none;
+}
+.splash-subtitle{
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  color:var(--text-muted);
+  margin-bottom:0.5rem;
+  letter-spacing:3px;text-transform:uppercase;
+}
+.splash-board{
+  font-size:1rem;color:#a78bfa;letter-spacing:2px;margin-bottom:3rem;
+}
+
+/* Author card on splash */
+.author-card-splash{
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.5rem 2rem;
+  display:flex;align-items:center;gap:1.5rem;
+  margin-bottom:2.5rem;
+  backdrop-filter:blur(10px);
+  max-width:380px;
+}
+.author-avatar{
+  width:70px;height:70px;border-radius:50%;
+  border:3px solid var(--primary);
+  background:linear-gradient(135deg,#6c63ff,#ff6584);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;font-weight:700;color:white;
+  flex-shrink:0;overflow:hidden;
+}
+.author-avatar img{width:100%;height:100%;object-fit:cover;}
+.author-info .name{font-weight:700;font-size:1.1rem;color:white;}
+.author-info .role{font-size:0.85rem;color:var(--text-muted);margin-top:2px;}
+.author-info .dept{font-size:0.8rem;color:#a78bfa;margin-top:2px;}
+
+.btn-start{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;border:none;
+  padding:1rem 3rem;font-size:1.2rem;font-weight:700;
+  border-radius:50px;cursor:pointer;
+  box-shadow:0 10px 40px rgba(108,99,255,0.5);
+  transition:var(--transition);
+  letter-spacing:2px;text-transform:uppercase;
+  position:relative;overflow:hidden;
+}
+.btn-start::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--secondary),var(--primary));
+  opacity:0;transition:var(--transition);
+}
+.btn-start:hover{transform:translateY(-3px);box-shadow:0 15px 50px rgba(108,99,255,0.7);}
+.btn-start:hover::before{opacity:1;}
+.btn-start span{position:relative;z-index:1;}
+
+/* Floating particles */
+.particle{
+  position:absolute;border-radius:50%;
+  animation:drift linear infinite;
+  pointer-events:none;
+}
+@keyframes drift{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
+  10%{opacity:1;}
+  90%{opacity:1;}
+  100%{transform:translateY(-100px) rotate(720deg);opacity:0;}
+}
+
+/* ===== NAV BAR ===== */
+.navbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(15,12,41,0.95);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0.8rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;
+}
+.nav-brand{display:flex;align-items:center;gap:0.7rem;cursor:pointer;}
+.nav-logo{width:36px;height:36px;}
+.nav-title{font-weight:700;font-size:1rem;color:white;}
+.nav-subtitle{font-size:0.7rem;color:var(--text-muted);}
+.nav-actions{display:flex;gap:0.5rem;}
+.nav-btn{
+  background:rgba(108,99,255,0.15);border:1px solid var(--border);
+  color:var(--text);padding:0.4rem 0.8rem;border-radius:20px;
+  cursor:pointer;font-size:0.8rem;transition:var(--transition);
+}
+.nav-btn:hover{background:var(--primary);color:white;}
+.nav-btn.active-nav{background:var(--primary);color:white;}
+
+/* ===== MAIN DASHBOARD ===== */
+#dashboard{background:var(--bg-dark);}
+.hero-banner{
+  background:linear-gradient(135deg,#0f0c29 0%,#302b63 60%,#24243e 100%);
+  padding:3rem 1.5rem 2rem;
+  text-align:center;position:relative;overflow:hidden;
+}
+.hero-banner::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(108,99,255,0.2) 0%,transparent 70%);
+}
+.hero-text{position:relative;z-index:1;}
+.hero-text h1{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  background:linear-gradient(135deg,#a78bfa,#ec4899);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-text p{color:var(--text-muted);margin-top:0.5rem;font-size:0.95rem;}
+
+.section-title{
+  font-size:1.2rem;font-weight:700;color:white;
+  margin:2rem 1.5rem 1rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.section-title::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,var(--border),transparent);
+}
+
+/* Chapter Cards */
+.chapters-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1rem;padding:0 1.5rem 1.5rem;
+}
+.chapter-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.5rem;
+  cursor:pointer;
+  transition:var(--transition);
+  position:relative;overflow:hidden;
+}
+.chapter-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+}
+.chapter-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow);
+  border-color:var(--primary);
+}
+.chapter-num{
+  font-size:0.75rem;color:var(--primary);
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:0.5rem;
+}
+.chapter-title{font-size:1.1rem;font-weight:700;color:white;margin-bottom:0.5rem;}
+.chapter-desc{font-size:0.85rem;color:var(--text-muted);line-height:1.5;}
+.chapter-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:1rem;padding-top:1rem;
+  border-top:1px solid var(--border);
+}
+.chapter-tag{
+  font-size:0.75rem;background:rgba(108,99,255,0.15);
+  color:var(--primary);padding:0.2rem 0.6rem;border-radius:10px;
+}
+.chapter-progress{font-size:0.75rem;color:var(--accent);}
+
+/* Feature cards */
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:1rem;padding:0 1.5rem 1.5rem;
+}
+.feature-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.2rem;text-align:center;
+  cursor:pointer;transition:var(--transition);
+}
+.feature-card:hover{transform:translateY(-3px);border-color:var(--primary);box-shadow:var(--shadow);}
+.feature-icon{font-size:2rem;margin-bottom:0.5rem;}
+.feature-label{font-size:0.85rem;font-weight:600;color:white;}
+.feature-sub{font-size:0.75rem;color:var(--text-muted);margin-top:0.2rem;}
+
+/* Stats bar */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1rem;padding:0 1.5rem 1.5rem;
+}
+.stat-item{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1rem;text-align:center;
+}
+.stat-num{font-size:1.8rem;font-weight:700;color:var(--primary);}
+.stat-label{font-size:0.75rem;color:var(--text-muted);}
+
+/* ===== CHAPTER VIEW ===== */
+#chapter-view{background:var(--bg-dark);padding-bottom:4rem;}
+.chapter-hero{
+  background:linear-gradient(135deg,var(--bg-mid),#302b63);
+  padding:2rem 1.5rem;
+  border-bottom:1px solid var(--border);
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(108,99,255,0.1);border:1px solid var(--border);
+  color:var(--text-muted);padding:0.5rem 1rem;border-radius:20px;
+  cursor:pointer;font-size:0.85rem;margin-bottom:1rem;
+  transition:var(--transition);
+}
+.back-btn:hover{color:white;border-color:var(--primary);}
+.chapter-view-title{font-family:var(--font-display);font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700;color:white;}
+.chapter-view-num{font-size:0.85rem;color:var(--primary);letter-spacing:2px;margin-bottom:0.5rem;}
+
+.chapter-tabs{
+  display:flex;gap:0.5rem;padding:1rem 1.5rem;overflow-x:auto;
+  border-bottom:1px solid var(--border);
+  scrollbar-width:none;
+}
+.chapter-tabs::-webkit-scrollbar{display:none;}
+.tab-btn{
+  background:transparent;border:1px solid var(--border);
+  color:var(--text-muted);padding:0.5rem 1rem;border-radius:20px;
+  cursor:pointer;font-size:0.85rem;white-space:nowrap;
+  transition:var(--transition);flex-shrink:0;
+}
+.tab-btn.active{background:var(--primary);border-color:var(--primary);color:white;}
+.tab-btn:hover:not(.active){color:white;border-color:var(--primary);}
+
+.chapter-content-area{padding:1.5rem;}
+.content-panel{display:none;}
+.content-panel.active{display:block;animation:fadeIn 0.3s ease;}
+
+/* Content styling */
+.content-section{margin-bottom:2rem;}
+.content-section h3{
+  font-size:1.2rem;font-weight:700;color:white;
+  margin-bottom:1rem;padding-bottom:0.5rem;
+  border-bottom:2px solid var(--primary);
+}
+.content-section p{color:var(--text-muted);line-height:1.7;margin-bottom:1rem;}
+.content-section ul{list-style:none;padding:0;}
+.content-section ul li{
+  color:var(--text-muted);line-height:1.6;
+  padding:0.4rem 0 0.4rem 1.5rem;
+  position:relative;
+}
+.content-section ul li::before{
+  content:'→';position:absolute;left:0;color:var(--primary);
+}
+
+.info-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:1rem 1.2rem;
+  margin-bottom:1rem;
+}
+.info-card h4{color:var(--accent2);font-size:0.95rem;margin-bottom:0.5rem;}
+.info-card p{color:var(--text-muted);font-size:0.9rem;line-height:1.5;}
+
+.psychologist-card{
+  background:linear-gradient(135deg,var(--bg-card),var(--bg-card2));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.2rem;margin-bottom:1rem;
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.psych-avatar{
+  width:55px;height:55px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;flex-shrink:0;
+}
+.psych-info h4{color:white;font-size:1rem;margin-bottom:0.3rem;}
+.psych-info .psych-dates{font-size:0.75rem;color:var(--primary);margin-bottom:0.3rem;}
+.psych-info p{color:var(--text-muted);font-size:0.85rem;line-height:1.5;}
+
+/* Diagram boxes */
+.diagram-box{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;
+  text-align:center;
+}
+.diagram-box h4{color:var(--accent2);margin-bottom:1rem;font-size:1rem;}
+
+/* ===== QUIZ ===== */
+.quiz-container{max-width:600px;margin:0 auto;}
+.quiz-header{
+  text-align:center;padding:1.5rem;
+  background:var(--bg-card);border-radius:var(--radius);
+  margin-bottom:1.5rem;
+}
+.quiz-header h3{color:white;font-size:1.3rem;}
+.quiz-score-badge{
+  display:inline-block;background:rgba(108,99,255,0.2);
+  color:var(--primary);padding:0.3rem 1rem;border-radius:20px;
+  font-size:0.9rem;margin-top:0.5rem;
+}
+.progress-bar-outer{
+  background:rgba(255,255,255,0.1);border-radius:10px;
+  height:6px;margin-top:1rem;overflow:hidden;
+}
+.progress-bar-inner{
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  height:100%;border-radius:10px;transition:width 0.5s ease;
+}
+.question-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;
+}
+.question-card .q-num{
+  font-size:0.8rem;color:var(--primary);letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:0.8rem;
+}
+.question-card .q-text{color:white;font-size:1rem;font-weight:600;margin-bottom:1.2rem;line-height:1.5;}
+.option-btn{
+  width:100%;background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);color:var(--text);
+  padding:0.8rem 1rem;border-radius:var(--radius-sm);
+  cursor:pointer;font-size:0.9rem;text-align:left;
+  margin-bottom:0.5rem;transition:var(--transition);
+}
+.option-btn:hover{border-color:var(--primary);background:rgba(108,99,255,0.1);}
+.option-btn.correct{border-color:var(--accent);background:rgba(67,233,123,0.1);color:var(--accent);}
+.option-btn.wrong{border-color:var(--secondary);background:rgba(255,101,132,0.1);color:var(--secondary);}
+.feedback-msg{
+  padding:0.8rem;border-radius:var(--radius-sm);
+  font-size:0.9rem;margin-top:0.5rem;text-align:center;font-weight:600;
+}
+.feedback-msg.correct{background:rgba(67,233,123,0.1);color:var(--accent);border:1px solid var(--accent);}
+.feedback-msg.wrong{background:rgba(255,101,132,0.1);color:var(--secondary);border:1px solid var(--secondary);}
+.next-q-btn{
+  width:100%;background:var(--primary);color:white;
+  border:none;padding:0.8rem;border-radius:var(--radius-sm);
+  cursor:pointer;font-size:1rem;font-weight:600;margin-top:0.8rem;
+  transition:var(--transition);
+}
+.next-q-btn:hover{background:var(--primary-dark);}
+.quiz-result{
+  text-align:center;padding:2rem;
+  background:var(--bg-card);border-radius:var(--radius);
+}
+.result-emoji{font-size:4rem;margin-bottom:1rem;}
+.result-score{font-size:2.5rem;font-weight:700;color:var(--accent2);margin-bottom:0.5rem;}
+.result-msg{color:var(--text-muted);font-size:1rem;margin-bottom:1.5rem;}
+.retry-btn{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;border:none;padding:0.8rem 2rem;
+  border-radius:50px;cursor:pointer;font-size:1rem;font-weight:600;
+  transition:var(--transition);
+}
+.retry-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+
+/* ===== SIMULATIONS ===== */
+#simulations{background:var(--bg-dark);}
+.sim-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1rem;padding:0 1.5rem 2rem;
+}
+.sim-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;
+  cursor:pointer;transition:var(--transition);
+  position:relative;overflow:hidden;
+}
+.sim-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--primary));
+  transform:scaleX(0);transition:var(--transition);transform-origin:left;
+}
+.sim-card:hover::after{transform:scaleX(1);}
+.sim-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+.sim-icon{font-size:2.5rem;margin-bottom:1rem;}
+.sim-title{font-size:1.1rem;font-weight:700;color:white;margin-bottom:0.5rem;}
+.sim-desc{font-size:0.85rem;color:var(--text-muted);line-height:1.5;}
+.sim-tag{
+  display:inline-block;margin-top:0.8rem;
+  font-size:0.75rem;background:rgba(67,233,123,0.1);
+  color:var(--accent);padding:0.2rem 0.7rem;border-radius:10px;border:1px solid var(--accent);
+}
+
+/* Simulation modal */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,0.8);backdrop-filter:blur(5px);
+  align-items:center;justify-content:center;padding:1rem;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);
+  width:100%;max-width:600px;max-height:90vh;
+  overflow-y:auto;
+  animation:slideUp 0.3s ease;
+}
+@keyframes slideUp{from{transform:translateY(50px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);
+  position:sticky;top:0;background:var(--bg-card);z-index:1;
+}
+.modal-header h3{color:white;font-size:1.1rem;}
+.modal-close{
+  background:rgba(255,255,255,0.1);border:none;color:white;
+  width:32px;height:32px;border-radius:50%;cursor:pointer;
+  font-size:1rem;transition:var(--transition);
+}
+.modal-close:hover{background:var(--secondary);}
+.modal-body{padding:1.5rem;}
+
+/* Simulation specific styles */
+.sim-btn{
+  background:var(--primary);color:white;border:none;
+  padding:0.7rem 1.5rem;border-radius:var(--radius-sm);
+  cursor:pointer;font-size:0.9rem;font-weight:600;
+  transition:var(--transition);margin:0.3rem;
+}
+.sim-btn:hover{background:var(--primary-dark);}
+.sim-btn.danger{background:var(--secondary);}
+.sim-btn.success{background:#27ae60;}
+.sim-display{
+  background:var(--bg-dark);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:1.5rem;
+  margin:1rem 0;min-height:100px;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+}
+.sim-result-text{color:var(--accent2);font-size:1.1rem;font-weight:600;}
+.sim-input{
+  background:var(--bg-dark);border:1px solid var(--border);
+  color:var(--text);padding:0.5rem 1rem;border-radius:var(--radius-sm);
+  font-size:0.9rem;outline:none;width:100%;margin:0.5rem 0;
+}
+.sim-input:focus{border-color:var(--primary);}
+canvas{border-radius:var(--radius-sm);display:block;margin:0 auto;}
+
+/* ===== BRAIN EXPLORER ===== */
+#brain-explorer{background:var(--bg-dark);}
+.brain-container{
+  max-width:600px;margin:0 auto;padding:1rem 1.5rem;
+}
+.brain-svg-wrap{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1rem;margin-bottom:1.5rem;
+  cursor:pointer;
+}
+.brain-region-info{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;
+}
+.brain-region-info h3{color:var(--accent2);margin-bottom:0.8rem;}
+.brain-region-info p{color:var(--text-muted);line-height:1.6;font-size:0.9rem;}
+
+/* ===== PSYCHOLOGISTS GALLERY ===== */
+#psychologists{background:var(--bg-dark);}
+.psych-gallery{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1rem;padding:0 1.5rem 2rem;
+}
+.psych-gallery-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;
+  transition:var(--transition);
+}
+.psych-gallery-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--primary);}
+.psych-gallery-avatar{
+  width:70px;height:70px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;margin-bottom:1rem;
+}
+.psych-gallery-name{font-size:1.1rem;font-weight:700;color:white;margin-bottom:0.2rem;}
+.psych-gallery-era{font-size:0.8rem;color:var(--primary);margin-bottom:0.5rem;}
+.psych-gallery-contrib{font-size:0.85rem;color:var(--text-muted);line-height:1.5;}
+
+/* ===== PROGRESS TRACKER ===== */
+#progress-tracker{background:var(--bg-dark);padding:1.5rem;}
+.progress-overview{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;
+  text-align:center;
+}
+.progress-circle-svg{display:block;margin:0 auto 1rem;}
+.progress-chapter-list{}
+.progress-chapter-item{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:1rem 1.2rem;
+  margin-bottom:0.5rem;display:flex;align-items:center;
+  justify-content:space-between;
+}
+.progress-chapter-name{color:var(--text);font-size:0.9rem;}
+.progress-chip{
+  font-size:0.75rem;padding:0.2rem 0.7rem;border-radius:10px;
+}
+.progress-chip.done{background:rgba(67,233,123,0.1);color:var(--accent);border:1px solid var(--accent);}
+.progress-chip.partial{background:rgba(249,202,36,0.1);color:var(--accent2);border:1px solid var(--accent2);}
+.progress-chip.not-started{background:rgba(255,255,255,0.05);color:var(--text-muted);}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:rgba(15,12,41,0.97);
+  backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;
+  padding:0.5rem 0;
+  padding-bottom:calc(0.5rem + env(safe-area-inset-bottom));
+}
+.bnav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  gap:0.2rem;padding:0.4rem 0;cursor:pointer;
+  color:var(--text-muted);font-size:0.65rem;
+  transition:var(--transition);border:none;background:transparent;
+}
+.bnav-item:hover,.bnav-item.active{color:var(--primary);}
+.bnav-icon{font-size:1.3rem;}
+
+/* Add padding for bottom nav */
+.with-bottom-nav{padding-bottom:80px;}
+
+/* ===== UTILITY ===== */
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  color:white;border:none;padding:0.7rem 1.5rem;
+  border-radius:var(--radius-sm);cursor:pointer;
+  font-size:0.9rem;font-weight:600;transition:var(--transition);
+}
+.btn-primary:hover{opacity:0.85;}
+.tag{
+  display:inline-block;font-size:0.75rem;
+  padding:0.2rem 0.6rem;border-radius:10px;
+  background:rgba(108,99,255,0.15);color:var(--primary);
+  border:1px solid var(--border);
+}
+.divider{height:1px;background:var(--border);margin:1.5rem 0;}
+.text-center{text-align:center;}
+.mt-1{margin-top:0.5rem;}
+.mt-2{margin-top:1rem;}
+.hidden{display:none!important;}
+
+/* Memory game */
+.memory-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0.5rem;margin:1rem 0;
+}
+.memory-cell{
+  aspect-ratio:1;background:var(--bg-dark);
+  border:1px solid var(--border);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;transition:var(--transition);
+}
+.memory-cell.revealed{background:rgba(108,99,255,0.2);border-color:var(--primary);}
+.memory-cell.matched{background:rgba(67,233,123,0.2);border-color:var(--accent);}
+
+/* Reaction time */
+.reaction-box{
+  width:200px;height:200px;margin:1rem auto;
+  border-radius:50%;display:flex;align-items:center;
+  justify-content:center;cursor:pointer;font-size:1rem;
+  font-weight:600;transition:background 0.1s;
+}
+
+/* Illusions */
+.illusion-container{
+  background:var(--bg-dark);border-radius:var(--radius-sm);
+  padding:1rem;margin:1rem 0;text-align:center;
+}
+.illusion-nav{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;}
+.illusion-nav-btn{
+  background:rgba(108,99,255,0.15);border:1px solid var(--border);
+  color:var(--text);padding:0.3rem 0.7rem;border-radius:10px;
+  cursor:pointer;font-size:0.8rem;transition:var(--transition);
+}
+.illusion-nav-btn.active{background:var(--primary);border-color:var(--primary);color:white;}
+
+/* Stroop test */
+.stroop-word{
+  font-size:3rem;font-weight:700;text-align:center;
+  padding:1.5rem;letter-spacing:3px;text-transform:uppercase;
+}
+.stroop-options{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-top:1rem;}
+.stroop-btn{
+  padding:0.6rem 1.2rem;border:2px solid;border-radius:8px;
+  cursor:pointer;font-size:0.9rem;font-weight:600;
+  transition:var(--transition);background:transparent;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:480px){
+  .chapters-grid{grid-template-columns:1fr;}
+  .features-grid{grid-template-columns:repeat(3,1fr);}
+  .sim-grid{grid-template-columns:1fr;}
+  .psych-gallery{grid-template-columns:1fr;}
+}
+
+/* Animations */
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+</style>
+</head>
+<body>
+
+<!-- ===== SPLASH SCREEN ===== -->
+<div id="splash" class="screen active">
+  <div class="splash-bg"></div>
+  <!-- Animated particles -->
+  <div id="particles"></div>
+  <!-- Neural network background SVG -->
+  <svg class="neural-bg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#6c63ff" stroke-width="0.5" fill="none" opacity="0.4">
+      <line x1="50" y1="50" x2="150" y2="100"/><line x1="150" y1="100" x2="250" y2="60"/>
+      <line x1="250" y1="60" x2="350" y2="120"/><line x1="150" y1="100" x2="200" y2="200"/>
+      <line x1="200" y1="200" x2="300" y2="250"/><line x1="300" y1="250" x2="350" y2="120"/>
+      <line x1="50" y1="200" x2="150" y2="100"/><line x1="50" y1="200" x2="200" y2="200"/>
+      <line x1="100" y1="300" x2="200" y2="200"/><line x1="100" y1="300" x2="250" y2="350"/>
+      <line x1="250" y1="350" x2="300" y2="250"/>
+    </g>
+    <g fill="#a78bfa">
+      <circle cx="50" cy="50" r="5"/><circle cx="150" cy="100" r="7"/><circle cx="250" cy="60" r="5"/>
+      <circle cx="350" cy="120" r="6"/><circle cx="200" cy="200" r="8"/><circle cx="300" cy="250" r="5"/>
+      <circle cx="50" cy="200" r="6"/><circle cx="100" cy="300" r="5"/><circle cx="250" cy="350" r="6"/>
+    </g>
+  </svg>
+
+  <div class="splash-content">
+    <!-- Brain SVG -->
+    <div class="brain-svg-container">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+        <defs>
+          <radialGradient id="brainGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#a78bfa"/>
+            <stop offset="100%" stop-color="#6c63ff"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Brain shape -->
+        <g filter="url(#glow)">
+          <path d="M100,30 C70,25 45,40 40,65 C35,80 38,95 45,105 C35,115 32,130 40,145 C48,158 65,165 80,160 C85,168 92,172 100,172 C108,172 115,168 120,160 C135,165 152,158 160,145 C168,130 165,115 155,105 C162,95 165,80 160,65 C155,40 130,25 100,30 Z" fill="url(#brainGrad)" opacity="0.9"/>
+          <!-- Gyri/sulci lines -->
+          <path d="M70,60 Q85,50 100,60 Q115,70 130,60" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <path d="M60,90 Q80,80 100,90 Q120,100 140,90" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <path d="M65,120 Q82,110 100,120 Q118,130 135,120" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <path d="M75,150 Q87,142 100,148 Q113,154 125,148" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <!-- Central sulcus -->
+          <path d="M100,30 L100,172" stroke="#ec4899" stroke-width="1" fill="none" opacity="0.3"/>
+          <!-- Neurons -->
+          <circle cx="75" cy="80" r="3" fill="#f9ca24" opacity="0.8"/>
+          <circle cx="125" cy="75" r="3" fill="#43e97b" opacity="0.8"/>
+          <circle cx="90" cy="130" r="3" fill="#ff6584" opacity="0.8"/>
+          <circle cx="115" cy="135" r="3" fill="#a78bfa" opacity="0.8"/>
+        </g>
+        <!-- Pulse rings -->
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#6c63ff" stroke-width="1" opacity="0.2">
+          <animate attributeName="r" values="80;90;80" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.2;0;0.2" dur="2s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+
+    <div class="splash-title">Psychology</div>
+    <div class="splash-subtitle">Class XI</div>
+    <div class="splash-board">JKBOSE • NCERT Aligned</div>
+
+    <!-- Author card -->
+    <div class="author-card-splash">
+      <div class="author-avatar" id="authorAvatarSplash">
+        <img src="author.jpg" alt="Mateen Yousuf" onerror="this.parentElement.innerHTML='MY'">
+      </div>
+      <div class="author-info">
+        <div class="name">Mateen Yousuf</div>
+        <div class="role">Teacher</div>
+        <div class="dept">School Education Department, J&K</div>
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="showScreen('dashboard')">
+      <span>🧠 Start Learning</span>
+    </button>
+  </div>
+</div>
+
+<!-- ===== MAIN DASHBOARD ===== -->
+<div id="dashboard" class="screen with-bottom-nav">
+  <nav class="navbar">
+    <div class="nav-brand" onclick="showScreen('dashboard')">
+      <svg class="nav-logo" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="18" fill="#6c63ff"/>
+        <path d="M18,8 C12,7 8,12 8,17 C8,21 10,24 13,26 C12,28 13,30 15,31 C16,32 17.5,32 18,32 C18.5,32 20,32 21,31 C23,30 24,28 23,26 C26,24 28,21 28,17 C28,12 24,7 18,8Z" fill="white" opacity="0.9"/>
+        <line x1="18" y1="8" x2="18" y2="32" stroke="#ec4899" stroke-width="1" opacity="0.5"/>
+        <line x1="10" y1="19" x2="26" y2="19" stroke="#f9ca24" stroke-width="0.8" opacity="0.4"/>
+      </svg>
+      <div>
+        <div class="nav-title">Psychology</div>
+        <div class="nav-subtitle">Class XI • JKBOSE</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="showScreen('progress-tracker')">📊 Progress</button>
+    </div>
+  </nav>
+
+  <div class="hero-banner">
+    <div class="hero-text">
+      <h1>🧠 Psychology Learning App</h1>
+      <p>JKBOSE Class 11 • Complete Syllabus • Interactive Simulations</p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">9</div>
+      <div class="stat-label">Chapters</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="completedCount">0</div>
+      <div class="stat-label">Completed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="totalScore">0</div>
+      <div class="stat-label">Quiz Score</div>
+    </div>
+  </div>
+
+  <!-- Quick Features -->
+  <div class="section-title">🚀 Quick Access</div>
+  <div class="features-grid">
+    <div class="feature-card" onclick="showScreen('simulations')">
+      <div class="feature-icon">🔬</div>
+      <div class="feature-label">Experiments</div>
+      <div class="feature-sub">Lab</div>
+    </div>
+    <div class="feature-card" onclick="showScreen('brain-explorer')">
+      <div class="feature-icon">🧠</div>
+      <div class="feature-label">Brain</div>
+      <div class="feature-sub">Explorer</div>
+    </div>
+    <div class="feature-card" onclick="showScreen('psychologists')">
+      <div class="feature-icon">👥</div>
+      <div class="feature-label">Psychologists</div>
+      <div class="feature-sub">Gallery</div>
+    </div>
+    <div class="feature-card" onclick="startAllQuiz()">
+      <div class="feature-icon">📝</div>
+      <div class="feature-label">Quiz</div>
+      <div class="feature-sub">All Chapters</div>
+    </div>
+  </div>
+
+  <!-- Chapters -->
+  <div class="section-title">📚 Chapters</div>
+  <div class="chapters-grid" id="chaptersGrid"></div>
+</div>
+
+<!-- ===== CHAPTER VIEW ===== -->
+<div id="chapter-view" class="screen with-bottom-nav">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <button class="back-btn" onclick="showScreen('dashboard')" style="margin:0">← Back</button>
+    </div>
+  </nav>
+  <div class="chapter-hero">
+    <div class="chapter-view-num" id="cvNum"></div>
+    <div class="chapter-view-title" id="cvTitle"></div>
+  </div>
+  <div class="chapter-tabs" id="chapterTabs"></div>
+  <div class="chapter-content-area" id="chapterContentArea"></div>
+</div>
+
+<!-- ===== SIMULATIONS ===== -->
+<div id="simulations" class="screen with-bottom-nav">
+  <nav class="navbar">
+    <div class="nav-brand" onclick="showScreen('dashboard')">
+      <div>
+        <div class="nav-title">🔬 Psychology Lab</div>
+        <div class="nav-subtitle">Interactive Experiments</div>
+      </div>
+    </div>
+  </nav>
+  <div class="section-title">Virtual Psychology Experiments</div>
+  <div class="sim-grid">
+    <div class="sim-card" onclick="openSim('memory')">
+      <div class="sim-icon">🧩</div>
+      <div class="sim-title">Memory Span Test</div>
+      <div class="sim-desc">Test your short-term memory capacity. How many digits can you recall?</div>
+      <span class="sim-tag">Short-term Memory</span>
+    </div>
+    <div class="sim-card" onclick="openSim('reaction')">
+      <div class="sim-icon">⚡</div>
+      <div class="sim-title">Reaction Time Test</div>
+      <div class="sim-desc">Measure your neural response speed. Click when the light turns green!</div>
+      <span class="sim-tag">Nervous System</span>
+    </div>
+    <div class="sim-card" onclick="openSim('stroop')">
+      <div class="sim-icon">🎨</div>
+      <div class="sim-title">Stroop Effect Test</div>
+      <div class="sim-desc">Experience cognitive interference. Name the color, not the word!</div>
+      <span class="sim-tag">Attention & Cognition</span>
+    </div>
+    <div class="sim-card" onclick="openSim('illusion')">
+      <div class="sim-icon">👁️</div>
+      <div class="sim-title">Perception Illusions</div>
+      <div class="sim-desc">Explore classic visual illusions that fool your brain.</div>
+      <span class="sim-tag">Perception</span>
+    </div>
+    <div class="sim-card" onclick="openSim('learning')">
+      <div class="sim-icon">📈</div>
+      <div class="sim-title">Learning Curve</div>
+      <div class="sim-desc">Simulate classical and operant conditioning principles.</div>
+      <span class="sim-tag">Learning</span>
+    </div>
+    <div class="sim-card" onclick="openSim('emotion')">
+      <div class="sim-icon">😊</div>
+      <div class="sim-title">Emotion Recognition</div>
+      <div class="sim-desc">Identify facial expressions and understand basic emotions.</div>
+      <span class="sim-tag">Emotion</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BRAIN EXPLORER ===== -->
+<div id="brain-explorer" class="screen with-bottom-nav">
+  <nav class="navbar">
+    <div class="nav-brand" onclick="showScreen('dashboard')">
+      <div>
+        <div class="nav-title">🧠 Brain Explorer</div>
+        <div class="nav-subtitle">Interactive Anatomy</div>
+      </div>
+    </div>
+  </nav>
+  <div class="brain-container">
+    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;text-align:center;">Tap on a brain region to learn more</p>
+    <div class="brain-svg-wrap">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-height:280px">
+        <defs>
+          <radialGradient id="bg1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1e1a4a"/>
+            <stop offset="100%" stop-color="#0f0c29"/>
+          </radialGradient>
+        </defs>
+        <rect width="400" height="300" fill="url(#bg1)" rx="12"/>
+        <!-- Lateral view of brain -->
+        <!-- Frontal lobe -->
+        <path id="br-frontal" d="M80,60 C80,40 110,30 140,35 C160,38 175,50 178,70 C180,85 172,100 160,110 C145,122 125,125 110,115 C92,103 80,82 80,60Z"
+          fill="#6c63ff" opacity="0.7" cursor="pointer" onclick="showBrainRegion('frontal')"
+          style="transition:opacity 0.2s"/>
+        <text x="125" y="78" fill="white" font-size="11" text-anchor="middle" pointer-events="none">Frontal</text>
+        <!-- Parietal lobe -->
+        <path id="br-parietal" d="M178,70 C185,55 200,45 220,48 C240,50 255,65 258,85 C260,100 252,115 240,120 C225,127 208,122 195,112 C183,102 175,87 178,70Z"
+          fill="#ec4899" opacity="0.7" cursor="pointer" onclick="showBrainRegion('parietal')"
+          style="transition:opacity 0.2s"/>
+        <text x="218" y="87" fill="white" font-size="11" text-anchor="middle" pointer-events="none">Parietal</text>
+        <!-- Occipital lobe -->
+        <path id="br-occipital" d="M258,85 C265,75 280,72 295,78 C310,84 318,100 315,115 C312,128 300,135 285,132 C268,128 255,115 258,85Z"
+          fill="#43e97b" opacity="0.7" cursor="pointer" onclick="showBrainRegion('occipital')"
+          style="transition:opacity 0.2s"/>
+        <text x="288" y="107" fill="white" font-size="11" text-anchor="middle" pointer-events="none">Occipital</text>
+        <!-- Temporal lobe -->
+        <path id="br-temporal" d="M110,115 C125,125 145,122 160,110 C172,100 178,115 175,130 C172,145 160,155 145,158 C128,160 112,150 105,137 C100,127 103,120 110,115Z"
+          fill="#f9ca24" opacity="0.7" cursor="pointer" onclick="showBrainRegion('temporal')"
+          style="transition:opacity 0.2s"/>
+        <text x="140" y="138" fill="#333" font-size="11" text-anchor="middle" pointer-events="none">Temporal</text>
+        <!-- Cerebellum -->
+        <path id="br-cerebellum" d="M265,130 C280,125 300,130 310,145 C318,158 314,172 302,178 C288,185 270,180 260,168 C250,155 252,138 265,130Z"
+          fill="#a78bfa" opacity="0.7" cursor="pointer" onclick="showBrainRegion('cerebellum')"
+          style="transition:opacity 0.2s"/>
+        <text x="285" y="157" fill="white" font-size="11" text-anchor="middle" pointer-events="none">Cerebellum</text>
+        <!-- Brainstem -->
+        <path id="br-brainstem" d="M175,155 C178,148 185,145 192,148 C200,152 202,162 198,170 C194,178 185,182 178,178 C170,173 170,163 175,155Z"
+          fill="#ff6584" opacity="0.7" cursor="pointer" onclick="showBrainRegion('brainstem')"
+          style="transition:opacity 0.2s"/>
+        <text x="188" y="165" fill="white" font-size="10" text-anchor="middle" pointer-events="none">Stem</text>
+        <!-- Hippocampus label -->
+        <path id="br-hippocampus" d="M140,158 C148,155 158,158 162,166 C166,174 162,183 155,186 C147,189 138,185 136,177 C133,169 135,162 140,158Z"
+          fill="#00b894" opacity="0.7" cursor="pointer" onclick="showBrainRegion('hippocampus')"
+          style="transition:opacity 0.2s"/>
+        <text x="149" y="174" fill="white" font-size="9" text-anchor="middle" pointer-events="none">Hippo</text>
+        <!-- Labels -->
+        <text x="200" y="230" fill="#9b97cc" font-size="12" text-anchor="middle">Lateral View of the Brain</text>
+        <text x="200" y="248" fill="#6c63ff" font-size="10" text-anchor="middle">Tap any region to explore</text>
+      </svg>
+    </div>
+    <div class="brain-region-info" id="brainRegionInfo">
+      <h3>👆 Select a Brain Region</h3>
+      <p>Tap on any colored region in the brain diagram above to learn about its functions, location, and psychological significance.</p>
+    </div>
+
+    <!-- Neuron diagram -->
+    <div class="section-title" style="margin-top:1.5rem;">Neuron Structure</div>
+    <div class="diagram-box">
+      <h4>The Basic Unit of Nervous System</h4>
+      <svg viewBox="0 0 360 120" xmlns="http://www.w3.org/2000/svg" width="100%">
+        <!-- Dendrites -->
+        <line x1="60" y1="60" x2="90" y2="60" stroke="#a78bfa" stroke-width="2"/>
+        <line x1="50" y1="40" x2="85" y2="58" stroke="#a78bfa" stroke-width="2"/>
+        <line x1="50" y1="80" x2="85" y2="62" stroke="#a78bfa" stroke-width="2"/>
+        <line x1="40" y1="55" x2="80" y2="58" stroke="#a78bfa" stroke-width="2"/>
+        <text x="42" y="30" fill="#a78bfa" font-size="9">Dendrites</text>
+        <!-- Cell body -->
+        <ellipse cx="105" cy="60" rx="18" ry="20" fill="#6c63ff" opacity="0.8"/>
+        <circle cx="105" cy="60" r="6" fill="#f9ca24"/>
+        <text x="105" y="92" fill="#6c63ff" font-size="9" text-anchor="middle">Cell Body</text>
+        <!-- Axon -->
+        <line x1="123" y1="60" x2="280" y2="60" stroke="#43e97b" stroke-width="3"/>
+        <text x="200" y="50" fill="#43e97b" font-size="9" text-anchor="middle">Axon (Myelinated)</text>
+        <!-- Myelin sheaths -->
+        <ellipse cx="155" cy="60" rx="10" ry="6" fill="none" stroke="#f9ca24" stroke-width="1.5"/>
+        <ellipse cx="185" cy="60" rx="10" ry="6" fill="none" stroke="#f9ca24" stroke-width="1.5"/>
+        <ellipse cx="215" cy="60" rx="10" ry="6" fill="none" stroke="#f9ca24" stroke-width="1.5"/>
+        <ellipse cx="245" cy="60" rx="10" ry="6" fill="none" stroke="#f9ca24" stroke-width="1.5"/>
+        <!-- Terminal buttons -->
+        <line x1="280" y1="60" x2="300" y2="45" stroke="#ff6584" stroke-width="2"/>
+        <line x1="280" y1="60" x2="305" y2="60" stroke="#ff6584" stroke-width="2"/>
+        <line x1="280" y1="60" x2="300" y2="75" stroke="#ff6584" stroke-width="2"/>
+        <circle cx="300" cy="45" r="5" fill="#ff6584"/>
+        <circle cx="305" cy="60" r="5" fill="#ff6584"/>
+        <circle cx="300" cy="75" r="5" fill="#ff6584"/>
+        <text x="310" y="52" fill="#ff6584" font-size="9">Synaptic</text>
+        <text x="310" y="63" fill="#ff6584" font-size="9">Terminals</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PSYCHOLOGISTS GALLERY ===== -->
+<div id="psychologists" class="screen with-bottom-nav">
+  <nav class="navbar">
+    <div class="nav-brand" onclick="showScreen('dashboard')">
+      <div>
+        <div class="nav-title">👥 Psychologists</div>
+        <div class="nav-subtitle">Famous Contributors</div>
+      </div>
+    </div>
+  </nav>
+  <div class="section-title">Hall of Psychology Pioneers</div>
+  <div class="psych-gallery" id="psychGallery"></div>
+</div>
+
+<!-- ===== PROGRESS TRACKER ===== -->
+<div id="progress-tracker" class="screen with-bottom-nav">
+  <nav class="navbar">
+    <div class="nav-brand" onclick="showScreen('dashboard')">
+      <div>
+        <div class="nav-title">📊 Progress</div>
+        <div class="nav-subtitle">Your Learning Journey</div>
+      </div>
+    </div>
+  </nav>
+  <div style="padding:1.5rem;">
+    <div class="progress-overview">
+      <svg class="progress-circle-svg" id="progressCircleSvg" viewBox="0 0 120 120" width="120" height="120">
+        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(108,99,255,0.2)" stroke-width="10"/>
+        <circle id="progressArc" cx="60" cy="60" r="50" fill="none" stroke="#6c63ff" stroke-width="10"
+          stroke-dasharray="314" stroke-dashoffset="314" stroke-linecap="round"
+          transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 1s ease;"/>
+        <text x="60" y="55" text-anchor="middle" fill="white" font-size="18" font-weight="700" id="progressPercText">0%</text>
+        <text x="60" y="72" text-anchor="middle" fill="#9b97cc" font-size="9">Complete</text>
+      </svg>
+      <div style="color:white;font-size:1.1rem;font-weight:700;margin-bottom:0.3rem;">Learning Progress</div>
+      <div style="color:var(--text-muted);font-size:0.85rem;">Keep studying to unlock all chapters!</div>
+    </div>
+    <div class="section-title">Chapter Status</div>
+    <div class="progress-chapter-list" id="progressChapterList"></div>
+    <div style="margin-top:1.5rem;text-align:center;">
+      <button class="btn-primary" onclick="resetProgress()">🔄 Reset Progress</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SIMULATION MODALS ===== -->
+<div class="modal-overlay" id="simModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="simModalTitle">Simulation</h3>
+      <button class="modal-close" onclick="closeSim()">✕</button>
+    </div>
+    <div class="modal-body" id="simModalBody"></div>
+  </div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bnav-item active" onclick="showScreen('dashboard');setActiveNav(0)">
+    <span class="bnav-icon">🏠</span>Home
+  </button>
+  <button class="bnav-item" onclick="showScreen('simulations');setActiveNav(1)">
+    <span class="bnav-icon">🔬</span>Lab
+  </button>
+  <button class="bnav-item" onclick="showScreen('brain-explorer');setActiveNav(2)">
+    <span class="bnav-icon">🧠</span>Brain
+  </button>
+  <button class="bnav-item" onclick="showScreen('psychologists');setActiveNav(3)">
+    <span class="bnav-icon">👥</span>People
+  </button>
+  <button class="bnav-item" onclick="showScreen('progress-tracker');setActiveNav(4)">
+    <span class="bnav-icon">📊</span>Progress
+  </button>
+</nav>
+
+<script>
+// ===================================================
+// DATA: JKBOSE Class 11 Psychology Chapters
+// ===================================================
+const psychologyData = {
+  class:"11",subject:"Psychology",
+  chapters:[
+    {
+      id:1,
+      title:"What is Psychology?",
+      emoji:"🧠",
+      desc:"Introduction to psychology as a scientific discipline and its relationship with other sciences.",
+      color:"#6c63ff",
+      content:{
+        overview:`Psychology is the scientific study of human behaviour and mental processes. The word psychology is derived from two Greek words: 'psyche' (meaning soul or mind) and 'logos' (meaning study or science). Psychology aims to describe, explain, predict, and control behaviour.`,
+        keyConcepts:[
+          {title:"Definition of Psychology",text:"Scientific study of behaviour and mental processes — thoughts, feelings, and actions of individuals in various situations."},
+          {title:"Goals of Psychology",text:"To describe, explain, predict and modify/control human behaviour and mental processes."},
+          {title:"Psychology as a Science",text:"Psychology uses systematic and objective methods of investigation. It follows empirical approach — knowledge based on observation and experimentation."},
+          {title:"Branches of Psychology",text:"Clinical psychology, Counselling psychology, Educational psychology, Organizational psychology, Social psychology, Developmental psychology, Neuropsychology, Health psychology."}
+        ],
+        psychologists:[
+          {name:"Wilhelm Wundt",emoji:"🔬",dates:"1832–1920",contrib:"Established the first experimental psychology laboratory in Leipzig, Germany (1879). Father of experimental psychology. Founded Structuralism."},
+          {name:"William James",emoji:"📚",dates:"1842–1910",contrib:"Father of American psychology. Founded Functionalism. Wrote 'Principles of Psychology' (1890). Studied consciousness."},
+          {name:"Sigmund Freud",emoji:"🛋️",dates:"1856–1939",contrib:"Founded Psychoanalysis. Emphasized role of unconscious mind, dreams, and childhood experiences in shaping personality."}
+        ],
+        schools:[
+          {name:"Structuralism",founder:"Wundt & Titchener",desc:"Studies the structure of the mind using introspection."},
+          {name:"Functionalism",founder:"William James",desc:"Studies mental functions and how mind helps adapt to environment."},
+          {name:"Behaviourism",founder:"J.B. Watson",desc:"Studies only observable behaviour; mind is a 'black box'."},
+          {name:"Gestalt",founder:"Wertheimer, Kohler, Koffka",desc:"'The whole is more than the sum of its parts.' Studies perception holistically."},
+          {name:"Psychoanalysis",founder:"Sigmund Freud",desc:"Unconscious drives and childhood experiences shape behaviour."},
+          {name:"Humanistic",founder:"Maslow & Rogers",desc:"Focus on self-actualization, free will, and human potential."},
+          {name:"Cognitive",founder:"Ulric Neisser",desc:"Studies mental processes — memory, thinking, problem-solving."}
+        ],
+        quiz:[
+          {q:"Who is considered the Father of Experimental Psychology?",options:["William James","Wilhelm Wundt","Sigmund Freud","Ivan Pavlov"],ans:1},
+          {q:"In which year did Wundt establish the first psychology laboratory?",options:["1879","1900","1856","1920"],ans:0},
+          {q:"The word 'Psychology' comes from which language?",options:["Latin","Greek","French","German"],ans:1},
+          {q:"Which school of psychology studies only observable behaviour?",options:["Structuralism","Gestalt","Behaviourism","Psychoanalysis"],ans:2},
+          {q:"Who founded the Psychoanalytic school of psychology?",options:["B.F. Skinner","Maslow","Freud","Watson"],ans:2}
+        ]
+      }
+    },
+    {
+      id:2,
+      title:"Methods of Enquiry in Psychology",
+      emoji:"🔭",
+      desc:"Scientific methods used in psychological research: observation, experiments, surveys, and case studies.",
+      color:"#ec4899",
+      content:{
+        overview:`Psychology uses scientific methods to study behaviour. The goal is to be objective, systematic, and replicable. Major methods include Observation, Experimental, Survey, Psychological testing, and Case study methods.`,
+        keyConcepts:[
+          {title:"Observation Method",text:"Naturalistic observation: studying behaviour in natural settings. Controlled observation: in lab settings. Participant observation: researcher joins the group."},
+          {title:"Experimental Method",text:"Manipulates an independent variable (IV) to see effect on dependent variable (DV). Controls extraneous variables. Uses experimental and control groups. Best for establishing cause-effect."},
+          {title:"Survey / Interview Method",text:"Collects data from large groups via questionnaires or interviews. Structured, unstructured, or semi-structured. Can be biased by social desirability."},
+          {title:"Psychological Testing",text:"Standardised tools (IQ tests, personality tests) to measure individual differences. Must have reliability and validity."},
+          {title:"Case Study",text:"In-depth analysis of one individual or group. Provides rich qualitative data. Cannot be generalised easily. Famous: Freud's case studies."}
+        ],
+        psychologists:[
+          {name:"Ivan Pavlov",emoji:"🐕",dates:"1849–1936",contrib:"Discovered Classical Conditioning using dogs. Demonstrated stimulus-response learning. Nobel Prize in Physiology."},
+          {name:"B.F. Skinner",emoji:"📦",dates:"1904–1990",contrib:"Developed Operant Conditioning. Invented the 'Skinner Box'. Behaviourist approach to learning."}
+        ],
+        quiz:[
+          {q:"Which method is best for establishing cause-and-effect relationships?",options:["Survey","Case Study","Experimental","Observation"],ans:2},
+          {q:"The variable that is manipulated by the researcher is called?",options:["Dependent Variable","Extraneous Variable","Independent Variable","Control Variable"],ans:2},
+          {q:"Which method studies behaviour in natural settings?",options:["Lab experiment","Naturalistic observation","Survey","Psychological test"],ans:1},
+          {q:"Who discovered Classical Conditioning?",options:["Skinner","Watson","Pavlov","Thorndike"],ans:2},
+          {q:"A case study provides what type of data primarily?",options:["Quantitative","Qualitative","Statistical","Random"],ans:1}
+        ]
+      }
+    },
+    {
+      id:3,
+      title:"The Bases of Human Behaviour",
+      emoji:"🧬",
+      desc:"Biological, genetic, and evolutionary foundations of human behaviour including the nervous system.",
+      color:"#43e97b",
+      content:{
+        overview:`Human behaviour has biological bases. The nervous system, endocrine system, and genetics all influence how we think, feel, and act. Understanding the brain and its structures is essential to psychology.`,
+        keyConcepts:[
+          {title:"Neuron — Basic Unit",text:"Neurons are specialized cells that transmit information. Structure: Dendrites (receive signals) → Cell Body (Soma) → Axon → Synaptic Terminals. Synapse: tiny gap between neurons where communication occurs via neurotransmitters."},
+          {title:"Central Nervous System (CNS)",text:"Brain + Spinal Cord. Brain controls complex functions (thought, emotion). Spinal cord controls reflexes and transmits signals between brain and body."},
+          {title:"Peripheral Nervous System (PNS)",text:"Somatic NS: controls voluntary movements. Autonomic NS: controls involuntary functions. Autonomic NS → Sympathetic (fight-or-flight) + Parasympathetic (rest-and-digest)."},
+          {title:"Endocrine System",text:"Glands that secrete hormones directly into blood. Pituitary gland (master gland), Thyroid, Adrenal glands (produce adrenaline — fight-or-flight response)."},
+          {title:"Genetics & Behaviour",text:"Genes influence temperament, intelligence, mental disorders. Nature vs Nurture debate. Twin studies show genetic influence on personality and intelligence."}
+        ],
+        psychologists:[
+          {name:"Paul Broca",emoji:"🧠",dates:"1824–1880",contrib:"Discovered Broca's area in the frontal lobe — essential for speech production. Founded neuropsychology."},
+          {name:"Roger Sperry",emoji:"✂️",dates:"1913–1994",contrib:"Split-brain research. Showed left and right hemispheres have different functions. Nobel Prize 1981."}
+        ],
+        quiz:[
+          {q:"Which part of the neuron receives incoming signals?",options:["Axon","Dendrites","Myelin sheath","Synapse"],ans:1},
+          {q:"The brain and spinal cord together form the?",options:["PNS","ANS","CNS","ENS"],ans:2},
+          {q:"Which response is activated by the sympathetic nervous system?",options:["Rest and digest","Fight or flight","Sleep","Growth"],ans:1},
+          {q:"The 'master gland' of the endocrine system is?",options:["Thyroid","Adrenal","Pituitary","Pancreas"],ans:2},
+          {q:"Broca's area is located in which lobe?",options:["Parietal","Occipital","Temporal","Frontal"],ans:3}
+        ]
+      }
+    },
+    {
+      id:4,
+      title:"Human Development",
+      emoji:"👶",
+      desc:"Physical, cognitive, social, and emotional development across the lifespan from infancy to old age.",
+      color:"#f9ca24",
+      content:{
+        overview:`Human development is the study of systematic changes and continuities that occur in individuals across the lifespan. Development occurs in physical, cognitive, social, and emotional domains.`,
+        keyConcepts:[
+          {title:"Principles of Development",text:"Development is orderly and sequential. Development proceeds from general to specific (cephalocaudal & proximodistal). Rates differ among individuals. Nature & nurture both matter. Critical periods exist."},
+          {title:"Piaget's Cognitive Stages",text:"Sensorimotor (0-2 yrs): object permanence. Pre-operational (2-7 yrs): symbolic thinking, egocentrism. Concrete operational (7-11 yrs): logical thinking about concrete objects. Formal operational (11+): abstract reasoning."},
+          {title:"Erikson's Psychosocial Stages",text:"8 stages of conflict: Trust vs Mistrust (infancy), Autonomy vs Shame (toddler), Initiative vs Guilt (preschool), Industry vs Inferiority (school age), Identity vs Role Confusion (adolescence), etc."},
+          {title:"Adolescence",text:"Period of significant physical, cognitive, and social change. Identity development (Erikson). Puberty — physical changes. Peer relationships become important. Formal operational thinking."},
+          {title:"Kohlberg's Moral Development",text:"Pre-conventional (self-interest), Conventional (social norms), Post-conventional (universal principles)."}
+        ],
+        psychologists:[
+          {name:"Jean Piaget",emoji:"🧒",dates:"1896–1980",contrib:"Theory of Cognitive Development — 4 stages. Showed children think differently from adults. Concepts: schemas, assimilation, accommodation."},
+          {name:"Erik Erikson",emoji:"🧓",dates:"1902–1994",contrib:"8 stages of psychosocial development across the lifespan. Each stage has a crisis that must be resolved."},
+          {name:"Lev Vygotsky",emoji:"📖",dates:"1896–1934",contrib:"Zone of Proximal Development (ZPD). Social/cultural factors in cognitive development. Scaffolding concept."}
+        ],
+        quiz:[
+          {q:"Which stage of Piaget is characterised by egocentrism?",options:["Sensorimotor","Pre-operational","Concrete operational","Formal operational"],ans:1},
+          {q:"Object permanence develops in which Piagetian stage?",options:["Pre-operational","Formal operational","Sensorimotor","Concrete operational"],ans:2},
+          {q:"Who proposed the 8 stages of psychosocial development?",options:["Piaget","Freud","Erikson","Kohlberg"],ans:2},
+          {q:"The identity crisis primarily occurs during which Erikson stage?",options:["Infancy","School age","Adolescence","Early adulthood"],ans:2},
+          {q:"Zone of Proximal Development was proposed by?",options:["Piaget","Vygotsky","Bandura","Bruner"],ans:1}
+        ]
+      }
+    },
+    {
+      id:5,
+      title:"Sensory, Attentional and Perceptual Processes",
+      emoji:"👁️",
+      desc:"How we receive sensory information, direct attention, and organize perceptions of the world.",
+      color:"#a78bfa",
+      content:{
+        overview:`Sensation is the process by which our sensory organs receive stimulation. Perception is the process by which we interpret and organize sensory information. Attention is the selective focus on certain stimuli.`,
+        keyConcepts:[
+          {title:"Sensation vs Perception",text:"Sensation: Detecting raw stimuli (light, sound, smell). Perception: Interpreting and organising these sensations. Example: Seeing light wavelengths (sensation) vs seeing 'red apple' (perception)."},
+          {title:"Principles of Perceptual Organisation (Gestalt)",text:"Figure-Ground: separating object from background. Proximity: nearby objects grouped together. Similarity: similar objects grouped. Closure: completing incomplete figures. Continuity: smooth continuous lines preferred."},
+          {title:"Perceptual Constancies",text:"Shape constancy: object shape appears same despite viewing angle. Size constancy: object size appears same despite distance. Brightness/colour constancy."},
+          {title:"Depth Perception",text:"Monocular cues: linear perspective, overlap, texture gradient, relative size. Binocular cues: retinal disparity, convergence."},
+          {title:"Attention",text:"Selective attention: focusing on one stimulus while ignoring others (cocktail party effect). Divided attention: attending to multiple tasks. Sustained attention: maintaining focus over time."}
+        ],
+        psychologists:[
+          {name:"Max Wertheimer",emoji:"🔷",dates:"1880–1943",contrib:"Founded Gestalt psychology. Phi phenomenon — motion perception. 'The whole is greater than the sum of its parts.'"},
+          {name:"Eleanor Gibson",emoji:"🏔️",dates:"1910–2002",contrib:"Visual cliff experiment — studied depth perception in infants. Showed innate depth perception."}
+        ],
+        quiz:[
+          {q:"The process of interpreting sensory information is called?",options:["Sensation","Attention","Perception","Cognition"],ans:2},
+          {q:"Grouping nearby objects together is called?",options:["Similarity","Closure","Continuity","Proximity"],ans:3},
+          {q:"The 'cocktail party effect' is an example of?",options:["Divided attention","Selective attention","Sustained attention","Inattention"],ans:1},
+          {q:"Retinal disparity is a ___ cue for depth perception.",options:["Monocular","Binocular","Auditory","Kinesthetic"],ans:1},
+          {q:"Which Gestalt principle involves completing incomplete shapes?",options:["Proximity","Similarity","Closure","Figure-ground"],ans:2}
+        ]
+      }
+    },
+    {
+      id:6,
+      title:"Learning",
+      emoji:"📚",
+      desc:"How behaviour changes through experience — classical conditioning, operant conditioning, and observational learning.",
+      color:"#00b894",
+      content:{
+        overview:`Learning is a relatively permanent change in behaviour or mental processes resulting from experience. Three major theories: Classical Conditioning (Pavlov), Operant Conditioning (Skinner), and Observational/Social Learning (Bandura).`,
+        keyConcepts:[
+          {title:"Classical Conditioning (Pavlov)",text:"UCS (food) → UCR (salivation). Pair UCS with CS (bell). CS → CR (salivation). Concepts: Acquisition, Extinction, Spontaneous recovery, Generalisation, Discrimination."},
+          {title:"Operant Conditioning (Skinner)",text:"Behaviour followed by reinforcement increases; behaviour followed by punishment decreases. Positive reinforcement (+): add pleasant stimulus. Negative reinforcement (-): remove unpleasant stimulus. Punishment: decreases behaviour. Schedules: FR, VR, FI, VI."},
+          {title:"Social/Observational Learning (Bandura)",text:"Learning by watching others (models). Bobo Doll experiment. Processes: Attention → Retention → Reproduction → Motivation. Vicarious reinforcement."},
+          {title:"Cognitive Learning",text:"Latent learning (Tolman): learning without reinforcement, shown later. Insight learning (Kohler): sudden understanding of a problem solution."},
+          {title:"Factors Affecting Learning",text:"Motivation, practice, feedback, meaningfulness of material, prior knowledge, individual differences."}
+        ],
+        psychologists:[
+          {name:"Ivan Pavlov",emoji:"🐕",dates:"1849–1936",contrib:"Classical Conditioning — paired neutral stimulus with unconditioned stimulus. Nobel Prize. Foundation for behavioural therapy."},
+          {name:"B.F. Skinner",emoji:"📦",dates:"1904–1990",contrib:"Operant Conditioning. Skinner Box. Reinforcement schedules. Token economy applications."},
+          {name:"Albert Bandura",emoji:"🎭",dates:"1925–2021",contrib:"Social Learning Theory. Bobo Doll experiment. Self-efficacy concept. Bridges behaviourism and cognitive psychology."}
+        ],
+        quiz:[
+          {q:"In classical conditioning, the conditioned stimulus (CS) is?",options:["Food","Salivation","Bell (neutral stimulus paired)","Unconditioned response"],ans:2},
+          {q:"Reinforcing every occurrence of a behaviour is called?",options:["Partial reinforcement","Continuous reinforcement","Punishment","Extinction"],ans:1},
+          {q:"The Bobo Doll experiment was conducted by?",options:["Pavlov","Skinner","Bandura","Kohler"],ans:2},
+          {q:"Sudden understanding of a problem is called?",options:["Trial and error","Conditioning","Insight learning","Latent learning"],ans:2},
+          {q:"Removing an unpleasant stimulus to increase behaviour is called?",options:["Positive reinforcement","Negative reinforcement","Punishment","Extinction"],ans:1}
+        ]
+      }
+    },
+    {
+      id:7,
+      title:"Human Memory",
+      emoji:"💾",
+      desc:"How information is encoded, stored, and retrieved — types of memory and forgetting.",
+      color:"#fd79a8",
+      content:{
+        overview:`Memory refers to the mental processes used to acquire, store, retain, and retrieve information. Memory is not a single system but involves multiple processes and types.`,
+        keyConcepts:[
+          {title:"Stages of Memory",text:"Encoding: converting information into a memory code. Storage: retaining encoded information. Retrieval: recovering stored information."},
+          {title:"Atkinson-Shiffrin Model",text:"Sensory Memory (0.5–3 sec) → Short-Term Memory / Working Memory (20–30 sec, 7±2 items) → Long-Term Memory (unlimited capacity, permanent)."},
+          {title:"Types of Long-Term Memory",text:"Explicit (Declarative): Episodic (personal events) + Semantic (general knowledge). Implicit (Non-declarative): Procedural (skills) + Priming + Conditioning."},
+          {title:"Forgetting",text:"Ebbinghaus forgetting curve — most forgetting happens quickly then levels off. Causes: Decay, Interference (proactive & retroactive), Retrieval failure, Motivated forgetting (repression)."},
+          {title:"Improving Memory",text:"Chunking, Mnemonics, Spaced practice, Elaborative encoding, Method of loci, Sleep consolidation."}
+        ],
+        psychologists:[
+          {name:"Hermann Ebbinghaus",emoji:"📉",dates:"1850–1909",contrib:"First systematic study of memory and forgetting. The Forgetting Curve. Savings method. Serial position effect."},
+          {name:"Atkinson & Shiffrin",emoji:"📦",dates:"1968",contrib:"Multi-store model of memory: sensory → short-term → long-term. Foundation of memory research."},
+          {name:"Endel Tulving",emoji:"📖",dates:"1927–",contrib:"Distinguished episodic and semantic memory. Encoding specificity principle. Synergistic ecphory."}
+        ],
+        quiz:[
+          {q:"Which memory has unlimited capacity?",options:["Sensory Memory","Short-term Memory","Long-term Memory","Working Memory"],ans:2},
+          {q:"According to Miller, short-term memory holds approximately?",options:["3±1 items","7±2 items","12±2 items","15±3 items"],ans:1},
+          {q:"Memory for personal life events is called?",options:["Semantic memory","Procedural memory","Episodic memory","Priming"],ans:2},
+          {q:"The Ebbinghaus forgetting curve shows that forgetting is fastest?",options:["After a week","Shortly after learning","After a month","During sleep"],ans:1},
+          {q:"When old memories interfere with new ones, it is called?",options:["Retroactive interference","Proactive interference","Decay","Repression"],ans:1}
+        ]
+      }
+    },
+    {
+      id:8,
+      title:"Thinking",
+      emoji:"💭",
+      desc:"Concepts, problem-solving, reasoning, and creativity — the higher mental processes.",
+      color:"#fdcb6e",
+      content:{
+        overview:`Thinking is the manipulation of mental representations to form concepts, solve problems, make decisions, and engage in creative activities. Thinking involves mental images, concepts, language, and reasoning.`,
+        keyConcepts:[
+          {title:"Concepts and Categories",text:"Concepts: mental categories grouping similar objects/events/people. Natural concepts have prototypes (best examples). Artificial concepts have strict rules. Hierarchical: superordinate → basic → subordinate."},
+          {title:"Problem Solving",text:"Stages: Problem identification → Representation → Strategy selection → Execution → Evaluation. Strategies: Algorithms (exhaustive, guaranteed) vs Heuristics (mental shortcuts — fast but error-prone). Obstacles: Mental set, Functional fixedness."},
+          {title:"Reasoning",text:"Deductive: from general to specific (if-then logic). Inductive: from specific observations to general conclusions. Analogical: reasoning by comparison."},
+          {title:"Decision Making",text:"Heuristics cause systematic errors (biases). Availability heuristic: judging by ease of recall. Representativeness heuristic: judging by similarity to prototype. Anchoring: over-relying on first information."},
+          {title:"Creativity",text:"Novel and useful ideas. Components: Divergent thinking (many solutions), Convergent thinking (one best solution). Characteristics: Fluency, Flexibility, Originality, Elaboration."}
+        ],
+        psychologists:[
+          {name:"Wolfgang Kohler",emoji:"🐒",dates:"1887–1967",contrib:"Insight learning in chimpanzees. Showed animals can reason, not just use trial-and-error. Gestalt approach to problem solving."},
+          {name:"Daniel Kahneman",emoji:"🤔",dates:"1934–2024",contrib:"Two systems of thinking (System 1: fast/intuitive, System 2: slow/deliberate). Cognitive biases. Nobel Prize in Economics 2002."}
+        ],
+        quiz:[
+          {q:"A mental shortcut for problem solving is called?",options:["Algorithm","Schema","Heuristic","Prototype"],ans:2},
+          {q:"Which thinking generates multiple solutions to a problem?",options:["Convergent","Deductive","Divergent","Analogical"],ans:2},
+          {q:"Sticking to an old approach even when it doesn't work is called?",options:["Functional fixedness","Mental set","Anchoring","Availability heuristic"],ans:1},
+          {q:"Reasoning from general to specific is called?",options:["Inductive","Abductive","Deductive","Analogical"],ans:2},
+          {q:"Kohler's insight learning experiments used?",options:["Rats","Pigeons","Dogs","Chimpanzees"],ans:3}
+        ]
+      }
+    },
+    {
+      id:9,
+      title:"Motivation and Emotion",
+      emoji:"❤️",
+      desc:"The drives and feelings that energise, direct, and sustain human behaviour.",
+      color:"#e17055",
+      content:{
+        overview:`Motivation refers to the processes that initiate, direct, and sustain behaviour toward a goal. Emotions are subjective feelings accompanied by physiological arousal and expressive behaviour.`,
+        keyConcepts:[
+          {title:"Types of Motivation",text:"Intrinsic motivation: driven by internal rewards (curiosity, enjoyment). Extrinsic motivation: driven by external rewards (money, grades). Biological motives: hunger, thirst, sleep. Social motives: achievement, affiliation, power."},
+          {title:"Maslow's Hierarchy of Needs",text:"Pyramid (bottom to top): Physiological → Safety → Love/Belonging → Esteem → Self-actualisation. Lower needs must be met before higher ones. Self-actualisation = fulfilling one's potential."},
+          {title:"Theories of Motivation",text:"Drive Reduction Theory: biological drives create tension; behaviour reduces drive. Arousal Theory: optimal level of arousal for performance (Yerkes-Dodson Law). Incentive Theory: behaviour pulled by external goals."},
+          {title:"Emotions — Components",text:"Subjective experience (feelings), Physiological arousal (heart rate, hormones), Behavioural expression (facial expressions, actions). James-Lange: arousal → emotion. Cannon-Bard: stimulus → arousal + emotion simultaneously. Schachter-Singer: arousal + cognitive label = emotion."},
+          {title:"Basic Emotions",text:"Paul Ekman identified 6 universal basic emotions expressed through facial expressions: Happiness, Sadness, Fear, Anger, Surprise, Disgust. Cross-cultural universality."}
+        ],
+        psychologists:[
+          {name:"Abraham Maslow",emoji:"🏔️",dates:"1908–1970",contrib:"Hierarchy of Needs. Humanistic psychology. Self-actualisation theory. Focus on human potential and growth."},
+          {name:"Paul Ekman",emoji:"😊",dates:"1934–",contrib:"Universal facial expressions of emotion. Identified 6 basic emotions. Cross-cultural studies. Micro-expressions."},
+          {name:"William James & Carl Lange",emoji:"💓",dates:"1880s",contrib:"James-Lange theory: physical arousal precedes and causes emotional experience. 'We are afraid because we run.'"}
+        ],
+        quiz:[
+          {q:"According to Maslow, which is the highest level need?",options:["Safety","Esteem","Love","Self-actualisation"],ans:3},
+          {q:"Motivation from internal enjoyment is called?",options:["Extrinsic","Drive","Intrinsic","Incentive"],ans:2},
+          {q:"The Yerkes-Dodson law describes the relationship between?",options:["Memory and emotion","Arousal and performance","Hunger and aggression","Sleep and cognition"],ans:1},
+          {q:"Paul Ekman identified how many universal basic emotions?",options:["4","5","6","8"],ans:2},
+          {q:"'We are afraid because we run' represents which theory?",options:["Cannon-Bard","Schachter-Singer","James-Lange","Drive reduction"],ans:2}
+        ]
+      }
+    }
+  ]
+};
+
+// Famous Psychologists Gallery Data
+const famousPsychologists = [
+  {name:"Wilhelm Wundt",emoji:"🔬",era:"1832–1920",contrib:"Father of experimental psychology. Founded first psychology lab in Leipzig. Structuralism."},
+  {name:"William James",emoji:"📚",era:"1842–1910",contrib:"Father of American psychology. Functionalism. 'Principles of Psychology' (1890)."},
+  {name:"Sigmund Freud",emoji:"🛋️",era:"1856–1939",contrib:"Psychoanalysis. Unconscious mind, id/ego/superego, psychosexual stages."},
+  {name:"Ivan Pavlov",emoji:"🐕",era:"1849–1936",contrib:"Classical conditioning. Nobel Prize. Salivating dogs experiment."},
+  {name:"B.F. Skinner",emoji:"📦",era:"1904–1990",contrib:"Operant conditioning. Reinforcement schedules. Skinner box."},
+  {name:"Jean Piaget",emoji:"🧒",era:"1896–1980",contrib:"4 stages of cognitive development. Schemas, assimilation, accommodation."},
+  {name:"Abraham Maslow",emoji:"🏔️",era:"1908–1970",contrib:"Hierarchy of needs. Humanistic psychology. Self-actualisation."},
+  {name:"Albert Bandura",emoji:"🎭",era:"1925–2021",contrib:"Social learning theory. Bobo Doll experiment. Self-efficacy."},
+  {name:"Carl Rogers",emoji:"🌱",era:"1902–1987",contrib:"Person-centred therapy. Unconditional positive regard. Self-concept."},
+  {name:"Erik Erikson",emoji:"🧓",era:"1902–1994",contrib:"8 stages of psychosocial development. Identity crisis concept."},
+  {name:"Lev Vygotsky",emoji:"📖",era:"1896–1934",contrib:"Zone of Proximal Development. Scaffolding. Social-cultural theory."},
+  {name:"Hermann Ebbinghaus",emoji:"📉",era:"1850–1909",contrib:"Forgetting curve. First systematic memory studies. Serial position effect."}
+];
+
+// Brain region info
+const brainRegions = {
+  frontal:{name:"Frontal Lobe",info:"The frontal lobe is the largest lobe located at the front of the brain. Functions: Planning, decision-making, voluntary movement, speech production (Broca's area), personality, and executive functions. Damage can cause personality changes and impaired planning."},
+  parietal:{name:"Parietal Lobe",info:"Located behind the frontal lobe. Functions: Processing sensory information (touch, temperature, pain), spatial awareness, body orientation, and attention. Contains the primary somatosensory cortex."},
+  occipital:{name:"Occipital Lobe",info:"Located at the back of the brain. Primary visual processing centre. Functions: Vision, colour recognition, motion detection, reading. Damage causes visual disturbances or blindness."},
+  temporal:{name:"Temporal Lobe",info:"Located on the sides of the brain. Functions: Hearing, language comprehension (Wernicke's area), memory formation, emotion processing. Contains the hippocampus and amygdala."},
+  cerebellum:{name:"Cerebellum",info:"Located at the back-bottom of the brain. Functions: Coordination of voluntary movement, balance, posture, and motor learning. Damage causes ataxia (loss of coordination)."},
+  brainstem:{name:"Brain Stem",info:"Connects brain to spinal cord. Three parts: Medulla oblongata (breathing, heart rate), Pons (sleep, arousal), Midbrain (movement, reward). Controls vital life functions."},
+  hippocampus:{name:"Hippocampus",info:"Located in the temporal lobe. Critical for formation of new long-term memories. Also involved in spatial navigation. H.M. — famous patient whose hippocampus was removed — could not form new memories."}
+};
+
+// ===================================================
+// APP STATE
+// ===================================================
+let currentChapter = null;
+let currentQuiz = {questions:[],currentIdx:0,score:0,answered:false};
+let progress = JSON.parse(localStorage.getItem('psych_progress')||'{}');
+let totalScore = parseInt(localStorage.getItem('psych_score')||'0');
+
+// ===================================================
+// SCREEN MANAGEMENT
+// ===================================================
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // Update bottom nav
+  const navMap = {dashboard:0,simulations:1,'brain-explorer':2,psychologists:3,'progress-tracker':4};
+  if(navMap[id]!==undefined) setActiveNav(navMap[id]);
+  // Show/hide bottom nav
+  const noNav = ['splash'];
+  document.getElementById('bottomNav').style.display = noNav.includes(id)?'none':'flex';
+  // Render screens
+  if(id==='dashboard') renderDashboard();
+  if(id==='psychologists') renderPsychGallery();
+  if(id==='progress-tracker') renderProgress();
+  window.scrollTo(0,0);
+}
+
+function setActiveNav(idx){
+  document.querySelectorAll('.bnav-item').forEach((b,i)=>{
+    b.classList.toggle('active',i===idx);
+  });
+}
+
+// ===================================================
+// DASHBOARD
+// ===================================================
+function renderDashboard(){
+  const grid = document.getElementById('chaptersGrid');
+  grid.innerHTML = '';
+  let completed = Object.values(progress).filter(v=>v==='done').length;
+  document.getElementById('completedCount').textContent = completed;
+  document.getElementById('totalScore').textContent = totalScore;
+  psychologyData.chapters.forEach((ch,i)=>{
+    const p = progress[ch.id] || 'not-started';
+    const card = document.createElement('div');
+    card.className = 'chapter-card';
+    card.style.borderColor = p==='done'?'#43e97b':p==='partial'?'#f9ca24':'var(--border)';
+    card.innerHTML = `
+      <div class="chapter-num">Chapter ${ch.id}</div>
+      <div style="font-size:1.8rem;margin-bottom:0.5rem">${ch.emoji}</div>
+      <div class="chapter-title">${ch.title}</div>
+      <div class="chapter-desc">${ch.desc}</div>
+      <div class="chapter-footer">
+        <span class="chapter-tag">${ch.id<=3?'Unit I':ch.id<=5?'Unit II':ch.id<=7?'Unit III':'Unit IV'}</span>
+        <span class="chapter-progress">${p==='done'?'✅ Done':p==='partial'?'📖 Reading':'🔒 Start'}</span>
+      </div>`;
+    card.onclick = ()=>openChapter(i);
+    grid.appendChild(card);
+  });
+}
+
+// ===================================================
+// CHAPTER VIEW
+// ===================================================
+function openChapter(idx){
+  currentChapter = psychologyData.chapters[idx];
+  document.getElementById('cvNum').textContent = `Chapter ${currentChapter.id}`;
+  document.getElementById('cvTitle').textContent = `${currentChapter.emoji} ${currentChapter.title}`;
+  // Mark as partial if not done
+  if(!progress[currentChapter.id]) progress[currentChapter.id]='partial';
+  localStorage.setItem('psych_progress',JSON.stringify(progress));
+  renderChapterTabs();
+  showScreen('chapter-view');
+}
+
+function renderChapterTabs(){
+  const tabs = ['📖 Overview','🔑 Concepts','👥 Psychologists','📊 Diagram','📝 Quiz'];
+  const tabsEl = document.getElementById('chapterTabs');
+  tabsEl.innerHTML = '';
+  tabs.forEach((t,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn'+(i===0?' active':'');
+    btn.textContent = t;
+    btn.onclick = ()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      showChapterTab(i);
+    };
+    tabsEl.appendChild(btn);
+  });
+  showChapterTab(0);
+}
+
+function showChapterTab(idx){
+  const area = document.getElementById('chapterContentArea');
+  area.innerHTML = '';
+  const ch = currentChapter;
+  const c = ch.content;
+  if(idx===0){
+    // Overview
+    area.innerHTML = `
+      <div class="content-section">
+        <h3>Chapter Overview</h3>
+        <p>${c.overview}</p>
+      </div>`;
+  } else if(idx===1){
+    // Key Concepts
+    area.innerHTML = '<div class="content-section"><h3>Key Concepts</h3></div>';
+    const sec = area.querySelector('.content-section');
+    (c.keyConcepts||[]).forEach(kc=>{
+      sec.innerHTML += `<div class="info-card"><h4>▸ ${kc.title}</h4><p>${kc.text}</p></div>`;
+    });
+    // Schools if exists
+    if(c.schools){
+      sec.innerHTML += '<h3 style="margin-top:1.5rem;color:white;font-size:1.1rem;border-bottom:2px solid var(--primary);padding-bottom:0.5rem;margin-bottom:1rem;">Schools of Psychology</h3>';
+      c.schools.forEach(s=>{
+        sec.innerHTML += `<div class="info-card"><h4>${s.name} — ${s.founder}</h4><p>${s.desc}</p></div>`;
+      });
+    }
+  } else if(idx===2){
+    // Psychologists
+    area.innerHTML = '<div class="content-section"><h3>Key Psychologists</h3></div>';
+    const sec = area.querySelector('.content-section');
+    (c.psychologists||[]).forEach(p=>{
+      sec.innerHTML += `
+        <div class="psychologist-card">
+          <div class="psych-avatar">${p.emoji}</div>
+          <div class="psych-info">
+            <h4>${p.name}</h4>
+            <div class="psych-dates">${p.dates}</div>
+            <p>${p.contrib}</p>
+          </div>
+        </div>`;
+    });
+  } else if(idx===3){
+    // Diagrams
+    area.innerHTML = `<div class="content-section"><h3>Visual Diagrams</h3></div>`;
+    renderChapterDiagram(area, ch);
+  } else if(idx===4){
+    // Quiz
+    startChapterQuiz(ch);
+  }
+  area.style.animation='fadeIn 0.3s ease';
+}
+
+function renderChapterDiagram(area, ch){
+  const sec = area.querySelector('.content-section');
+  if(ch.id===1){
+    sec.innerHTML += `
+      <div class="diagram-box">
+        <h4>Goals of Psychology</h4>
+        <svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+          ${['Describe','Explain','Predict','Control'].map((g,i)=>`
+            <rect x="${20+i*68}" y="50" width="60" height="60" rx="8" fill="${['#6c63ff','#ec4899','#43e97b','#f9ca24'][i]}" opacity="0.8"/>
+            <text x="${50+i*68}" y="86" fill="white" font-size="11" text-anchor="middle" font-weight="bold">${g}</text>
+          `).join('')}
+          <text x="150" y="145" fill="#9b97cc" font-size="11" text-anchor="middle">Four Goals of Psychology</text>
+        </svg>
+      </div>
+      <div class="diagram-box">
+        <h4>Timeline of Psychology Schools</h4>
+        <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <line x1="20" y1="50" x2="300" y2="50" stroke="#6c63ff" stroke-width="2"/>
+          ${[['1879\nStructure',20],['1890\nFunction',80],['1900\nPsycho-\nanalysis',140],['1913\nBehav.',200],['1950\nHuman.',260]].map(([label,x])=>`
+            <circle cx="${x}" cy="50" r="5" fill="#a78bfa"/>
+            ${label.split('\n').map((l,li)=>`<text x="${x}" y="${li===0?38:72+li*12}" fill="#e8e4ff" font-size="8" text-anchor="middle">${l}</text>`).join('')}
+          `).join('')}
+        </svg>
+      </div>`;
+  } else if(ch.id===4){
+    sec.innerHTML += `
+      <div class="diagram-box">
+        <h4>Piaget's Cognitive Stages</h4>
+        <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" width="100%">
+          ${[['Formal\nOperational','11+ yrs',260,40,'#6c63ff'],['Concrete\nOperational','7-11 yrs',240,55,'#a78bfa'],['Pre-\nOperational','2-7 yrs',200,55,'#ec4899'],['Sensori-\nmotor','0-2 yrs',160,60,'#ff6584']].map(([name,age,w,h,color],i)=>`
+            <rect x="${(300-w)/2}" y="${20+i*38}" width="${w}" height="${h}" rx="6" fill="${color}" opacity="0.75"/>
+            ${name.split('\n').map((l,li)=>`<text x="150" y="${40+i*38+li*12}" fill="white" font-size="11" text-anchor="middle" font-weight="bold">${l}</text>`).join('')}
+            <text x="262" y="${44+i*38}" fill="#9b97cc" font-size="9">${age}</text>
+          `).join('')}
+          <text x="150" y="175" fill="#9b97cc" font-size="9" text-anchor="middle">Piaget's Developmental Stages (bottom = earliest)</text>
+        </svg>
+      </div>`;
+  } else if(ch.id===7){
+    sec.innerHTML += `
+      <div class="diagram-box">
+        <h4>Atkinson-Shiffrin Memory Model</h4>
+        <svg viewBox="0 0 320 120" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <rect x="5" y="40" width="65" height="40" rx="6" fill="#6c63ff" opacity="0.7"/>
+          <text x="37" y="57" fill="white" font-size="9" text-anchor="middle">Sensory</text>
+          <text x="37" y="70" fill="white" font-size="9" text-anchor="middle">Memory</text>
+          <text x="37" y="95" fill="#9b97cc" font-size="8" text-anchor="middle">~0.5-3s</text>
+          <path d="M70,60 L95,60" stroke="#43e97b" stroke-width="2" marker-end="url(#arr)"/>
+          <text x="82" y="52" fill="#43e97b" font-size="8" text-anchor="middle">Attend</text>
+          <rect x="95" y="35" width="70" height="50" rx="6" fill="#ec4899" opacity="0.7"/>
+          <text x="130" y="55" fill="white" font-size="9" text-anchor="middle">Short-Term</text>
+          <text x="130" y="67" fill="white" font-size="9" text-anchor="middle">Memory</text>
+          <text x="130" y="97" fill="#9b97cc" font-size="8" text-anchor="middle">20-30s, 7±2</text>
+          <path d="M165,60 L195,60" stroke="#43e97b" stroke-width="2" marker-end="url(#arr)"/>
+          <text x="180" y="52" fill="#43e97b" font-size="8" text-anchor="middle">Encode</text>
+          <rect x="195" y="25" width="80" height="65" rx="6" fill="#43e97b" opacity="0.7"/>
+          <text x="235" y="48" fill="white" font-size="9" text-anchor="middle">Long-Term</text>
+          <text x="235" y="60" fill="white" font-size="9" text-anchor="middle">Memory</text>
+          <text x="235" y="97" fill="#0f0c29" font-size="8" text-anchor="middle">Unlimited</text>
+          <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 Z" fill="#43e97b"/></marker></defs>
+        </svg>
+      </div>`;
+  } else if(ch.id===9){
+    sec.innerHTML += `
+      <div class="diagram-box">
+        <h4>Maslow's Hierarchy of Needs</h4>
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" width="100%">
+          ${[
+            ['Self-actualisation',260,22,'#6c63ff','Growth'],
+            ['Esteem',220,26,'#a78bfa','Respect'],
+            ['Love & Belonging',180,28,'#ec4899','Social'],
+            ['Safety',140,30,'#f9ca24','Security'],
+            ['Physiological',100,30,'#e17055','Basic']
+          ].map(([name,y,h,color,sub],i)=>`
+            <polygon points="${(280-(i===0?80:i===1?130:i===2?180:i===3?230:280))/2},${y} ${280-(280-(i===0?80:i===1?130:i===2?180:i===3?230:280))/2},${y} ${280-(280-(i===0?80:i===1?130:i===2?180:i===3?230:260))/2},${y+h} ${(280-(i===0?80:i===1?130:i===2?180:i===3?230:260))/2},${y+h}" fill="${color}" opacity="0.8"/>
+            <text x="140" y="${y+h/2+4}" fill="white" font-size="${i<2?9:10}" text-anchor="middle" font-weight="bold">${name}</text>
+          `).join('')}
+          <text x="140" y="195" fill="#9b97cc" font-size="9" text-anchor="middle">Maslow's Hierarchy (base = lowest needs)</text>
+        </svg>
+      </div>`;
+  } else {
+    sec.innerHTML += `
+      <div class="diagram-box" style="min-height:120px;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+        <div style="font-size:3rem;margin-bottom:0.8rem">${ch.emoji}</div>
+        <div style="color:var(--text-muted);font-size:0.9rem;">Visual diagrams for ${ch.title}</div>
+        <div style="color:var(--primary);font-size:0.8rem;margin-top:0.5rem;">Explore the content in other tabs</div>
+      </div>`;
+  }
+}
+
+// ===================================================
+// QUIZ ENGINE
+// ===================================================
+function startChapterQuiz(ch){
+  progress[ch.id] = 'done';
+  localStorage.setItem('psych_progress',JSON.stringify(progress));
+  const questions = ch.content.quiz;
+  currentQuiz = {questions,currentIdx:0,score:0,answered:false};
+  renderQuizQuestion();
+}
+
+function startAllQuiz(){
+  // Combine all chapter quizzes
+  let allQ = [];
+  psychologyData.chapters.forEach(ch=>{
+    allQ = allQ.concat(ch.content.quiz.map(q=>({...q,chapter:ch.title})));
+  });
+  // Shuffle and take 15
+  allQ = allQ.sort(()=>Math.random()-0.5).slice(0,15);
+  currentChapter = {title:'All Chapters Quiz',id:'all',content:{quiz:allQ}};
+  document.getElementById('cvNum').textContent = 'Mixed Quiz';
+  document.getElementById('cvTitle').textContent = '📝 All Chapters Quiz';
+  currentQuiz = {questions:allQ,currentIdx:0,score:0,answered:false};
+  const area = document.getElementById('chapterContentArea');
+  area.innerHTML = '';
+  // Minimal tabs for quiz-only
+  document.getElementById('chapterTabs').innerHTML = '';
+  renderQuizQuestion();
+  showScreen('chapter-view');
+}
+
+function renderQuizQuestion(){
+  const area = document.getElementById('chapterContentArea');
+  const q = currentQuiz;
+  if(q.currentIdx >= q.questions.length){
+    // Show result
+    const pct = Math.round((q.score/q.questions.length)*100);
+    totalScore += q.score;
+    localStorage.setItem('psych_score',totalScore.toString());
+    area.innerHTML = `
+      <div class="quiz-result">
+        <div class="result-emoji">${pct>=80?'🏆':pct>=60?'😊':pct>=40?'📖':'💪'}</div>
+        <div class="result-score">${q.score}/${q.questions.length}</div>
+        <div style="color:var(--primary);font-size:1.3rem;font-weight:700;margin-bottom:0.5rem;">${pct}%</div>
+        <div class="result-msg">${pct>=80?'Excellent! Outstanding performance!':pct>=60?'Good job! Keep it up!':pct>=40?'Fair attempt. Review the chapter.':'Keep studying! You can do it!'}</div>
+        <button class="retry-btn" onclick="retryQuiz()">🔄 Retry Quiz</button>
+        <button class="retry-btn" style="margin-left:0.5rem;background:var(--bg-card2);" onclick="showScreen('dashboard')">🏠 Home</button>
+      </div>`;
+    return;
+  }
+  const curr = q.questions[q.currentIdx];
+  const pct = Math.round((q.currentIdx/q.questions.length)*100);
+  area.innerHTML = `
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <h3>${currentChapter?.title||'Quiz'}</h3>
+        <div class="quiz-score-badge">Score: ${q.score} / ${q.currentIdx}</div>
+        <div class="progress-bar-outer"><div class="progress-bar-inner" style="width:${pct}%"></div></div>
+      </div>
+      <div class="question-card">
+        <div class="q-num">Question ${q.currentIdx+1} of ${q.questions.length}</div>
+        <div class="q-text">${curr.q}</div>
+        <div id="optionsArea">
+          ${curr.options.map((opt,oi)=>`<button class="option-btn" onclick="selectAnswer(${oi})">${String.fromCharCode(65+oi)}. ${opt}</button>`).join('')}
+        </div>
+        <div id="feedbackArea"></div>
+      </div>
+    </div>`;
+}
+
+function selectAnswer(idx){
+  if(currentQuiz.answered) return;
+  currentQuiz.answered = true;
+  const curr = currentQuiz.questions[currentQuiz.currentIdx];
+  const correct = curr.ans;
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((b,i)=>{
+    if(i===correct) b.classList.add('correct');
+    if(i===idx && i!==correct) b.classList.add('wrong');
+    b.disabled = true;
+  });
+  const fb = document.getElementById('feedbackArea');
+  if(idx===correct){
+    currentQuiz.score++;
+    fb.innerHTML = '<div class="feedback-msg correct">✅ Correct! Well done!</div>';
+  } else {
+    fb.innerHTML = `<div class="feedback-msg wrong">❌ Incorrect. Correct answer: ${curr.options[correct]}</div>`;
+  }
+  fb.innerHTML += `<button class="next-q-btn" onclick="nextQuestion()">Next Question →</button>`;
+}
+
+function nextQuestion(){
+  currentQuiz.currentIdx++;
+  currentQuiz.answered=false;
+  renderQuizQuestion();
+}
+
+function retryQuiz(){
+  currentQuiz.currentIdx=0;currentQuiz.score=0;currentQuiz.answered=false;
+  renderQuizQuestion();
+}
+
+// ===================================================
+// PSYCHOLOGISTS GALLERY
+// ===================================================
+function renderPsychGallery(){
+  const g = document.getElementById('psychGallery');
+  g.innerHTML = '';
+  famousPsychologists.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'psych-gallery-card';
+    card.innerHTML = `
+      <div class="psych-gallery-avatar">${p.emoji}</div>
+      <div class="psych-gallery-name">${p.name}</div>
+      <div class="psych-gallery-era">📅 ${p.era}</div>
+      <div class="psych-gallery-contrib">${p.contrib}</div>`;
+    g.appendChild(card);
+  });
+}
+
+// ===================================================
+// BRAIN EXPLORER
+// ===================================================
+function showBrainRegion(region){
+  const info = brainRegions[region];
+  if(!info) return;
+  document.getElementById('brainRegionInfo').innerHTML = `
+    <h3>🧠 ${info.name}</h3>
+    <p>${info.info}</p>`;
+  // Highlight
+  document.querySelectorAll('[id^="br-"]').forEach(el=>el.style.opacity=0.4);
+  const el = document.getElementById('br-'+region);
+  if(el) el.style.opacity=1;
+}
+
+// ===================================================
+// PROGRESS TRACKER
+// ===================================================
+function renderProgress(){
+  const list = document.getElementById('progressChapterList');
+  list.innerHTML = '';
+  const total = psychologyData.chapters.length;
+  const done = Object.values(progress).filter(v=>v==='done').length;
+  const pct = Math.round((done/total)*100);
+  // Update circle
+  const arc = document.getElementById('progressArc');
+  const perc = document.getElementById('progressPercText');
+  if(arc){
+    const circumference = 314;
+    arc.style.strokeDashoffset = circumference - (pct/100)*circumference;
+    perc.textContent = pct+'%';
+  }
+  psychologyData.chapters.forEach(ch=>{
+    const p = progress[ch.id]||'not-started';
+    const item = document.createElement('div');
+    item.className = 'progress-chapter-item';
+    item.innerHTML = `
+      <span class="progress-chapter-name">${ch.emoji} Ch.${ch.id}: ${ch.title}</span>
+      <span class="progress-chip ${p==='done'?'done':p==='partial'?'partial':'not-started'}">${p==='done'?'✅ Done':p==='partial'?'📖 Reading':'Not Started'}</span>`;
+    list.appendChild(item);
+  });
+}
+
+function resetProgress(){
+  if(confirm('Reset all progress and scores?')){
+    localStorage.removeItem('psych_progress');
+    localStorage.removeItem('psych_score');
+    progress={};totalScore=0;
+    renderProgress();
+    renderDashboard();
+  }
+}
+
+// ===================================================
+// SIMULATIONS
+// ===================================================
+function openSim(type){
+  const modal = document.getElementById('simModal');
+  const body = document.getElementById('simModalBody');
+  const title = document.getElementById('simModalTitle');
+  modal.classList.add('open');
+  if(type==='memory') renderMemorySim(title,body);
+  else if(type==='reaction') renderReactionSim(title,body);
+  else if(type==='stroop') renderStroopSim(title,body);
+  else if(type==='illusion') renderIllusionSim(title,body);
+  else if(type==='learning') renderLearningSim(title,body);
+  else if(type==='emotion') renderEmotionSim(title,body);
+}
+
+function closeSim(){
+  document.getElementById('simModal').classList.remove('open');
+}
+
+// MEMORY SIMULATION
+function renderMemorySim(title,body){
+  title.textContent = '🧩 Memory Span Test';
+  body.innerHTML = `
+    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">A sequence of digits will be shown. Memorize them, then type them back. Tests your Short-Term Memory capacity (Miller's 7±2).</p>
+    <div id="memDisplay" class="sim-display">
+      <div style="color:var(--text-muted)">Press START to begin</div>
+    </div>
+    <input id="memInput" class="sim-input hidden" placeholder="Type the digits you saw..." type="text">
+    <div style="text-align:center;margin-top:1rem;">
+      <button class="sim-btn" onclick="startMemoryTest()">▶ START</button>
+      <button class="sim-btn success hidden" id="memCheckBtn" onclick="checkMemory()">✓ CHECK</button>
+    </div>
+    <div id="memResult" style="margin-top:1rem;text-align:center;"></div>
+    <div style="margin-top:1.5rem;background:var(--bg-dark);padding:1rem;border-radius:8px;">
+      <div style="color:var(--accent2);font-size:0.85rem;font-weight:600;margin-bottom:0.5rem;">📚 Psychology Concept</div>
+      <div style="color:var(--text-muted);font-size:0.8rem;">George Miller (1956) found that short-term memory holds about <strong style="color:var(--primary)">7±2 items</strong> (5 to 9). This is known as <em>Miller's Magic Number</em>.</div>
+    </div>`;
+}
+
+let memSequence = [];
+let memLevel = 4;
+function startMemoryTest(){
+  const display = document.getElementById('memDisplay');
+  const input = document.getElementById('memInput');
+  const checkBtn = document.getElementById('memCheckBtn');
+  const resultEl = document.getElementById('memResult');
+  resultEl.innerHTML='';
+  input.value='';
+  input.classList.add('hidden');
+  checkBtn.classList.add('hidden');
+  memSequence = Array.from({length:memLevel},()=>Math.floor(Math.random()*10));
+  display.innerHTML = `<div style="color:var(--primary);font-size:0.8rem;margin-bottom:0.5rem;">Memorize this sequence:</div>`;
+  let i=0;
+  const show = setInterval(()=>{
+    if(i<memSequence.length){
+      display.innerHTML = `<div style="font-size:3rem;font-weight:700;color:var(--accent2);letter-spacing:4px">${memSequence[i]}</div>`;
+      i++;
+    } else {
+      clearInterval(show);
+      display.innerHTML = `<div style="color:var(--text-muted)">Now type the sequence!</div>`;
+      input.classList.remove('hidden');
+      checkBtn.classList.remove('hidden');
+      input.focus();
+    }
+  },800);
+}
+function checkMemory(){
+  const input = document.getElementById('memInput');
+  const resultEl = document.getElementById('memResult');
+  const typed = input.value.replace(/\s/g,'');
+  const correct = memSequence.join('');
+  if(typed===correct){
+    memLevel = Math.min(memLevel+1,12);
+    resultEl.innerHTML=`<div style="color:var(--accent);font-size:1rem;font-weight:700;">✅ Correct! Next level: ${memLevel} digits</div>`;
+    setTimeout(startMemoryTest,1500);
+  } else {
+    resultEl.innerHTML=`<div style="color:var(--secondary);font-size:1rem;font-weight:700;">❌ Wrong! Correct: ${correct}<br>Your memory span: ~${memLevel-1} items</div>
+      <button class="sim-btn" style="margin-top:0.8rem;" onclick="resetMemory()">Try Again</button>`;
+    memLevel=4;
+  }
+}
+function resetMemory(){memLevel=4;startMemoryTest();}
+
+// REACTION TIME SIMULATION
+function renderReactionSim(title,body){
+  title.textContent = '⚡ Reaction Time Test';
+  body.innerHTML = `
+    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Click the circle as fast as possible when it turns GREEN. Measures your neural response time.</p>
+    <div id="reactionBox" class="reaction-box" style="background:#444;color:white;font-size:1rem;user-select:none;" onclick="handleReaction()">
+      CLICK TO START
+    </div>
+    <div id="reactionResults" style="margin-top:1rem;text-align:center;"></div>
+    <div style="margin-top:1rem;background:var(--bg-dark);padding:1rem;border-radius:8px;">
+      <div style="color:var(--accent2);font-size:0.85rem;font-weight:600;margin-bottom:0.3rem;">📚 Average Human Reaction Time</div>
+      <div style="color:var(--text-muted);font-size:0.8rem;">Visual stimulus: ~200-300ms. Audio: ~150-180ms. Influenced by: attention, fatigue, caffeine, practice.</div>
+    </div>`;
+}
+let reactionState = 'idle';
+let reactionStart = 0;
+let reactionTimes = [];
+function handleReaction(){
+  const box = document.getElementById('reactionBox');
+  const res = document.getElementById('reactionResults');
+  if(reactionState==='idle'){
+    reactionState='waiting';
+    box.style.background='#c0392b';
+    box.style.color='white';
+    box.textContent='Wait for GREEN...';
+    const delay = 1500+Math.random()*2500;
+    window._reactionTimeout = setTimeout(()=>{
+      reactionState='ready';
+      box.style.background='#27ae60';
+      box.textContent='CLICK NOW!';
+      reactionStart=Date.now();
+    },delay);
+  } else if(reactionState==='waiting'){
+    clearTimeout(window._reactionTimeout);
+    reactionState='idle';
+    box.style.background='#c0392b';
+    box.textContent='Too early! Click to try again.';
+    setTimeout(()=>{box.style.background='#444';box.textContent='Click to Start';},1500);
+  } else if(reactionState==='ready'){
+    const t = Date.now()-reactionStart;
+    reactionTimes.push(t);
+    reactionState='idle';
+    box.style.background='#444';
+    box.textContent='Click to try again';
+    const avg = reactionTimes.length>1?Math.round(reactionTimes.reduce((a,b)=>a+b)/reactionTimes.length):null;
+    res.innerHTML=`
+      <div style="font-size:1.5rem;font-weight:700;color:var(--accent2)">${t} ms</div>
+      <div style="color:var(--text-muted);font-size:0.85rem;">${t<200?'🏆 Lightning fast!':t<300?'⚡ Above average!':t<500?'👍 Average':'📚 Slower — try practicing!'}</div>
+      ${avg?`<div style="color:var(--primary);font-size:0.85rem;margin-top:0.5rem;">Average: ${avg}ms (${reactionTimes.length} trials)</div>`:''}`;
+  }
+}
+
+// STROOP SIMULATION
+function renderStroopSim(title,body){
+  title.textContent = '🎨 Stroop Effect Test';
+  body.innerHTML = `
+    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Name the COLOR of the text (not the word). This demonstrates cognitive interference.</p>
+    <div id="stroopWord" class="stroop-word">BLUE</div>
+    <div id="stroopOptions" class="stroop-options"></div>
+    <div id="stroopScore" style="text-align:center;margin-top:1rem;color:var(--text-muted);font-size:0.9rem;">Score: 0 | Time: 0s</div>
+    <div id="stroopFeedback" style="text-align:center;height:30px;font-size:1rem;font-weight:700;"></div>
+    <div style="margin-top:1rem;background:var(--bg-dark);padding:1rem;border-radius:8px;">
+      <div style="color:var(--accent2);font-size:0.85rem;font-weight:600;margin-bottom:0.3rem;">📚 The Stroop Effect</div>
+      <div style="color:var(--text-muted);font-size:0.8rem;">Named after J.R. Stroop (1935). Reading is automatic; naming ink colour requires more cognitive effort, causing interference. Used to study attention and cognitive flexibility.</div>
+    </div>`;
+  startStroop();
+}
+const colors = [{name:'RED',hex:'#e74c3c'},{name:'GREEN',hex:'#27ae60'},{name:'BLUE',hex:'#2980b9'},{name:'YELLOW',hex:'#f1c40f'},{name:'PURPLE',hex:'#8e44ad'}];
+let stroopScore=0,stroopCorrect=0,stroopStart=0,stroopCurrent=null;
+function startStroop(){
+  stroopScore=0;stroopCorrect=0;stroopStart=Date.now();
+  nextStroopWord();
+}
+function nextStroopWord(){
+  const wordColor = colors[Math.floor(Math.random()*colors.length)];
+  const textColor = colors[Math.floor(Math.random()*colors.length)];
+  stroopCurrent = textColor.name;
+  const wordEl = document.getElementById('stroopWord');
+  if(wordEl){
+    wordEl.textContent = wordColor.name;
+    wordEl.style.color = textColor.hex;
+    const opts = document.getElementById('stroopOptions');
+    const shuffled = [...colors].sort(()=>Math.random()-0.5).slice(0,4);
+    if(!shuffled.find(c=>c.name===textColor.name)) shuffled[0]=textColor;
+    opts.innerHTML = shuffled.sort(()=>Math.random()-0.5).map(c=>`
+      <button class="stroop-btn" style="color:${c.hex};border-color:${c.hex}" onclick="checkStroop('${c.name}')">${c.name}</button>`).join('');
+  }
+}
+function checkStroop(ans){
+  const fb = document.getElementById('stroopFeedback');
+  const score = document.getElementById('stroopScore');
+  stroopScore++;
+  if(ans===stroopCurrent){
+    stroopCorrect++;
+    fb.style.color='#43e97b';fb.textContent='✓ Correct!';
+  } else {
+    fb.style.color='#ff6584';fb.textContent=`✗ It was ${stroopCurrent}`;
+  }
+  const elapsed = Math.round((Date.now()-stroopStart)/1000);
+  score.textContent=`Score: ${stroopCorrect}/${stroopScore} | Time: ${elapsed}s | Accuracy: ${Math.round(stroopCorrect/stroopScore*100)}%`;
+  setTimeout(()=>{fb.textContent='';nextStroopWord();},600);
+}
+
+// ILLUSION SIMULATION
+function renderIllusionSim(title,body){
+  title.textContent = '👁️ Visual Perception Illusions';
+  body.innerHTML = `
+    <div class="illusion-container">
+      <canvas id="illusionCanvas" width="300" height="220"></canvas>
+    </div>
+    <div id="illusionDesc" style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin:0.5rem 0 1rem;min-height:40px;"></div>
+    <div class="illusion-nav">
+      <button class="illusion-nav-btn active" onclick="showIllusion(0,this)">Müller-Lyer</button>
+      <button class="illusion-nav-btn" onclick="showIllusion(1,this)">Kanizsa</button>
+      <button class="illusion-nav-btn" onclick="showIllusion(2,this)">Ponzo</button>
+      <button class="illusion-nav-btn" onclick="showIllusion(3,this)">Ebbinghaus</button>
+    </div>`;
+  showIllusion(0, document.querySelector('.illusion-nav-btn'));
+}
+
+function showIllusion(idx, btn){
+  document.querySelectorAll('.illusion-nav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const canvas = document.getElementById('illusionCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,300,220);
+  const descs = [
+    "The two horizontal lines are EQUAL in length, but the arrows make them look different.",
+    "You see a white triangle that doesn't actually exist — your brain completes the shape.",
+    "The two horizontal lines are EQUAL in length, but converging lines make the top look longer.",
+    "The two orange circles are EQUAL in size, but surrounding circles affect your perception."
+  ];
+  document.getElementById('illusionDesc').textContent = descs[idx];
+  ctx.strokeStyle = '#a78bfa';ctx.fillStyle='#a78bfa';ctx.lineWidth=3;
+  if(idx===0){
+    // Müller-Lyer
+    const drawArrow = (x1,y,x2,inward)=>{
+      ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke();
+      const d = inward?-1:1;
+      [[x1,d],[x2,-d]].forEach(([x,dir])=>{
+        ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+dir*20,y-15);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+dir*20,y+15);ctx.stroke();
+      });
+    };
+    ctx.strokeStyle='#6c63ff';drawArrow(30,80,170,false);
+    ctx.strokeStyle='#ec4899';drawArrow(30,150,170,true);
+    ctx.fillStyle='#9b97cc';ctx.font='11px sans-serif';ctx.textAlign='center';
+    ctx.fillText('Both lines = 140px',150,200);
+  } else if(idx===1){
+    // Kanizsa triangle
+    const drawPac = (x,y,startAngle,endAngle)=>{
+      ctx.beginPath();ctx.moveTo(x,y);ctx.arc(x,y,40,startAngle*Math.PI/180,endAngle*Math.PI/180);ctx.closePath();
+      ctx.fillStyle='#6c63ff';ctx.fill();
+    };
+    drawPac(150,60,60,360-60);
+    drawPac(60,170,-60,180+60);
+    drawPac(240,170,180+60,360+60);
+    ctx.strokeStyle='#a78bfa';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    ctx.strokeRect(110,20,80,160);ctx.setLineDash([]);
+  } else if(idx===2){
+    // Ponzo
+    ctx.strokeStyle='#6c63ff';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(50,220);ctx.lineTo(150,20);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(250,220);ctx.lineTo(150,20);ctx.stroke();
+    ctx.strokeStyle='#ec4899';ctx.lineWidth=4;
+    ctx.beginPath();ctx.moveTo(100,90);ctx.lineTo(200,90);ctx.stroke();
+    ctx.strokeStyle='#43e97b';ctx.lineWidth=4;
+    ctx.beginPath();ctx.moveTo(80,160);ctx.lineTo(220,160);ctx.stroke();
+    ctx.fillStyle='#9b97cc';ctx.font='11px sans-serif';ctx.textAlign='center';
+    ctx.fillText('Both lines equal length!',150,205);
+  } else if(idx===3){
+    // Ebbinghaus
+    const drawCirc=(x,y,r,col)=>{ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();};
+    // Small surrounders
+    [0,60,120,180,240,300].forEach(a=>{drawCirc(110+Math.cos(a*Math.PI/180)*55,110+Math.sin(a*Math.PI/180)*55,12,'#4a4080');});
+    drawCirc(110,110,25,'#f9ca24');
+    // Large surrounders
+    [0,60,120,180,240,300].forEach(a=>{drawCirc(200+Math.cos(a*Math.PI/180)*70,110+Math.sin(a*Math.PI/180)*70,30,'#4a4080');});
+    drawCirc(200,110,25,'#f9ca24');
+    ctx.fillStyle='#9b97cc';ctx.font='11px sans-serif';ctx.textAlign='center';
+    ctx.fillText('Both orange circles are the same size!',150,200);
+  }
+}
+
+// LEARNING CURVE SIMULATION
+function renderLearningSim(title,body){
+  title.textContent = '📈 Classical Conditioning Simulator';
+  body.innerHTML = `
+    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Simulate Pavlov's Classical Conditioning experiment. Pair CS (bell) with UCS (food).</p>
+    <div style="background:var(--bg-dark);border-radius:8px;padding:1rem;margin-bottom:1rem;">
+      <div style="display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-size:2.5rem" id="dogEmoji">🐕</div>
+          <div style="font-size:0.75rem;color:var(--text-muted)">Dog</div>
+        </div>
+        <div style="text-align:center;padding:0.5rem 1rem;background:rgba(108,99,255,0.1);border-radius:8px;" id="stimDisplay">
+          <div style="font-size:1.2rem;color:var(--text-muted)">No stimulus</div>
+        </div>
+      </div>
+      <div id="responseDisplay" style="text-align:center;margin-top:1rem;min-height:30px;font-size:0.9rem;color:var(--accent2);"></div>
+    </div>
+    <div id="trialCount" style="text-align:center;color:var(--primary);font-size:0.85rem;margin-bottom:1rem;">Trials: 0 | Strength: 0%</div>
+    <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
+      <button class="sim-btn" onclick="conditionTrial('both')">🍖+🔔 UCS+CS</button>
+      <button class="sim-btn" onclick="conditionTrial('cs')">🔔 CS Only</button>
+      <button class="sim-btn" onclick="conditionTrial('ucs')">🍖 UCS Only</button>
+      <button class="sim-btn danger" onclick="conditionTrial('reset')">↺ Extinction</button>
+    </div>
+    <div style="margin-top:1rem;background:var(--bg-dark);border-radius:8px;padding:1rem;">
+      <canvas id="conditioningChart" width="280" height="100"></canvas>
+    </div>`;
+  window.condStrength=0; window.condTrials=0; window.condHistory=[];
+}
+function conditionTrial(type){
+  const dog = document.getElementById('dogEmoji');
+  const stim = document.getElementById('stimDisplay');
+  const resp = document.getElementById('responseDisplay');
+  const count = document.getElementById('trialCount');
+  if(type==='reset'){
+    window.condStrength=Math.max(0,window.condStrength-15);
+    stim.innerHTML='<div style="font-size:1.2rem;color:var(--secondary)">Extinction trial</div>';
+    resp.innerHTML='<span style="color:var(--text-muted)">No response (extinction)</span>';
+    dog.textContent='🐕';
+  } else if(type==='both'){
+    window.condStrength=Math.min(100,window.condStrength+12);
+    window.condTrials++;
+    stim.innerHTML='<div style="font-size:1.5rem">🔔 + 🍖</div><div style="font-size:0.8rem;color:var(--text-muted)">CS + UCS paired</div>';
+    resp.innerHTML='<span style="color:var(--accent)">💧 Salivation (UCR)</span>';
+    dog.textContent='🐕😋';
+  } else if(type==='cs'){
+    window.condTrials++;
+    const r = window.condStrength>30;
+    stim.innerHTML='<div style="font-size:1.5rem">🔔</div><div style="font-size:0.8rem;color:var(--text-muted)">CS only (test trial)</div>';
+    resp.innerHTML = r ? '<span style="color:var(--accent)">💧 Conditioned response! CR formed!</span>' : '<span style="color:var(--text-muted)">No response yet (need more pairing)</span>';
+    dog.textContent = r ? '🐕💧' : '🐕';
+  } else {
+    stim.innerHTML='<div style="font-size:1.5rem">🍖</div><div style="font-size:0.8rem;color:var(--text-muted)">UCS alone</div>';
+    resp.innerHTML='<span style="color:var(--accent)">💧 Salivation (UCR)</span>';
+    dog.textContent='🐕😋';
+  }
+  window.condHistory.push(window.condStrength);
+  count.textContent=`Trials: ${window.condTrials} | Conditioning Strength: ${window.condStrength}%`;
+  drawConditioningChart();
+}
+function drawConditioningChart(){
+  const canvas = document.getElementById('conditioningChart');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,280,100);
+  ctx.strokeStyle='rgba(108,99,255,0.2)';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(0,i*25);ctx.lineTo(280,i*25);ctx.stroke();}
+  const h=window.condHistory;
+  if(h.length<2)return;
+  ctx.strokeStyle='#43e97b';ctx.lineWidth=2;ctx.beginPath();
+  h.forEach((v,i)=>{
+    const x=(i/(Math.max(h.length-1,1)))*270+5;
+    const y=95-(v/100)*90;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  ctx.fillStyle='#9b97cc';ctx.font='9px sans-serif';
+  ctx.fillText('Trials →',220,98);
+  ctx.fillText('Strength',0,10);
+}
+
+// EMOTION SIMULATION
+function renderEmotionSim(title,body){
+  title.textContent = '😊 Emotion Recognition';
+  body.innerHTML = `
+    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Identify the basic emotion displayed. Based on Paul Ekman's universal facial expressions.</p>
+    <div id="emotionDisplay" style="text-align:center;font-size:6rem;padding:1rem;background:var(--bg-dark);border-radius:12px;cursor:pointer;margin-bottom:1rem;"></div>
+    <div id="emotionQuestion" style="text-align:center;color:white;font-weight:600;margin-bottom:1rem;"></div>
+    <div id="emotionOptions" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-bottom:1rem;"></div>
+    <div id="emotionScore" style="text-align:center;color:var(--primary);font-size:0.9rem;"></div>
+    <div style="margin-top:1rem;background:var(--bg-dark);padding:1rem;border-radius:8px;">
+      <div style="color:var(--accent2);font-size:0.85rem;font-weight:600;margin-bottom:0.3rem;">📚 Ekman's 6 Basic Emotions</div>
+      <div style="color:var(--text-muted);font-size:0.8rem;">Paul Ekman identified 6 emotions expressed the same way across all cultures: Happiness 😊, Sadness 😢, Fear 😨, Anger 😠, Surprise 😲, Disgust 🤢</div>
+    </div>`;
+  window.emotScore=0; window.emotTotal=0;
+  nextEmotion();
+}
+const emotions = [
+  {emoji:'😊',name:'Happiness',hint:'Joy, pleasure'},
+  {emoji:'😢',name:'Sadness',hint:'Grief, loss'},
+  {emoji:'😨',name:'Fear',hint:'Danger, threat'},
+  {emoji:'😠',name:'Anger',hint:'Frustration'},
+  {emoji:'😲',name:'Surprise',hint:'Unexpected event'},
+  {emoji:'🤢',name:'Disgust',hint:'Repulsion'}
+];
+let currentEmotion=null;
+function nextEmotion(){
+  currentEmotion = emotions[Math.floor(Math.random()*emotions.length)];
+  document.getElementById('emotionDisplay').textContent = currentEmotion.emoji;
+  document.getElementById('emotionQuestion').textContent = 'What emotion is this?';
+  const opts = [...emotions].sort(()=>Math.random()-0.5).slice(0,6);
+  if(!opts.find(e=>e.name===currentEmotion.name)) opts[0]=currentEmotion;
+  const shuffled = opts.sort(()=>Math.random()-0.5);
+  document.getElementById('emotionOptions').innerHTML = shuffled.map(e=>`
+    <button onclick="checkEmotion('${e.name}')" style="padding:0.6rem;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,0.05);color:var(--text);cursor:pointer;font-size:0.85rem;transition:all 0.2s;" id="emoBtn_${e.name}">${e.emoji} ${e.name}</button>`).join('');
+}
+function checkEmotion(name){
+  window.emotTotal++;
+  const isCorrect = name===currentEmotion.name;
+  if(isCorrect) window.emotScore++;
+  document.querySelectorAll('[id^="emoBtn_"]').forEach(b=>{
+    b.disabled=true;b.style.opacity='0.5';
+  });
+  const correctBtn = document.getElementById('emoBtn_'+currentEmotion.name);
+  if(correctBtn){correctBtn.style.background='rgba(67,233,123,0.2)';correctBtn.style.borderColor='#43e97b';correctBtn.style.opacity='1';}
+  document.getElementById('emotionScore').textContent = `Score: ${window.emotScore}/${window.emotTotal} | Accuracy: ${Math.round(window.emotScore/window.emotTotal*100)}%`;
+  setTimeout(nextEmotion,1200);
+}
+
+// ===================================================
+// PARTICLES (splash)
+// ===================================================
+function createParticles(){
+  const container = document.getElementById('particles');
+  const colors = ['#6c63ff','#ec4899','#43e97b','#f9ca24','#a78bfa'];
+  for(let i=0;i<20;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 4+Math.random()*8;
+    p.style.cssText = `
+      width:${size}px;height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      opacity:${0.3+Math.random()*0.4};
+      left:${Math.random()*100}%;
+      animation-duration:${8+Math.random()*12}s;
+      animation-delay:${Math.random()*10}s;
+    `;
+    container.appendChild(p);
+  }
+}
+
+// ===================================================
+// SERVICE WORKER REGISTRATION
+// ===================================================
+// Service Worker: only register on HTTP/HTTPS (not local file://)
+if('serviceWorker' in navigator && location.protocol !== 'file:'){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('service-worker.js')
+      .then(()=>console.log('✅ PWA ready — offline mode enabled'))
+      .catch(()=>{}); // silently ignore if hosting not available
+  });
+}
+
+// ===================================================
+// INIT
+// ===================================================
+document.addEventListener('DOMContentLoaded',()=>{
+  createParticles();
+  renderDashboard();
+  renderPsychGallery();
+  // Show bottom nav hidden initially
+  document.getElementById('bottomNav').style.display='none';
+  // Update completed count on load
+  let completed = Object.values(progress).filter(v=>v==='done').length;
+  document.getElementById('completedCount').textContent = completed;
+  document.getElementById('totalScore').textContent = totalScore;
+});
+</script>
+</body>
+</html>

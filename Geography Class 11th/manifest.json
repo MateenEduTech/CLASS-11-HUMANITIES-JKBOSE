@@ -1,0 +1,47 @@
+{
+  "name": "Class 11 Geography – JKBOSE",
+  "short_name": "Geo11 JKBOSE",
+  "description": "Interactive Class 11 Geography Learning App for JKBOSE students. All 22 chapters, simulations, maps and quizzes — fully offline.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a1628",
+  "theme_color": "#e8a020",
+  "lang": "en",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%230a1628' rx='24'/%3E%3Ccircle cx='96' cy='96' r='70' fill='none' stroke='%23e8a020' stroke-width='6'/%3E%3Ccircle cx='96' cy='96' r='70' fill='%230d2040'/%3E%3Cellipse cx='96' cy='96' rx='30' ry='70' fill='none' stroke='%23e8a020' stroke-width='3' opacity='0.5'/%3E%3Cline x1='26' y1='96' x2='166' y2='96' stroke='%23e8a020' stroke-width='3' opacity='0.5'/%3E%3Cline x1='96' y1='26' x2='96' y2='166' stroke='%23e8a020' stroke-width='3' opacity='0.5'/%3E%3Ctext x='96' y='140' text-anchor='middle' font-size='28' font-weight='bold' fill='%23e8a020' font-family='Georgia'%3EGeo%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230a1628' rx='60'/%3E%3Ccircle cx='256' cy='256' r='190' fill='none' stroke='%23e8a020' stroke-width='14'/%3E%3Ccircle cx='256' cy='256' r='190' fill='%230d2040'/%3E%3Cellipse cx='256' cy='256' rx='80' ry='190' fill='none' stroke='%23e8a020' stroke-width='8' opacity='0.5'/%3E%3Cline x1='66' y1='256' x2='446' y2='256' stroke='%23e8a020' stroke-width='8' opacity='0.5'/%3E%3Ctext x='256' y='360' text-anchor='middle' font-size='72' font-weight='bold' fill='%23e8a020' font-family='Georgia'%3EGeo%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Chapters",
+      "short_name": "Chapters",
+      "description": "Jump to chapter list",
+      "url": "./index.html#chapters"
+    },
+    {
+      "name": "Quiz Mode",
+      "short_name": "Quiz",
+      "description": "Start a quick quiz",
+      "url": "./index.html#quiz"
+    },
+    {
+      "name": "Simulation Lab",
+      "short_name": "Sims",
+      "description": "Open simulation lab",
+      "url": "./index.html#simLab"
+    }
+  ]
+}

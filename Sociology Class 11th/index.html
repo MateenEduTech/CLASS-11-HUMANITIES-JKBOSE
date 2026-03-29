@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#6C63FF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Class 11 Sociology Interactive Learning App by Mateen Yousuf - JKBOSE">
+<title>Sociology Class 11 | JKBOSE</title>
+<link rel="manifest" href="manifest.json">
+<style>
+/* ============================================================
+   ROOT VARIABLES & RESET
+   ============================================================ */
+:root {
+  --bg-deep: #0A0B1A;
+  --bg-card: #12142A;
+  --bg-surface: #1A1D3A;
+  --primary: #6C63FF;
+  --primary-light: #8B85FF;
+  --accent: #FF6584;
+  --gold: #F7B731;
+  --teal: #43C59E;
+  --green: #2ECC71;
+  --text-primary: #E8EAF6;
+  --text-secondary: #9FA8C9;
+  --text-muted: #5C6490;
+  --border: rgba(108, 99, 255, 0.2);
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Segoe UI', system-ui, sans-serif;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+.screen { display:none; min-height:100vh; animation: fadeIn 0.4s ease; }
+.screen.active { display:block; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
+
+/* ============================================================
+   SPLASH SCREEN
+   ============================================================ */
+#splash {
+  background: linear-gradient(135deg, #0A0B1A 0%, #1a0533 50%, #0A0B1A 100%);
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.splash-canvas-wrapper {
+  position: absolute; top:0; left:0; width:100%; height:100%; z-index:0;
+}
+#splashCanvas { width:100%; height:100%; }
+
+.splash-content {
+  position: relative; z-index: 1; text-align: center;
+  max-width: 480px; width:100%;
+}
+
+.splash-logo {
+  width: 90px; height: 90px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 44px; margin: 0 auto 20px;
+  box-shadow: 0 0 40px rgba(108,99,255,0.5);
+  animation: logoPulse 2s ease-in-out infinite;
+}
+@keyframes logoPulse {
+  0%,100%{ box-shadow: 0 0 40px rgba(108,99,255,0.5); }
+  50%{ box-shadow: 0 0 70px rgba(108,99,255,0.8); }
+}
+
+.splash-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 6vw, 42px);
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, var(--primary-light) 50%, var(--accent) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2; margin-bottom: 8px;
+}
+
+.splash-subtitle {
+  font-size: 14px; color: var(--text-secondary);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.splash-board {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold), #e67e22);
+  color: #000; font-weight: 700; font-size: 11px;
+  padding: 4px 14px; border-radius: 20px;
+  letter-spacing: 2px; margin-bottom: 40px;
+}
+
+/* Social Icons SVG Animation */
+.social-icons-row {
+  display: flex; gap: 16px; justify-content: center;
+  margin-bottom: 40px; flex-wrap: wrap;
+}
+.social-icon-item {
+  width: 48px; height: 48px;
+  background: rgba(108,99,255,0.15);
+  border: 1px solid rgba(108,99,255,0.3);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+.social-icon-item:nth-child(2){ animation-delay: 0.4s; }
+.social-icon-item:nth-child(3){ animation-delay: 0.8s; }
+.social-icon-item:nth-child(4){ animation-delay: 1.2s; }
+.social-icon-item:nth-child(5){ animation-delay: 1.6s; }
+@keyframes iconFloat {
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-8px); }
+}
+
+.btn-start {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white; font-size: 16px; font-weight: 700;
+  padding: 16px 48px; border: none; border-radius: 50px;
+  cursor: pointer; letter-spacing: 1px;
+  box-shadow: 0 0 30px rgba(108,99,255,0.4);
+  transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.btn-start::after {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
+  opacity:0; transition: var(--transition);
+}
+.btn-start:hover { transform: translateY(-3px); box-shadow: 0 0 50px rgba(108,99,255,0.6); }
+.btn-start:hover::after { opacity:1; }
+.btn-start:active { transform: translateY(0); }
+
+/* ============================================================
+   HOME SCREEN
+   ============================================================ */
+#home {
+  background: var(--bg-deep);
+  padding-bottom: 100px;
+}
+
+.app-header {
+  background: rgba(18,20,42,0.95);
+  backdrop-filter: blur(20px);
+  padding: 16px 20px;
+  position: sticky; top:0; z-index:100;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.header-logo { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+.header-logo span { color: var(--primary); }
+.header-progress {
+  font-size: 12px; color: var(--text-secondary);
+  background: rgba(108,99,255,0.15); padding: 6px 12px; border-radius: 20px;
+}
+
+.home-hero {
+  padding: 30px 20px 24px;
+  background: linear-gradient(180deg, rgba(108,99,255,0.08) 0%, transparent 100%);
+}
+
+/* Author Card */
+.author-card {
+  background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(255,101,132,0.1));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 24px;
+}
+.author-photo-ring {
+  width: 80px; height: 80px; flex-shrink: 0;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  box-shadow: 0 0 20px rgba(108,99,255,0.4);
+}
+.author-photo-ring img {
+  width: 100%; height: 100%;
+  border-radius: 50%; object-fit: cover;
+  background: var(--bg-surface);
+  display: block;
+}
+.author-photo-fallback {
+  width: 74px; height: 74px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+}
+.author-info h3 { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.author-info p { font-size: 13px; color: var(--text-secondary); margin-bottom: 2px; }
+.author-badge {
+  display: inline-block;
+  background: rgba(247,183,49,0.2);
+  color: var(--gold);
+  font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 12px;
+  border: 1px solid rgba(247,183,49,0.3);
+  margin-top: 6px;
+}
+
+/* Progress Overview */
+.progress-overview {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.progress-overview h3 { font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; letter-spacing: 1px; text-transform: uppercase; }
+.progress-stats {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 12px;
+}
+.stat-item { text-align: center; }
+.stat-num { font-size: 28px; font-weight: 700; color: var(--primary); display: block; }
+.stat-label { font-size: 11px; color: var(--text-muted); }
+.progress-bar-wrap {
+  height: 6px; background: rgba(255,255,255,0.08);
+  border-radius: 3px; margin-top: 14px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+
+/* Section Headers */
+.section-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 20px; margin-bottom: 16px;
+}
+.section-header h2 { font-size: 18px; font-weight: 700; }
+.section-header .badge {
+  background: rgba(108,99,255,0.2);
+  color: var(--primary-light);
+  font-size: 11px; padding: 3px 8px; border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Chapters Grid */
+.chapters-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  padding: 0 20px 20px;
+}
+
+.chapter-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.chapter-card::before {
+  content: '';
+  position: absolute; top:0; left:0; width:4px; height:100%;
+  background: var(--chapter-color, var(--primary));
+}
+.chapter-card:hover {
+  transform: translateX(4px);
+  border-color: var(--chapter-color, var(--primary));
+  box-shadow: -4px 0 20px rgba(108,99,255,0.2);
+}
+.chapter-card.completed { opacity: 0.9; }
+.chapter-card.completed::after {
+  content: '✓';
+  position: absolute; top: 16px; right: 16px;
+  width: 24px; height: 24px;
+  background: var(--green);
+  color: white; font-size: 12px; font-weight: 700;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.chapter-card-inner { display: flex; align-items: flex-start; gap: 14px; }
+.chapter-emoji {
+  font-size: 28px; flex-shrink: 0;
+  width: 52px; height: 52px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.chapter-info { flex: 1; }
+.chapter-num { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.chapter-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; line-height: 1.3; }
+.chapter-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.chapter-meta {
+  display: flex; gap: 8px; margin-top: 10px;
+}
+.chapter-tag {
+  font-size: 10px; padding: 3px 8px; border-radius: 6px;
+  background: rgba(255,255,255,0.06); color: var(--text-muted);
+}
+
+/* Quick Access Cards */
+.quick-access {
+  padding: 0 20px 20px;
+}
+.quick-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.quick-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+.quick-card:hover { border-color: var(--primary); transform: translateY(-2px); background: var(--bg-surface); }
+.quick-card .icon { font-size: 28px; margin-bottom: 10px; }
+.quick-card h4 { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.quick-card p { font-size: 11px; color: var(--text-muted); }
+
+/* ============================================================
+   CHAPTER DETAIL SCREEN
+   ============================================================ */
+#chapter-detail {
+  background: var(--bg-deep);
+  padding-bottom: 100px;
+}
+
+.detail-header {
+  padding: 20px;
+  padding-top: 56px;
+  position: relative;
+}
+.back-btn {
+  position: absolute; top: 16px; left: 16px;
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 20px;
+  transition: var(--transition);
+}
+.back-btn:hover { background: var(--primary); }
+
+.chapter-hero {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  border-left: 4px solid var(--chapter-color, var(--primary));
+  margin-bottom: 20px;
+}
+.chapter-hero-emoji { font-size: 40px; margin-bottom: 12px; }
+.chapter-hero-num { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+.chapter-hero-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 6px 0; }
+.chapter-hero-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+/* Tab navigation */
+.tab-nav {
+  display: flex; gap: 6px;
+  padding: 0 20px 16px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display:none; }
+.tab-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  transition: var(--transition);
+}
+.tab-btn.active {
+  background: var(--primary);
+  color: white; border-color: var(--primary);
+}
+
+.tab-content { padding: 0 20px; }
+.tab-panel { display:none; animation: fadeIn 0.3s ease; }
+.tab-panel.active { display: block; }
+
+/* Content card */
+.content-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px; margin-bottom: 16px;
+}
+.content-card h3 {
+  font-size: 15px; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.content-card p {
+  font-size: 14px; color: var(--text-secondary); line-height: 1.7;
+}
+
+/* Key points */
+.key-points { list-style: none; }
+.key-points li {
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 14px; color: var(--text-secondary);
+  display: flex; align-items: flex-start; gap: 10px;
+  line-height: 1.5;
+}
+.key-points li:last-child { border-bottom: none; }
+.key-points li::before {
+  content: '→'; color: var(--primary);
+  font-weight: 700; flex-shrink:0;
+}
+
+/* Thinker cards */
+.thinkers-list { display: flex; flex-direction: column; gap: 12px; }
+.thinker-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex; gap: 14px;
+}
+.thinker-avatar {
+  width: 48px; height: 48px; flex-shrink:0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+.thinker-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.thinker-period { font-size: 11px; color: var(--gold); margin-bottom: 4px; }
+.thinker-contribution { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+/* Case study */
+.case-study-card {
+  background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(255,101,132,0.05));
+  border: 1px solid rgba(108,99,255,0.3);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.case-study-label {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--primary-light); margin-bottom: 8px;
+}
+.case-study-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+.case-study-content { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+/* ============================================================
+   QUIZ
+   ============================================================ */
+.quiz-container { padding: 0 20px 20px; }
+.quiz-header {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 16px; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.quiz-progress-text { font-size: 14px; color: var(--text-secondary); }
+.quiz-score-text { font-size: 14px; font-weight: 700; color: var(--primary); }
+
+.question-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px; margin-bottom: 16px;
+}
+.question-num {
+  font-size: 11px; color: var(--text-muted);
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;
+}
+.question-text { font-size: 16px; font-weight: 600; line-height: 1.5; margin-bottom: 20px; }
+
+.options-list { display: flex; flex-direction: column; gap: 10px; }
+.option-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  text-align: left; cursor: pointer;
+  color: var(--text-primary); font-size: 14px;
+  transition: var(--transition);
+  display: flex; align-items: center; gap: 12px;
+}
+.option-btn:hover:not(:disabled) { border-color: var(--primary); background: rgba(108,99,255,0.1); }
+.option-btn.correct { border-color: var(--green); background: rgba(46,204,113,0.1); color: var(--green); }
+.option-btn.wrong { border-color: var(--accent); background: rgba(255,101,132,0.1); color: var(--accent); }
+.option-btn:disabled { cursor: default; }
+.option-letter {
+  width: 28px; height: 28px; flex-shrink: 0;
+  border-radius: 8px; background: rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--text-muted);
+}
+.option-btn.correct .option-letter { background: var(--green); color: white; }
+.option-btn.wrong .option-letter { background: var(--accent); color: white; }
+
+.explanation-box {
+  background: rgba(108,99,255,0.1);
+  border: 1px solid rgba(108,99,255,0.3);
+  border-radius: var(--radius-sm);
+  padding: 14px; margin-top: 12px;
+  font-size: 13px; color: var(--text-secondary);
+  line-height: 1.6; display: none;
+}
+.explanation-box.show { display: block; animation: fadeIn 0.3s ease; }
+
+.quiz-nav {
+  display: flex; gap: 12px; margin-top: 16px;
+}
+.btn-next {
+  flex: 1;
+  background: var(--primary);
+  color: white; font-size: 15px; font-weight: 700;
+  padding: 14px; border: none; border-radius: var(--radius-sm);
+  cursor: pointer; transition: var(--transition);
+  display: none;
+}
+.btn-next.show { display: block; }
+.btn-next:hover { background: var(--primary-light); }
+
+/* Quiz Result */
+.quiz-result {
+  text-align: center; padding: 40px 20px;
+}
+.result-emoji { font-size: 60px; margin-bottom: 16px; }
+.result-score { font-size: 48px; font-weight: 700; color: var(--primary); }
+.result-label { font-size: 20px; font-weight: 700; margin: 8px 0; }
+.result-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 30px; }
+.result-stars { font-size: 30px; margin-bottom: 20px; }
+.btn-retry {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary); font-size: 14px; font-weight: 600;
+  padding: 12px 24px; border-radius: 50px;
+  cursor: pointer; margin: 0 6px; transition: var(--transition);
+}
+.btn-retry:hover { border-color: var(--primary); }
+
+/* ============================================================
+   SIMULATION LAB
+   ============================================================ */
+#simulations {
+  background: var(--bg-deep);
+  padding-bottom: 100px;
+}
+
+.sim-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 14px; padding: 20px;
+}
+.sim-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px; cursor: pointer;
+  transition: var(--transition);
+}
+.sim-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+.sim-card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.sim-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+}
+.sim-card-title { font-size: 16px; font-weight: 700; }
+.sim-card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.sim-launch-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 14px;
+  background: rgba(108,99,255,0.2);
+  color: var(--primary-light);
+  font-size: 13px; font-weight: 600;
+  padding: 8px 16px; border-radius: 20px;
+  border: 1px solid rgba(108,99,255,0.3);
+}
+
+/* ============================================================
+   INDIVIDUAL SIMULATIONS
+   ============================================================ */
+#sim-detail {
+  background: var(--bg-deep);
+  padding-bottom: 100px;
+}
+
+.sim-area {
+  padding: 16px 20px;
+}
+
+/* Social Structure Sim */
+.structure-viz {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px; margin-bottom: 16px;
+}
+.structure-svg-wrap { text-align: center; }
+
+/* Social Inequality Sim */
+.inequality-controls {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px; margin-bottom: 16px;
+}
+.sim-slider-wrap { margin-bottom: 16px; }
+.sim-slider-wrap label {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;
+}
+.sim-slider-wrap input[type=range] {
+  width: 100%; accent-color: var(--primary);
+}
+.inequality-bars {
+  display: flex; align-items: flex-end; gap: 4px;
+  height: 120px; background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-sm); padding: 10px;
+}
+.ineq-bar {
+  flex: 1; border-radius: 4px 4px 0 0;
+  transition: height 0.5s ease;
+  min-height: 4px;
+}
+
+/* Urban-Rural Sim */
+.ur-compare {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.ur-side {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.ur-side h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; text-align:center; }
+.ur-metrics { display: flex; flex-direction: column; gap: 8px; }
+.ur-metric { font-size: 12px; }
+.ur-metric-bar {
+  height: 6px; border-radius: 3px; margin-top: 4px;
+  background: rgba(255,255,255,0.1);
+  overflow:hidden;
+}
+.ur-metric-fill { height:100%; border-radius:3px; }
+
+/* Culture Explorer Sim */
+.culture-cards {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.culture-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px; text-align:center;
+  cursor:pointer; transition: var(--transition);
+}
+.culture-item:hover { border-color: var(--gold); transform: scale(1.02); }
+.culture-item .flag { font-size: 32px; margin-bottom: 8px; }
+.culture-item h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.culture-item p { font-size: 11px; color: var(--text-secondary); }
+.culture-detail {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px; margin-top: 12px;
+  animation: fadeIn 0.3s ease;
+  display: none;
+}
+.culture-detail.show { display: block; }
+
+/* Social Change Sim */
+.change-timeline {
+  position: relative;
+  padding-left: 24px;
+}
+.change-timeline::before {
+  content:''; position:absolute; left:10px; top:0; bottom:0;
+  width:2px; background: linear-gradient(180deg, var(--primary), var(--accent));
+}
+.timeline-event {
+  position: relative; margin-bottom: 20px;
+  padding: 14px; background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  animation: slideInLeft 0.5s ease forwards;
+  opacity: 0;
+}
+.timeline-event::before {
+  content:''; position:absolute;
+  left: -18px; top:18px;
+  width:10px; height:10px; border-radius:50%;
+  background: var(--primary);
+  border: 2px solid var(--bg-deep);
+}
+@keyframes slideInLeft {
+  from{ opacity:0; transform:translateX(-20px); }
+  to{ opacity:1; transform:translateX(0); }
+}
+.timeline-year { font-size:11px; color:var(--gold); font-weight:700; margin-bottom:4px; }
+.timeline-event-title { font-size:14px; font-weight:700; margin-bottom:4px; }
+.timeline-event-desc { font-size:12px; color:var(--text-secondary); line-height:1.5; }
+
+/* ============================================================
+   THINKERS GALLERY
+   ============================================================ */
+#thinkers {
+  background: var(--bg-deep);
+  padding-bottom: 100px;
+}
+
+.thinkers-gallery {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 14px; padding: 0 20px 20px;
+}
+.gallery-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px; text-align:center;
+  cursor:pointer; transition: var(--transition);
+}
+.gallery-card:hover { transform:translateY(-4px); border-color: var(--primary); }
+.gallery-avatar {
+  width:60px; height:60px;
+  border-radius:50%; margin:0 auto 12px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px;
+  border: 2px solid rgba(108,99,255,0.3);
+}
+.gallery-name { font-size:13px; font-weight:700; margin-bottom:2px; }
+.gallery-period { font-size:11px; color:var(--gold); margin-bottom:6px; }
+.gallery-tag {
+  display:inline-block;
+  background: rgba(108,99,255,0.15);
+  color: var(--primary-light);
+  font-size:10px; padding:3px 8px; border-radius:8px;
+}
+
+/* Thinker Modal */
+.modal-overlay {
+  position:fixed; inset:0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  z-index:1000; display:none;
+  align-items:flex-end; justify-content:center;
+  padding: 0;
+}
+.modal-overlay.open { display:flex; animation: fadeIn 0.3s ease; }
+.modal-sheet {
+  background: var(--bg-surface);
+  border-radius: 24px 24px 0 0;
+  padding: 24px; width:100%;
+  max-height: 80vh; overflow-y: auto;
+  animation: slideUp 0.3s ease;
+  max-width: 600px;
+}
+@keyframes slideUp { from{transform:translateY(50px)} to{transform:translateY(0)} }
+.modal-handle {
+  width:40px; height:4px; border-radius:2px;
+  background: rgba(255,255,255,0.2);
+  margin: 0 auto 20px;
+}
+.modal-title { font-size:20px; font-weight:700; margin-bottom:6px; }
+.modal-sub { font-size:13px; color:var(--gold); margin-bottom:14px; }
+.modal-body { font-size:14px; color:var(--text-secondary); line-height:1.7; }
+.modal-close {
+  position:absolute; top:16px; right:16px;
+  background:rgba(255,255,255,0.1); border:none; color:white;
+  width:32px; height:32px; border-radius:50%;
+  cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ============================================================
+   BOTTOM NAV
+   ============================================================ */
+.bottom-nav {
+  position: fixed; bottom:0; left:0; right:0;
+  background: rgba(18,20,42,0.97);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex; z-index:200;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.nav-item {
+  flex:1; padding:12px 8px 10px;
+  display:flex; flex-direction:column;
+  align-items:center; gap:4px;
+  cursor:pointer; transition: var(--transition);
+  border:none; background:transparent; color:var(--text-muted);
+}
+.nav-item.active { color: var(--primary); }
+.nav-icon { font-size:22px; }
+.nav-label { font-size:10px; font-weight:600; letter-spacing:0.5px; }
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.screen-title {
+  font-size:22px; font-weight:700;
+  padding: 20px 20px 0;
+  margin-bottom: 6px;
+}
+.screen-subtitle {
+  font-size:13px; color:var(--text-secondary);
+  padding: 0 20px 20px;
+}
+.divider { height:1px; background:var(--border); margin:0 20px 20px; }
+
+.badge-pill {
+  display:inline-block;
+  padding: 2px 8px; border-radius: 10px;
+  font-size:10px; font-weight:700;
+}
+
+.loading-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
+
+/* Responsive */
+@media (min-width: 600px) {
+  .chapters-grid { grid-template-columns: repeat(2,1fr); }
+  .quick-grid { grid-template-columns: repeat(4,1fr); }
+  .sim-grid { grid-template-columns: repeat(2,1fr); }
+  .thinkers-gallery { grid-template-columns: repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== SPLASH SCREEN ==================== -->
+<div id="splash" class="screen active">
+  <div class="splash-canvas-wrapper">
+    <canvas id="splashCanvas"></canvas>
+  </div>
+  <div class="splash-content">
+    <div class="splash-logo">🏛️</div>
+    <div class="splash-subtitle">JKBOSE • Class 11</div>
+    <div class="splash-title">Sociology<br>Learning App</div>
+    <div class="splash-board">NEP 2020 ALIGNED</div>
+
+    <div class="social-icons-row">
+      <div class="social-icon-item">👥</div>
+      <div class="social-icon-item">🏘️</div>
+      <div class="social-icon-item">🌍</div>
+      <div class="social-icon-item">📚</div>
+      <div class="social-icon-item">⚖️</div>
+    </div>
+
+    <!-- Animated SVG community graphic -->
+    <svg width="220" height="80" viewBox="0 0 220 80" style="margin-bottom:30px; opacity:0.8">
+      <!-- People icons -->
+      <circle cx="30" cy="30" r="12" fill="rgba(108,99,255,0.3)" stroke="#6C63FF" stroke-width="1.5"/>
+      <text x="30" y="36" text-anchor="middle" font-size="14">🧑</text>
+      <circle cx="70" cy="20" r="14" fill="rgba(255,101,132,0.3)" stroke="#FF6584" stroke-width="1.5"/>
+      <text x="70" y="27" text-anchor="middle" font-size="16">👩</text>
+      <circle cx="110" cy="30" r="12" fill="rgba(67,197,158,0.3)" stroke="#43C59E" stroke-width="1.5"/>
+      <text x="110" y="36" text-anchor="middle" font-size="14">👨</text>
+      <circle cx="150" cy="20" r="14" fill="rgba(247,183,49,0.3)" stroke="#F7B731" stroke-width="1.5"/>
+      <text x="150" y="27" text-anchor="middle" font-size="16">👴</text>
+      <circle cx="190" cy="30" r="12" fill="rgba(165,94,234,0.3)" stroke="#A55EEA" stroke-width="1.5"/>
+      <text x="190" y="36" text-anchor="middle" font-size="14">👵</text>
+      <!-- Connection lines -->
+      <line x1="42" y1="30" x2="56" y2="24" stroke="rgba(108,99,255,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="84" y1="24" x2="96" y2="28" stroke="rgba(255,101,132,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="122" y1="28" x2="136" y2="24" stroke="rgba(67,197,158,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="164" y1="24" x2="178" y2="28" stroke="rgba(247,183,49,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <!-- Labels -->
+      <text x="110" y="65" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.5)" letter-spacing="3">SOCIETY • CULTURE • CHANGE</text>
+    </svg>
+
+    <button class="btn-start" onclick="startApp()">▶ START LEARNING</button>
+    <p style="margin-top:14px; font-size:11px; color:var(--text-muted)">By Mateen Yousuf • School Education Dept J&K</p>
+  </div>
+</div>
+
+<!-- ==================== HOME SCREEN ==================== -->
+<div id="home" class="screen">
+  <div class="app-header">
+    <div class="header-logo">Socio<span>logy</span> 11</div>
+    <div class="header-progress" id="headerProgress">0/8 Chapters</div>
+  </div>
+
+  <!-- Author Card -->
+  <div style="padding: 20px 20px 0">
+    <div class="author-card">
+      <div class="author-photo-ring">
+        <img src="author.jpg" alt="Mateen Yousuf"
+          onerror="this.parentElement.innerHTML='<div class=\'author-photo-fallback\'>👨‍🏫</div>'">
+      </div>
+      <div class="author-info">
+        <h3>Mateen Yousuf</h3>
+        <p>Teacher</p>
+        <p>School Education Department</p>
+        <p>Jammu & Kashmir</p>
+        <span class="author-badge">✦ App Author</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div style="padding: 16px 20px 0">
+    <div class="progress-overview">
+      <h3>Your Progress</h3>
+      <div class="progress-stats">
+        <div class="stat-item">
+          <span class="stat-num" id="statChapters">0</span>
+          <div class="stat-label">Chapters Done</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" id="statQuizzes">0</span>
+          <div class="stat-label">Quizzes Taken</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" id="statScore">0%</span>
+          <div class="stat-label">Avg Score</div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="mainProgressBar" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Access -->
+  <div style="padding: 16px 20px 0">
+    <div class="section-header" style="padding:0; margin-bottom:12px">
+      <h2>🚀 Quick Access</h2>
+    </div>
+    <div class="quick-grid">
+      <div class="quick-card" onclick="showScreen('simulations')">
+        <div class="icon">🧪</div>
+        <h4>Simulations</h4>
+        <p>Interactive labs</p>
+      </div>
+      <div class="quick-card" onclick="showScreen('thinkers')">
+        <div class="icon">🧠</div>
+        <h4>Thinkers</h4>
+        <p>Sociologists gallery</p>
+      </div>
+      <div class="quick-card" onclick="startAllChaptersQuiz()">
+        <div class="icon">🎯</div>
+        <h4>Master Quiz</h4>
+        <p>All chapters</p>
+      </div>
+      <div class="quick-card" onclick="resetProgress()">
+        <div class="icon">🔄</div>
+        <h4>Reset</h4>
+        <p>Clear progress</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapters -->
+  <div style="margin-top:24px">
+    <div class="section-header">
+      <h2>📖 Chapters</h2>
+      <span class="badge">8 Units</span>
+    </div>
+    <div class="chapters-grid" id="chaptersGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CHAPTER DETAIL ==================== -->
+<div id="chapter-detail" class="screen">
+  <div class="detail-header">
+    <button class="back-btn" onclick="goBack()">←</button>
+    <div id="chapterHero" class="chapter-hero">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <div class="tab-nav" id="chapterTabNav">
+    <button class="tab-btn active" onclick="switchTab('learn', this)">📖 Learn</button>
+    <button class="tab-btn" onclick="switchTab('keypoints', this)">🔑 Key Points</button>
+    <button class="tab-btn" onclick="switchTab('thinkers-tab', this)">🧠 Thinkers</button>
+    <button class="tab-btn" onclick="switchTab('casestudy', this)">📋 Case Study</button>
+    <button class="tab-btn" onclick="switchTab('quiz-tab', this)">❓ Quiz</button>
+  </div>
+
+  <div class="tab-content">
+    <div class="tab-panel active" id="tab-learn"><!-- JS fills --></div>
+    <div class="tab-panel" id="tab-keypoints"><!-- JS fills --></div>
+    <div class="tab-panel" id="tab-thinkers-tab"><!-- JS fills --></div>
+    <div class="tab-panel" id="tab-casestudy"><!-- JS fills --></div>
+    <div class="tab-panel" id="tab-quiz-tab"><!-- JS fills --></div>
+  </div>
+</div>
+
+<!-- ==================== SIMULATIONS ==================== -->
+<div id="simulations" class="screen">
+  <div class="app-header">
+    <div class="header-logo">🧪 Sim<span>Lab</span></div>
+    <div class="header-progress">5 Simulations</div>
+  </div>
+  <div class="screen-title">Sociology Lab</div>
+  <div class="screen-subtitle">Interactive tools to explore social concepts</div>
+
+  <div class="sim-grid">
+    <div class="sim-card" onclick="launchSim('structure')">
+      <div class="sim-card-header">
+        <div class="sim-icon" style="background:rgba(108,99,255,0.2)">🏗️</div>
+        <div>
+          <div class="sim-card-title">Social Structure</div>
+        </div>
+      </div>
+      <div class="sim-card-desc">Visualize family, class, and caste relationships in a social hierarchy.</div>
+      <div class="sim-launch-btn">▶ Launch</div>
+    </div>
+
+    <div class="sim-card" onclick="launchSim('inequality')">
+      <div class="sim-card-header">
+        <div class="sim-icon" style="background:rgba(231,76,60,0.2)">📊</div>
+        <div>
+          <div class="sim-card-title">Inequality Simulator</div>
+        </div>
+      </div>
+      <div class="sim-card-desc">Adjust income, education, and caste sliders to see inequality distribution.</div>
+      <div class="sim-launch-btn">▶ Launch</div>
+    </div>
+
+    <div class="sim-card" onclick="launchSim('urbanrural')">
+      <div class="sim-card-header">
+        <div class="sim-icon" style="background:rgba(67,197,158,0.2)">🌆</div>
+        <div>
+          <div class="sim-card-title">Urban vs Rural</div>
+        </div>
+      </div>
+      <div class="sim-card-desc">Compare lifestyles, access to services, and social mobility across settings.</div>
+      <div class="sim-launch-btn">▶ Launch</div>
+    </div>
+
+    <div class="sim-card" onclick="launchSim('culture')">
+      <div class="sim-card-header">
+        <div class="sim-icon" style="background:rgba(247,183,49,0.2)">🎭</div>
+        <div>
+          <div class="sim-card-title">Culture Explorer</div>
+        </div>
+      </div>
+      <div class="sim-card-desc">Explore cultural diversity — festivals, family systems, and values across India.</div>
+      <div class="sim-launch-btn">▶ Launch</div>
+    </div>
+
+    <div class="sim-card" onclick="launchSim('change')">
+      <div class="sim-card-header">
+        <div class="sim-icon" style="background:rgba(165,94,234,0.2)">🔄</div>
+        <div>
+          <div class="sim-card-title">Social Change Timeline</div>
+        </div>
+      </div>
+      <div class="sim-card-desc">See how technology and globalization have transformed Indian society since 1947.</div>
+      <div class="sim-launch-btn">▶ Launch</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SIMULATION DETAIL ==================== -->
+<div id="sim-detail" class="screen">
+  <div class="app-header">
+    <div class="header-logo" id="simDetailTitle">Simulation</div>
+    <button onclick="showScreen('simulations')" style="background:rgba(255,255,255,0.1); border:none; color:white; padding:8px 14px; border-radius:20px; cursor:pointer">✕ Close</button>
+  </div>
+  <div class="sim-area" id="simContent">
+    <!-- Filled by JS -->
+  </div>
+</div>
+
+<!-- ==================== THINKERS GALLERY ==================== -->
+<div id="thinkers" class="screen">
+  <div class="app-header">
+    <div class="header-logo">🧠 <span>Thinkers</span></div>
+    <div class="header-progress" id="thinkersCount">24 Sociologists</div>
+  </div>
+  <div class="screen-title">Sociology Thinkers</div>
+  <div class="screen-subtitle">The great minds who shaped sociological thought</div>
+  <div class="thinkers-gallery" id="thinkersGallery"><!-- JS fills --></div>
+</div>
+
+<!-- ==================== BOTTOM NAV ==================== -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-item active" data-screen="home" onclick="navTo('home', this)">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Home</span>
+  </button>
+  <button class="nav-item" data-screen="simulations" onclick="navTo('simulations', this)">
+    <span class="nav-icon">🧪</span>
+    <span class="nav-label">Simulations</span>
+  </button>
+  <button class="nav-item" data-screen="thinkers" onclick="navTo('thinkers', this)">
+    <span class="nav-icon">🧠</span>
+    <span class="nav-label">Thinkers</span>
+  </button>
+</nav>
+
+<!-- Thinker Modal -->
+<div class="modal-overlay" id="thinkerModal" onclick="closeModal(event)">
+  <div class="modal-sheet" style="position:relative">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeThinkerModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  DATA — loaded inline for offline use
+// ============================================================
+let CHAPTERS = [];
+let currentChapterId = null;
+let currentQuiz = { questions:[], current:0, score:0, answered:false };
+let previousScreen = 'home';
+
+// Embedded chapter data for full offline support
+const CHAPTER_DATA = {
+  "class":"11","subject":"Sociology","board":"JKBOSE",
+  "chapters":[
+    {id:1,title:"Introducing Sociology",emoji:"🔬",color:"#6C63FF",
+     description:"Understanding the scientific study of society, social behaviour, and human relationships.",
+     content:"Sociology is the systematic study of human society and social behaviour. It examines how social structures, institutions, and forces affect human thought and behaviour. Auguste Comte, who coined the term 'sociology' in 1838, envisioned it as the 'queen of all sciences.' Sociology looks at the big picture of society and tries to understand what holds societies together and what causes them to change or fall apart. It is distinguished from other social sciences by its focus on the social as a whole — not individual psychology, not economics alone, but the interplay of social forces that shape every aspect of human life.",
+     keyPoints:["Sociology studies society and social relationships scientifically","Auguste Comte coined the term 'sociology' in 1838","It examines social structures, patterns, and institutions","Sociology bridges the individual and society","It uses both qualitative and quantitative research methods","Sociology is distinct from psychology (individual focus) and economics"],
+     thinkers:[{name:"Auguste Comte",emoji:"🔬",contribution:"Father of Sociology; coined 'sociology' in 1838; proposed Positivism as the scientific study of society through observable facts",period:"1798–1857",origin:"France"},{name:"Emile Durkheim",emoji:"📊",contribution:"Social facts; Division of Labour; Suicide study; established sociology as a formal academic discipline with rigorous methods",period:"1858–1917",origin:"France"},{name:"Max Weber",emoji:"📜",contribution:"Interpretive sociology (Verstehen); Protestant Ethic and Spirit of Capitalism; ideal types; rationalization",period:"1864–1920",origin:"Germany"},{name:"Karl Marx",emoji:"⚒️",contribution:"Class conflict; Historical materialism; Alienation; Capitalism critique; The Communist Manifesto",period:"1818–1883",origin:"Germany"}],
+     caseStudy:{title:"Durkheim's Study of Suicide (1897)",content:"Emile Durkheim's landmark 1897 study demonstrated that even the most personal act — taking one's own life — is shaped by social forces, not just individual psychology. By analyzing official statistics across countries, he found that suicide rates differed systematically by religion (Protestants higher than Catholics), marital status (single higher than married), and economic conditions. He identified four types: Egoistic (weak social ties), Altruistic (too strong ties — e.g., soldiers), Anomic (disrupted norms), and Fatalistic (excessive regulation). This showed that 'social facts' — external forces — powerfully shape individual behaviour."},
+     quiz:[{question:"Who is known as the 'Father of Sociology'?",options:["Karl Marx","Auguste Comte","Max Weber","Emile Durkheim"],answer:"Auguste Comte",explanation:"Auguste Comte coined the term 'sociology' in 1838 and is considered its founder."},{question:"Which book did Emile Durkheim write about suicide as a social phenomenon?",options:["Das Kapital","Suicide","The Protestant Ethic","Social Contract"],answer:"Suicide",explanation:"Durkheim's 1897 book 'Suicide' showed that suicide rates are influenced by social factors."},{question:"What term did Max Weber use for his interpretive method?",options:["Positivism","Functionalism","Verstehen","Dialectics"],answer:"Verstehen",explanation:"Weber's 'Verstehen' (German for 'understanding') emphasized empathetic interpretation of social actions."},{question:"What is a 'social fact' according to Durkheim?",options:["Personal beliefs","Natural events","External forces that shape individual behaviour","Economic factors"],answer:"External forces that shape individual behaviour",explanation:"Social facts are external, coercive forces like norms, laws, and customs."},{question:"Which perspective views society as a system of interrelated parts?",options:["Conflict Theory","Functionalism","Symbolic Interactionism","Feminism"],answer:"Functionalism",explanation:"Functionalism views society as a system where each part serves a function."}]},
+
+    {id:2,title:"Understanding Society",emoji:"🏘️",color:"#FF6584",
+     description:"Exploring social structure, social groups, institutions, and the layers of society.",
+     content:"Society is a complex web of social relationships, institutions, and structures. It is not simply a collection of individuals but a system of relationships that gives those individuals meaning and identity. Social structure refers to the recurring patterns of behaviour and relationships that persist over time. Social groups — ranging from families to nations — form the basic building blocks of society. Understanding society means examining both macro-level institutions (government, religion, economy) and micro-level everyday interactions. Status positions (ascribed or achieved) and the roles attached to them create predictable social behaviour.",
+     keyPoints:["Society is more than just a collection of individuals","Social structure includes norms, roles, statuses, and institutions","Social groups range from primary (family) to secondary (work, school)","Status can be ascribed (given at birth) or achieved (earned)","Roles are expected behaviours associated with a particular status","Social institutions: family, education, religion, economy, government"],
+     thinkers:[{name:"Herbert Spencer",emoji:"🔭",contribution:"Organic analogy of society; Social Darwinism; society evolves from simple to complex through differentiation",period:"1820–1903",origin:"England"},{name:"Talcott Parsons",emoji:"🔧",contribution:"Structural Functionalism; AGIL model: Adaptation, Goal attainment, Integration, Latency",period:"1902–1979",origin:"USA"},{name:"Erving Goffman",emoji:"🎭",contribution:"Dramaturgical theory; impression management; face-work; stigma in social interaction",period:"1922–1982",origin:"Canada"}],
+     caseStudy:{title:"Caste as Social Structure in India",content:"The Indian caste system is one of the world's oldest examples of social stratification. Originally linked to occupation (varna system), it became a hereditary, ritualized hierarchy dividing society into Brahmin, Kshatriya, Vaishya, Shudra, and 'untouchables.' This ascribed status system shows how social structures persist for centuries, shaping access to resources, marriage, and social mobility. India's Constitution (1950) outlawed caste discrimination, and the system of reservations (affirmative action) for Scheduled Castes and Tribes represents a structural response to historical inequality."},
+     quiz:[{question:"What is 'ascribed status'?",options:["Status earned through achievement","Status assigned at birth","Status based on wealth","Status gained through education"],answer:"Status assigned at birth",explanation:"Ascribed status is assigned at birth based on caste, race, or gender."},{question:"Primary groups are characterized by:",options:["Formal relationships","Large size","Intimate, face-to-face relationships","Contract-based interactions"],answer:"Intimate, face-to-face relationships",explanation:"Primary groups like families have close, personal relationships."},{question:"Herbert Spencer compared society to:",options:["A machine","A living organism","A river","A computer"],answer:"A living organism",explanation:"Spencer used the organic analogy, comparing society's parts to organs."},{question:"What is a 'role' in sociology?",options:["A person's rank in society","Expected behaviours associated with a status","A group's cultural practices","An individual's personality"],answer:"Expected behaviours associated with a status",explanation:"A role is the set of behaviours expected of someone in a social position."},{question:"Which sociologist developed 'impression management'?",options:["Karl Marx","Max Weber","Erving Goffman","Auguste Comte"],answer:"Erving Goffman",explanation:"Goffman's dramaturgical theory described social life as a performance."}]},
+
+    {id:3,title:"Social Institutions: Family, Marriage & Kinship",emoji:"👨‍👩‍👧‍👦",color:"#43C59E",
+     description:"Examining family structures, marriage systems, and kinship networks across cultures.",
+     content:"The family is the most fundamental of all social institutions, found universally though its forms vary widely. Family serves crucial functions: socialization of children, regulation of sexual behaviour, economic cooperation, emotional support, and transmission of cultural heritage. Marriage is the socially sanctioned union forming the basis of family. Kinship refers to the network of social relationships based on blood (consanguine), marriage (affinal), or adoption. Different societies organize kinship differently — patrilineal societies trace descent through fathers, matrilineal through mothers, and bilateral through both. India's diversity includes both systems.",
+     keyPoints:["Nuclear family: parents and their children; Extended/Joint family: multiple generations","Marriage forms: Monogamy (one spouse), Polygyny (multiple wives), Polyandry (multiple husbands)","Endogamy: marriage within a group; Exogamy: marriage outside a group","Patrilineal: descent through father; Matrilineal: through mother; Bilateral: through both","Hypergamy: marrying up in status; prevalent in Indian marriage practices","Family functions: socialization, economic cooperation, emotional support, reproduction"],
+     thinkers:[{name:"George Peter Murdock",emoji:"🌐",contribution:"Cross-cultural study of 250 societies; identified four universal functions of family: sexual, reproductive, economic, educational",period:"1897–1985",origin:"USA"},{name:"Claude Lévi-Strauss",emoji:"🔗",contribution:"Alliance theory: incest taboo forces exogamy, creating social alliances between groups; gift exchange in marriage",period:"1908–2009",origin:"France"},{name:"Friedrich Engels",emoji:"⚒️",contribution:"Origin of Family, Private Property and the State (1884): family as economic institution that protects property through female control",period:"1820–1895",origin:"Germany"}],
+     caseStudy:{title:"The Joint Family System in Kashmir",content:"The traditional Kashmiri joint family (wudar) exemplifies an extended family structure where multiple generations live under one roof, sharing resources, responsibilities, and decision-making. Economic pressures of modernization, urbanization, and migration for education and employment are driving transition to nuclear units. Yet cultural continuity persists through festivals (Eid ul-Fitr, Navroz), shared cuisine, language transmission, and collective rituals at shrines (dargahs). This case illustrates how family structures adapt to macro changes while preserving cultural identity."},
+     quiz:[{question:"A family of parents and unmarried children is called:",options:["Extended family","Nuclear family","Joint family","Clan"],answer:"Nuclear family",explanation:"The nuclear family is the basic unit of a married couple and their children."},{question:"Marriage with multiple wives is called:",options:["Monogamy","Polyandry","Polygyny","Endogamy"],answer:"Polygyny",explanation:"Polygyny is a form of polygamy where a man has more than one wife."},{question:"Marriage within one's own social group is:",options:["Exogamy","Endogamy","Monogamy","Hypergamy"],answer:"Endogamy",explanation:"Endogamy requires marrying within one's caste, tribe, or community."},{question:"Tracing descent through the mother's line is:",options:["Patrilineal","Bilateral","Matrilineal","Unilateral"],answer:"Matrilineal",explanation:"Matrilineal descent traces family membership through the mother's side."},{question:"Lévi-Strauss argued the incest taboo serves to:",options:["Punish offenders","Force people to marry outside their group, creating alliances","Protect genetics only","Maintain religious purity"],answer:"Force people to marry outside their group, creating alliances",explanation:"Lévi-Strauss argued the incest taboo forces exogamy, creating social bonds between groups."}]},
+
+    {id:4,title:"Culture and Socialization",emoji:"🎭",color:"#F7B731",
+     description:"Understanding how culture shapes human behaviour and how individuals become members of society.",
+     content:"Culture is the totality of learned, socially transmitted customs, knowledge, material objects, and behaviour that characterizes a human group. It includes both material culture (tools, buildings, technology, art) and non-material culture (beliefs, values, norms, language, symbols). Culture is LEARNED (not innate), SHARED (not individual), CUMULATIVE (built over generations), and DYNAMIC (it changes). Socialization is the lifelong process through which individuals internalize culture and develop a social identity. Primary socialization (childhood, mainly in family) teaches basic norms and language. Secondary socialization (adulthood, through schools, peers, workplaces) expands this further.",
+     keyPoints:["Culture is learned, shared, cumulative, and dynamic","Material culture: physical objects; Non-material culture: beliefs, values, norms, language","Socialization: Primary (childhood) and Secondary (adulthood)","Agents of socialization: family, peer groups, school, media, religion, workplace","Cultural relativism: judge cultures by their own standards, not others'","Ethnocentrism: judging other cultures by one's own cultural standards (bias)"],
+     thinkers:[{name:"Edward Tylor",emoji:"📖",contribution:"First anthropological definition of culture (1871) as 'that complex whole which includes knowledge, belief, art, morals, law, custom'",period:"1832–1917",origin:"England"},{name:"Margaret Mead",emoji:"🌺",contribution:"Culture shapes gender roles differently across societies; Coming of Age in Samoa; challenged biological determinism",period:"1901–1978",origin:"USA"},{name:"George Herbert Mead",emoji:"🪞",contribution:"Self develops through social interaction; 'I' (spontaneous self) and 'Me' (social, reflective self); mind, self, society",period:"1863–1931",origin:"USA"}],
+     caseStudy:{title:"Socialization Through Kashmiri Folk Traditions",content:"In Kashmir, folk traditions serve as powerful informal socialization tools. The Rouf dance (women's circle dance at Eid) transmits gender roles and community solidarity. Hafiza music performances teach Sufi values of love and spiritual seeking. Oral recitations of Shah-i-Hamadan's teachings at Khanqah-i-Moula instill Islamic ethics. Children absorb values of hospitality (mehman-nawazi) and respect for elders through participation in family rituals. These processes transmit Kashmiri identity even as formal schooling introduces broader national curriculum."},
+     quiz:[{question:"Which is an example of NON-material culture?",options:["Buildings","Tools","Norms and values","Clothing"],answer:"Norms and values",explanation:"Non-material culture includes intangible elements like beliefs, values, norms, and language."},{question:"The process by which children learn society's culture is:",options:["Enculturation","Socialization","Assimilation","Acculturation"],answer:"Socialization",explanation:"Primary socialization during childhood teaches basic cultural norms and values."},{question:"Who first defined culture as 'that complex whole'?",options:["Margaret Mead","Edward Tylor","Claude Lévi-Strauss","Ruth Benedict"],answer:"Edward Tylor",explanation:"Edward Tylor provided the first anthropological definition of culture in 1871."},{question:"Judging other cultures by one's own standards is called:",options:["Cultural relativism","Ethnocentrism","Multiculturalism","Assimilation"],answer:"Ethnocentrism",explanation:"Ethnocentrism is the tendency to view one's own culture as superior."},{question:"George Herbert Mead's concept of 'self' involves:",options:["Biological instincts only","The 'I' (spontaneous) and 'Me' (social self)","Only unconscious drives","Fixed personality traits"],answer:"The 'I' (spontaneous) and 'Me' (social self)",explanation:"Mead saw the self emerging from social interaction with an I (spontaneous) and Me (social expectations)."}]},
+
+    {id:5,title:"Doing Sociology: Research Methods",emoji:"📊",color:"#4ECDC4",
+     description:"Learning the tools and techniques sociologists use to study society scientifically.",
+     content:"Sociological research requires systematic, rigorous methods to gather reliable evidence about social life. The scientific method in sociology involves: (1) Formulating a research question, (2) Reviewing existing literature, (3) Forming a hypothesis, (4) Choosing methodology, (5) Collecting data, (6) Analyzing data, (7) Drawing conclusions and reporting. Sociologists choose between quantitative methods (surveys, experiments, statistical analysis — which produce numerical data) and qualitative methods (interviews, participant observation, ethnography, case studies — which produce rich, descriptive data). Mixed methods combine both. Choice depends on the research question.",
+     keyPoints:["Research process: question → literature review → hypothesis → method → data → analysis → conclusions","Quantitative: surveys, questionnaires, experiments, statistical analysis","Qualitative: interviews, participant observation, ethnography, focus groups","Triangulation: using multiple methods to cross-check findings","Sampling: random, stratified, purposive — ensuring representative data","Research ethics: informed consent, confidentiality, avoiding harm, honesty"],
+     thinkers:[{name:"Emile Durkheim",emoji:"📊",contribution:"Established positivist methodology; used statistical analysis of suicide data; 'social facts' studied objectively like natural phenomena",period:"1858–1917",origin:"France"},{name:"Max Weber",emoji:"📜",contribution:"Interpretive (Verstehen) methodology; ideal types as analytical tools; value-free research as an ideal",period:"1864–1920",origin:"Germany"},{name:"Bronisław Malinowski",emoji:"🏝️",contribution:"Pioneered participant observation and extended fieldwork (Trobriand Islands); ethnography as immersive method",period:"1884–1942",origin:"Poland/UK"}],
+     caseStudy:{title:"Mixed-Methods Research on Education in J&K",content:"A sociological study of educational attainment in Jammu & Kashmir might combine: Quantitative surveys of 1,000 households measuring literacy rates, enrollment, dropout rates, and income — providing statistical breadth. In-depth qualitative interviews with 50 families across Srinagar, rural Kashmir Valley, and Gujjar-Bakerwal nomadic communities — capturing barriers to girls' education, impact of conflict-related school closures, and aspirations of first-generation learners. The mixed-methods triangulation reveals patterns invisible to either method alone: statistics show the gender gap; interviews explain why it persists."},
+     quiz:[{question:"Which method involves the researcher living within the community?",options:["Survey","Experiment","Participant observation","Content analysis"],answer:"Participant observation",explanation:"Participant observation involves immersing oneself in a community to understand it from inside."},{question:"A hypothesis is:",options:["A proven fact","A testable prediction about variables","A research question","A literature review"],answer:"A testable prediction about variables",explanation:"A hypothesis is a tentative, testable statement guiding research."},{question:"Using multiple methods to check findings is called:",options:["Replication","Triangulation","Sampling","Generalization"],answer:"Triangulation",explanation:"Triangulation uses multiple methods or data sources to improve validity."},{question:"Which type of data can be expressed in numbers?",options:["Qualitative data","Ethnographic data","Quantitative data","Biographical data"],answer:"Quantitative data",explanation:"Quantitative data is numerical and can be analyzed statistically."},{question:"Informed consent means:",options:["The researcher is knowledgeable","Participants agree after being fully informed","The institution approves","Data is confidential"],answer:"Participants agree after being fully informed",explanation:"Informed consent ensures participants voluntarily agree with full knowledge of the study."}]},
+
+    {id:6,title:"Social Change and Social Order",emoji:"🔄",color:"#A55EEA",
+     description:"Examining how societies transform over time and the forces that maintain social stability.",
+     content:"Social change refers to significant, lasting alterations in behaviour patterns, cultural values, social institutions, and social structures over time. Change can be evolutionary (slow, gradual — like the spread of literacy) or revolutionary (rapid, disruptive — like the French Revolution). Major drivers of change include: technology (printing press, internet), economic forces (industrialization, globalization), social movements (civil rights, women's liberation), conflict (wars, revolutions), and diffusion of ideas. Social order refers to the stability and continuity maintained through shared norms, social control, and institutions. The tension between change and order is sociology's central drama.",
+     keyPoints:["Social change can be evolutionary (gradual) or revolutionary (rapid)","Drivers of change: technology, economy, social movements, conflict, diffusion","Modernization theory: societies move from traditional to modern (Parsons, Rostow)","Social control — formal (law, police) and informal (norms, gossip, peer pressure)","Collective behaviour: crowds, panics, fashions, social movements","Globalization: economic and cultural integration accelerating change worldwide"],
+     thinkers:[{name:"Karl Marx",emoji:"⚒️",contribution:"Class conflict as engine of historical change; capitalism generates its own contradictions leading to socialism; dialectical materialism",period:"1818–1883",origin:"Germany"},{name:"Max Weber",emoji:"📜",contribution:"Rationalization and bureaucratization as defining features of modernity; disenchantment of the world",period:"1864–1920",origin:"Germany"},{name:"Emile Durkheim",emoji:"📊",contribution:"Mechanical solidarity (traditional) to organic solidarity (modern); anomie as normlessness during rapid change",period:"1858–1917",origin:"France"}],
+     caseStudy:{title:"Social Change in Post-2019 Kashmir",content:"The reorganization of Jammu & Kashmir in August 2019 brought rapid, externally-driven political and social change. Alongside political transitions, spreading internet connectivity (despite intermittent restrictions) enabled e-commerce, digital education, and social media communication. Traditional crafts like Pashmina shawls and carpet-weaving face competition from industrial production and synthetic substitutes. Youth aspirations shift toward professional careers, migration for education, and entrepreneurship. Religious practices continue but are increasingly mediated by social media. This multifaceted case illustrates how macro political decisions intersect with everyday social transformation."},
+     quiz:[{question:"Durkheim's 'anomie' refers to:",options:["Strong social norms","A state of normlessness during rapid change","Traditional solidarity","Organic interdependence"],answer:"A state of normlessness during rapid change",explanation:"Anomie describes normlessness when social bonds break down during rapid change."},{question:"According to Marx, the primary driver of social change is:",options:["Ideas and values","Great leaders","Class conflict and economic relations","Natural disasters"],answer:"Class conflict and economic relations",explanation:"Marx argued conflict between economic classes drives historical change."},{question:"Formal social control includes:",options:["Gossip and ridicule","Laws, police, and courts","Cultural norms","Family pressure"],answer:"Laws, police, and courts",explanation:"Formal social control uses codified laws and official institutions."},{question:"Weber described increasing rationality in modern society as:",options:["Anomie","Class conflict","Rationalization","Secularization"],answer:"Rationalization",explanation:"Weber saw rationalization — replacing tradition with efficiency — as modernity's defining feature."},{question:"Shift from rural agricultural to urban industrial society is called:",options:["Globalization","Secularization","Urbanization","Modernization"],answer:"Modernization",explanation:"Modernization encompasses urbanization, industrialization, and rationalization."}]},
+
+    {id:7,title:"Environment and Society",emoji:"🌍",color:"#2ECC71",
+     description:"Exploring the relationship between human society and the natural environment.",
+     content:"Environmental sociology examines the reciprocal relationship between human societies and the natural environment. Human societies depend on ecosystems for resources (food, water, energy, minerals) while simultaneously transforming them through agriculture, industry, and urbanization. The industrial revolution accelerated environmental degradation: deforestation, pollution, biodiversity loss, and climate change are fundamentally social problems with social causes and requiring social solutions. Environmental justice addresses how environmental burdens are unequally distributed — the poor, indigenous communities, and Global South bear disproportionate impacts of pollution and climate change despite contributing least to it.",
+     keyPoints:["Society and nature are in a dynamic, reciprocal relationship","Industrialization and capitalism drive environmental degradation","Environmental justice: poor and marginalized bear disproportionate environmental burdens","Chipko Movement (1973): India's grassroots forest protection movement","Sustainable development: meeting present needs without compromising future generations","Climate change as a social problem requiring collective social action"],
+     thinkers:[{name:"Murray Bookchin",emoji:"🌱",contribution:"Social ecology: environmental problems rooted in social hierarchy; domination of nature mirrors domination of people",period:"1921–2006",origin:"USA"},{name:"Vandana Shiva",emoji:"🌺",contribution:"Ecofeminism; critique of Green Revolution's impact on biodiversity; championed Chipko Movement; food sovereignty",period:"1952–present",origin:"India"},{name:"Ulrich Beck",emoji:"⚠️",contribution:"Risk society (1986): modern industrial society produces and distributes new manmade risks; reflexive modernization",period:"1944–2015",origin:"Germany"}],
+     caseStudy:{title:"Dal Lake: Environment and Society in Kashmir",content:"Dal Lake in Srinagar is a microcosm of the society-environment nexus. The Hanji community has sustained a unique floating civilization for centuries — living on houseboats, growing vegetables on floating gardens (raad), and fishing. But population growth, urban encroachment, tourism pressure, and inadequate waste management have severely degraded the lake. Its area has shrunk from 75 sq km (1900) to under 18 sq km today due to weeds, sewage, and sedimentation. J&K's Dal Lake Conservation Authority employs integrated solutions: engineering (dredging, weed removal), policy (encroachment removal, sewage treatment), and community engagement — demonstrating that environmental problems require integrated social solutions."},
+     quiz:[{question:"The Chipko Movement was about:",options:["Water rights","Protecting forests from commercial logging","Land reform","Air pollution"],answer:"Protecting forests from commercial logging",explanation:"The Chipko Movement (1973) involved villagers hugging trees to prevent logging."},{question:"Ulrich Beck's 'risk society' suggests:",options:["Medieval societies were riskier","Modern societies generate new manmade risks","Risk is equally distributed","Technology eliminates risks"],answer:"Modern societies generate new manmade risks",explanation:"Beck argued industrialization creates new risks (pollution, nuclear) central to modern life."},{question:"Environmental justice concerns:",options:["Protecting endangered species","Equal distribution of environmental burdens","Industrial development","Scientific research"],answer:"Equal distribution of environmental burdens",explanation:"Environmental justice addresses how pollution disproportionately affects poor and minority communities."},{question:"Sustainable development means:",options:["No development","Meeting present needs without compromising future generations","Only renewable energy","Stopping industry"],answer:"Meeting present needs without compromising future generations",explanation:"This is the Brundtland Commission (1987) definition of sustainable development."},{question:"Ecofeminism links environmental destruction to:",options:["Overpopulation","Patriarchy and domination of both women and nature","Technology alone","Capitalism alone"],answer:"Patriarchy and domination of both women and nature",explanation:"Ecofeminism argues the same patriarchal logic drives both oppression of women and exploitation of nature."}]},
+
+    {id:8,title:"Social Inequality and Social Justice",emoji:"⚖️",color:"#E74C3C",
+     description:"Understanding the dimensions of inequality in society and the pursuit of a just social order.",
+     content:"Social inequality refers to the unequal distribution of valued resources — wealth, power, prestige, education, health — across individuals and groups in society. Social stratification is the hierarchical arrangement that results. Dimensions of inequality include: economic class (income and wealth), caste (ritualized Hindu hierarchy), gender (patriarchy), race/ethnicity, religion, and region. In India, these dimensions intersect in complex ways — Dalit women, for instance, face triple disadvantage of caste, class, and gender. Social justice encompasses both formal equality (equal treatment) and substantive equality (addressing historical disadvantage through positive action).",
+     keyPoints:["Inequality exists across class, caste, gender, race, religion, and region","India's Constitution: outlaws discrimination, provides reservations for SC/ST/OBC","Gender inequality: patriarchy, wage gap, domestic violence, unequal education","Poverty: absolute (below survival) and relative (below societal average)","Social mobility: vertical (moving up/down class ladder) and horizontal (same level)","Intersectionality: multiple forms of disadvantage reinforce each other"],
+     thinkers:[{name:"B.R. Ambedkar",emoji:"⚖️",contribution:"Annihilation of Caste (1936); architect of Indian Constitution; Dalit rights; conversion to Buddhism; opposed Gandhian varnashrama",period:"1891–1956",origin:"India"},{name:"Pierre Bourdieu",emoji:"🎓",contribution:"Economic, social, and cultural capital; habitus (embodied dispositions); field theory of social reproduction of inequality",period:"1930–2002",origin:"France"},{name:"John Rawls",emoji:"🏛️",contribution:"A Theory of Justice (1971); original position and veil of ignorance thought experiment; difference principle: inequalities only just if they benefit the least advantaged",period:"1921–2002",origin:"USA"}],
+     caseStudy:{title:"Reservations Policy and Social Justice in India",content:"India's system of reservations (affirmative action) for Scheduled Castes (15%), Scheduled Tribes (7.5%), and Other Backward Classes (27%) in education and government employment is among the world's largest affirmative action programs. Ambedkar argued that formal equality before law was insufficient after millennia of exclusion; substantive equality required compensatory policies. The policy has enabled millions of Dalits and Adivasis to access education and employment previously denied to them. Ongoing debates — about creamy layer exclusions, expanding or reducing reservations, extending to private sector — illustrate the continuing struggle to balance merit, equality of opportunity, and historical justice."},
+     quiz:[{question:"The hierarchical arrangement of groups in society is called:",options:["Social mobility","Social stratification","Social control","Socialization"],answer:"Social stratification",explanation:"Social stratification refers to the hierarchical arrangement based on wealth, power, and prestige."},{question:"B.R. Ambedkar's most significant contribution was:",options:["Leading independence movement","Drafting India's Constitution and fighting for Dalit rights","Establishing socialism","Non-aligned movement"],answer:"Drafting India's Constitution and fighting for Dalit rights",explanation:"Ambedkar chaired the Constitution drafting committee and was a lifelong Dalit rights advocate."},{question:"Bourdieu's 'cultural capital' refers to:",options:["Money and assets","Social connections","Knowledge, skills, education conferring social advantage","Political power"],answer:"Knowledge, skills, education conferring social advantage",explanation:"Cultural capital includes educational credentials and tastes that give social advantages."},{question:"The 'glass ceiling' refers to:",options:["A type of architecture","Invisible barriers preventing women from reaching top positions","Transparent government","Economic barriers for immigrants"],answer:"Invisible barriers preventing women from reaching top positions",explanation:"The glass ceiling describes invisible barriers preventing women from advancing to senior positions."},{question:"Rawls' 'veil of ignorance' thought experiment aims to:",options:["Show inequality is natural","Determine just principles without knowing one's place in society","Prove knowledge is power","Understand social structures"],answer:"Determine just principles without knowing one's place in society",explanation:"Rawls asked: what principles would you choose not knowing if you'd be rich or poor? This reveals fair principles."}]}
+  ]
+};
+
+// ============================================================
+//  ALL THINKERS (for gallery)
+// ============================================================
+const ALL_THINKERS = [
+  {name:"Auguste Comte",emoji:"🔬",period:"1798–1857",origin:"France",tag:"Founder",bio:"Coined the term 'sociology' in 1838. Proposed Positivism — the application of scientific methods to study society. Developed the 'Law of Three Stages' (theological, metaphysical, positive) of social development. Envisioned sociology as the 'queen of sciences.'"},
+  {name:"Emile Durkheim",emoji:"📊",period:"1858–1917",origin:"France",tag:"Functionalism",bio:"Established sociology as a formal academic discipline. Key works: The Division of Labour in Society (1893), Rules of Sociological Method (1895), Suicide (1897). Concepts: social facts, anomie, mechanical vs organic solidarity, collective consciousness."},
+  {name:"Max Weber",emoji:"📜",period:"1864–1920",origin:"Germany",tag:"Interpretive",bio:"Developed Verstehen (interpretive understanding) methodology. Key works: The Protestant Ethic and the Spirit of Capitalism (1905), Economy and Society. Concepts: rationalization, ideal types, bureaucracy, charismatic authority, disenchantment of the world."},
+  {name:"Karl Marx",emoji:"⚒️",period:"1818–1883",origin:"Germany",tag:"Conflict",bio:"Historical materialism: economic base determines cultural superstructure. Key works: The Communist Manifesto (1848), Das Kapital (1867). Concepts: class conflict, alienation, surplus value, false consciousness, capitalism's contradictions."},
+  {name:"Herbert Spencer",emoji:"🔭",period:"1820–1903",origin:"England",tag:"Evolution",bio:"Applied evolutionary theory to society. Coined 'survival of the fittest.' Organic analogy: society like a living organism. Opposed state intervention. Developed Social Darwinism — controversial application of natural selection to social life."},
+  {name:"George Herbert Mead",emoji:"🪞",period:"1863–1931",origin:"USA",tag:"Interactionism",bio:"Founder of symbolic interactionism. The self develops through social interaction (taking the role of the other). 'I' and 'Me' components of self. Mind emerges from communication. Key work: Mind, Self and Society (1934)."},
+  {name:"Erving Goffman",emoji:"🎭",period:"1922–1982",origin:"Canada",tag:"Micro",bio:"Dramaturgical analysis: social life as theatrical performance. Key works: Presentation of Self in Everyday Life (1959), Stigma (1963), Asylums (1961). Concepts: front stage/back stage, impression management, face-work, total institutions."},
+  {name:"Pierre Bourdieu",emoji:"🎓",period:"1930–2002",origin:"France",tag:"Inequality",bio:"Theory of social reproduction: how privilege passes between generations. Key concepts: habitus (embodied dispositions), field (social arenas), and capital (economic, social, cultural, symbolic). Key work: Distinction (1979). Analyzed education as reproducing class inequality."},
+  {name:"B.R. Ambedkar",emoji:"⚖️",period:"1891–1956",origin:"India",tag:"Justice",bio:"Chairman of India's Constitution Drafting Committee. Lifelong champion of Dalit rights. Key work: Annihilation of Caste (1936). Converted to Buddhism (1956). Argued formal equality insufficient without substantive change. Opposed both caste Hinduism and Gandhian varnashrama."},
+  {name:"Vandana Shiva",emoji:"🌺",period:"1952–present",origin:"India",tag:"Ecofeminism",bio:"Environmental activist and ecofeminist. Championed Chipko Movement. Critiqued Green Revolution's impact on biodiversity and farmers. Founder of Navdanya movement for seed sovereignty. Argues capitalism, patriarchy, and nature domination are interconnected systems of oppression."},
+  {name:"Margaret Mead",emoji:"🌺",period:"1901–1978",origin:"USA",tag:"Culture",bio:"Cultural anthropologist. Coming of Age in Samoa (1928): gender roles are culturally determined, not biological. Male and Female (1949). Pioneer of fieldwork-based cultural study. Influenced understanding of gender, family, and adolescence across cultures."},
+  {name:"Claude Lévi-Strauss",emoji:"🔗",period:"1908–2009",origin:"France",tag:"Structuralism",bio:"Structural anthropology: underlying structures shape all human cultures. Alliance theory: incest taboo forces exogamy and creates social alliances. Myth analysis reveals universal binary structures. Key works: Tristes Tropiques, The Raw and the Cooked, The Elementary Structures of Kinship."},
+  {name:"Talcott Parsons",emoji:"🔧",period:"1902–1979",origin:"USA",tag:"Functionalism",bio:"Grand theory of structural functionalism. AGIL schema: social systems must Adapt, attain Goals, Integrate, and maintain Latency (cultural patterns). Social action theory. Key work: The Social System (1951). Criticized for conservative bias and ignoring conflict."},
+  {name:"Ulrich Beck",emoji:"⚠️",period:"1944–2015",origin:"Germany",tag:"Risk",bio:"Risk Society (1986): modern industrial society generates new, democratized manmade risks (nuclear, chemical, ecological) that transcend class boundaries. Reflexive modernization: society reflects on and challenges its own foundations. Coined 'individualization' and 'second modernity.'"},
+  {name:"John Rawls",emoji:"🏛️",period:"1921–2002",origin:"USA",tag:"Justice",bio:"Theory of Justice (1971): two principles — (1) equal basic liberties for all, (2) Difference Principle: social inequalities only just if they benefit the least advantaged. Original position thought experiment: choose principles behind 'veil of ignorance' without knowing your social position."},
+  {name:"Friedrich Engels",emoji:"⚒️",period:"1820–1895",origin:"Germany",tag:"Marxism",bio:"Co-authored The Communist Manifesto (1848) with Marx. The Origin of the Family, Private Property and the State (1884): family as economic institution protecting property through control of female sexuality. The Condition of the Working Class in England (1845): ethnographic account of industrial poverty."},
+  {name:"Bronisław Malinowski",emoji:"🏝️",period:"1884–1942",origin:"Poland",tag:"Methods",bio:"Pioneered participant observation and extended fieldwork (Trobriand Islands, 1915-18). Functional theory: every cultural element serves a basic human need. Argonauts of the Western Pacific (1922). Established ethnography as sociology's key qualitative method."},
+  {name:"George Peter Murdock",emoji:"🌐",period:"1897–1985",origin:"USA",tag:"Family",bio:"Cross-cultural study of 250 societies (Human Relations Area Files). Identified four universal functions of family: sexual, reproductive, economic, educational. Argued nuclear family is universal. Social Structure (1949). Pioneered comparative anthropology."},
+  {name:"Murray Bookchin",emoji:"🌱",period:"1921–2006",origin:"USA",tag:"Ecology",bio:"Founded social ecology: the domination of nature arises from the domination of humans by humans. Hierarchy in society (class, patriarchy, state) drives ecological destruction. Post-Scarcity Anarchism (1971). Influenced Green and anarchist movements worldwide."},
+  {name:"Edward Tylor",emoji:"📖",period:"1832–1917",origin:"England",tag:"Culture",bio:"Father of cultural anthropology. Primitive Culture (1871): first systematic definition of culture as 'that complex whole which includes knowledge, belief, art, morals, law, custom, and any other capabilities and habits acquired by man as a member of society.' Concept of animism."},
+  {name:"Herbert Blumer",emoji:"💬",period:"1900–1987",origin:"USA",tag:"Interactionism",bio:"Coined 'symbolic interactionism' (1937). Three premises: (1) humans act toward things based on meanings they have for them, (2) meaning arises in social interaction, (3) meanings are modified through interpretation. Critique of quantitative methods in sociology."},
+  {name:"C. Wright Mills",emoji:"✍️",period:"1916–1962",origin:"USA",tag:"Critical",bio:"The Sociological Imagination (1959): ability to understand personal troubles as shaped by public issues; biography and history intersect. The Power Elite (1956): US governed by a unified elite of corporate, military, and political leaders. Critique of 'grand theory' and 'abstracted empiricism.'"},
+  {name:"Harriet Martineau",emoji:"👩‍💼",period:"1802–1876",origin:"England",tag:"Pioneer",bio:"First female sociologist. Translated and condensed Comte's Positive Philosophy into English. Society in America (1837): empirical study applying sociological methods to American society. Advocated for women's rights, abolition of slavery, and workers' rights. Pioneer of feminist sociology."},
+  {name:"W.E.B. Du Bois",emoji:"✊",period:"1868–1963",origin:"USA",tag:"Race",bio:"First Black PhD from Harvard. The Souls of Black Folk (1903): concept of 'double consciousness' — African Americans see themselves through the eyes of a racist society. The Philadelphia Negro (1899): first sociological study of a Black American community. Co-founder of NAACP."}
+];
+
+// ============================================================
+//  APP INITIALIZATION
+// ============================================================
+function init() {
+  CHAPTERS = CHAPTER_DATA.chapters;
+  renderChapters();
+  renderThinkersGallery();
+  updateProgress();
+  initSplashCanvas();
+}
+
+// ============================================================
+//  SPLASH CANVAS ANIMATION
+// ============================================================
+function initSplashCanvas() {
+  const canvas = document.getElementById('splashCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Create particles
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 3 + 1,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5,
+      alpha: Math.random() * 0.5 + 0.1,
+      color: ['#6C63FF','#FF6584','#43C59E','#F7B731'][Math.floor(Math.random()*4)]
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    // Draw connections
+    ctx.globalAlpha = 0.05;
+    particles.forEach((p, i) => {
+      particles.slice(i+1).forEach(q => {
+        const d = Math.hypot(p.x-q.x, p.y-q.y);
+        if (d < 100) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = '#6C63FF';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      });
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+// ============================================================
+//  NAVIGATION
+// ============================================================
+function startApp() {
+  showScreen('home');
+  document.getElementById('bottomNav').style.display = 'flex';
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // Show/hide bottom nav
+  const hideNav = ['splash','chapter-detail','sim-detail'].includes(id);
+  document.getElementById('bottomNav').style.display = hideNav ? 'none' : 'flex';
+  // Update nav active state
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.screen === id);
+  });
+  window.scrollTo(0, 0);
+}
+
+function navTo(id, el) {
+  showScreen(id);
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function goBack() {
+  showScreen(previousScreen);
+  document.getElementById('bottomNav').style.display = 'flex';
+}
+
+// ============================================================
+//  RENDER CHAPTERS
+// ============================================================
+function renderChapters() {
+  const grid = document.getElementById('chaptersGrid');
+  const completed = getCompletedChapters();
+  grid.innerHTML = CHAPTERS.map(ch => `
+    <div class="chapter-card ${completed.includes(ch.id) ? 'completed' : ''}"
+         style="--chapter-color:${ch.color}"
+         onclick="openChapter(${ch.id})">
+      <div class="chapter-card-inner">
+        <div class="chapter-emoji">${ch.emoji}</div>
+        <div class="chapter-info">
+          <div class="chapter-num">Chapter ${ch.id}</div>
+          <div class="chapter-title">${ch.title}</div>
+          <div class="chapter-desc">${ch.description}</div>
+          <div class="chapter-meta">
+            <span class="chapter-tag">📖 Learn</span>
+            <span class="chapter-tag">❓ Quiz</span>
+            <span class="chapter-tag">🧠 Thinkers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+//  OPEN CHAPTER
+// ============================================================
+function openChapter(id) {
+  currentChapterId = id;
+  previousScreen = 'home';
+  const ch = CHAPTERS.find(c => c.id === id);
+  if (!ch) return;
+
+  // Hero
+  document.getElementById('chapterHero').innerHTML = `
+    <div style="--chapter-color:${ch.color}">
+      <div class="chapter-hero-emoji">${ch.emoji}</div>
+      <div class="chapter-hero-num">Chapter ${ch.id} • JKBOSE Class 11 Sociology</div>
+      <div class="chapter-hero-title">${ch.title}</div>
+      <div class="chapter-hero-desc">${ch.description}</div>
+    </div>
+  `;
+  document.querySelector('#chapter-detail .chapter-hero').style.borderLeftColor = ch.color;
+
+  // Reset tabs
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn')[0].classList.add('active');
+  document.getElementById('tab-learn').classList.add('active');
+
+  // Populate tabs
+  populateLearnTab(ch);
+  populateKeyPointsTab(ch);
+  populateThinkersTab(ch);
+  populateCaseStudyTab(ch);
+  populateQuizTab(ch);
+
+  showScreen('chapter-detail');
+  markChapterStarted(id);
+}
+
+function populateLearnTab(ch) {
+  document.getElementById('tab-learn').innerHTML = `
+    <div class="content-card">
+      <h3>📖 Overview</h3>
+      <p>${ch.content}</p>
+    </div>
+    <div style="background:rgba(${hexToRgb(ch.color)},0.08); border:1px solid rgba(${hexToRgb(ch.color)},0.2); border-radius:var(--radius); padding:16px; margin-bottom:16px">
+      <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:${ch.color}; margin-bottom:8px">Chapter at a Glance</div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; text-align:center">
+        <div><div style="font-size:24px">${ch.emoji}</div><div style="font-size:11px; color:var(--text-muted); margin-top:4px">Chapter ${ch.id}</div></div>
+        <div><div style="font-size:22px; font-weight:700; color:${ch.color}">${ch.thinkers.length}</div><div style="font-size:11px; color:var(--text-muted); margin-top:4px">Thinkers</div></div>
+        <div><div style="font-size:22px; font-weight:700; color:${ch.color}">${ch.quiz.length}</div><div style="font-size:11px; color:var(--text-muted); margin-top:4px">Quiz Qs</div></div>
+      </div>
+    </div>
+  `;
+}
+
+function populateKeyPointsTab(ch) {
+  document.getElementById('tab-keypoints').innerHTML = `
+    <div class="content-card">
+      <h3>🔑 Key Points</h3>
+      <ul class="key-points">
+        ${ch.keyPoints.map(kp => `<li>${kp}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+function populateThinkersTab(ch) {
+  document.getElementById('tab-thinkers-tab').innerHTML = `
+    <div class="thinkers-list">
+      ${ch.thinkers.map(t => `
+        <div class="thinker-card">
+          <div class="thinker-avatar">${t.emoji || '🧑‍🏫'}</div>
+          <div>
+            <div class="thinker-name">${t.name}</div>
+            <div class="thinker-period">${t.period} • ${t.origin || ''}</div>
+            <div class="thinker-contribution">${t.contribution}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function populateCaseStudyTab(ch) {
+  document.getElementById('tab-casestudy').innerHTML = `
+    <div class="case-study-card">
+      <div class="case-study-label">📋 Case Study</div>
+      <div class="case-study-title">${ch.caseStudy.title}</div>
+      <div class="case-study-content">${ch.caseStudy.content}</div>
+    </div>
+    <div class="content-card" style="margin-top:14px">
+      <h3>💡 Discussion Points</h3>
+      <ul class="key-points">
+        <li>How does this case illustrate the chapter's main concepts?</li>
+        <li>What social forces are at play in this situation?</li>
+        <li>Can you identify similar examples in your own community?</li>
+        <li>What would a sociologist from a different perspective say about this case?</li>
+      </ul>
+    </div>
+  `;
+}
+
+function populateQuizTab(ch) {
+  currentQuiz = { questions: ch.quiz, current: 0, score: 0, answered: false };
+  renderQuestion();
+}
+
+// ============================================================
+//  QUIZ ENGINE
+// ============================================================
+function renderQuestion() {
+  const panel = document.getElementById('tab-quiz-tab');
+  const { questions, current, score } = currentQuiz;
+
+  if (current >= questions.length) {
+    // Show result
+    const pct = Math.round((score / questions.length) * 100);
+    const stars = pct >= 80 ? '⭐⭐⭐' : pct >= 60 ? '⭐⭐' : '⭐';
+    const label = pct >= 80 ? 'Excellent!' : pct >= 60 ? 'Good Job!' : 'Keep Practising!';
+    panel.innerHTML = `
+      <div class="quiz-result">
+        <div class="result-emoji">${pct >= 80 ? '🏆' : pct >= 60 ? '👏' : '📚'}</div>
+        <div class="result-score">${score}/${questions.length}</div>
+        <div class="result-label">${label}</div>
+        <div class="result-sub">${pct}% Correct</div>
+        <div class="result-stars">${stars}</div>
+        <button class="btn-retry" onclick="retryQuiz()">🔄 Retry Quiz</button>
+        <button class="btn-retry" onclick="switchTab('learn', document.querySelectorAll(\'.tab-btn\')[0])">📖 Back to Learn</button>
+      </div>
+    `;
+    saveQuizScore(currentChapterId, pct);
+    markChapterCompleted(currentChapterId);
+    updateProgress();
+    return;
+  }
+
+  const q = questions[current];
+  const letters = ['A','B','C','D'];
+  panel.innerHTML = `
+    <div class="quiz-header">
+      <span class="quiz-progress-text">Question ${current+1} of ${questions.length}</span>
+      <span class="quiz-score-text">Score: ${score}</span>
+    </div>
+    <div class="question-card">
+      <div class="question-num">Question ${current+1}</div>
+      <div class="question-text">${q.question}</div>
+      <div class="options-list">
+        ${q.options.map((opt, i) => `
+          <button class="option-btn" onclick="selectAnswer(this, '${opt.replace(/'/g,"\\'")}', '${q.answer.replace(/'/g,"\\'")}')">
+            <span class="option-letter">${letters[i]}</span>
+            ${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation-box" id="explanationBox">💡 ${q.explanation}</div>
+    </div>
+    <div class="quiz-nav">
+      <button class="btn-next" id="nextBtn" onclick="nextQuestion()">
+        ${current + 1 < questions.length ? 'Next Question →' : 'See Results 🏆'}
+      </button>
+    </div>
+  `;
+  currentQuiz.answered = false;
+}
+
+function selectAnswer(btn, selected, correct) {
+  if (currentQuiz.answered) return;
+  currentQuiz.answered = true;
+
+  // Mark options
+  document.querySelectorAll('.option-btn').forEach(b => {
+    b.disabled = true;
+    const optText = b.textContent.trim().substring(1).trim(); // Remove letter prefix
+    if (b.textContent.includes(correct)) b.classList.add('correct');
+    else if (b === btn && selected !== correct) b.classList.add('wrong');
+  });
+
+  if (selected === correct) currentQuiz.score++;
+
+  // Show explanation
+  document.getElementById('explanationBox').classList.add('show');
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function nextQuestion() {
+  currentQuiz.current++;
+  renderQuestion();
+}
+
+function retryQuiz() {
+  const ch = CHAPTERS.find(c => c.id === currentChapterId);
+  currentQuiz = { questions: ch.quiz, current: 0, score: 0, answered: false };
+  renderQuestion();
+}
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+  if (tabId === 'quiz-tab') renderQuestion();
+}
+
+// ============================================================
+//  SIMULATIONS
+// ============================================================
+function launchSim(type) {
+  previousScreen = 'simulations';
+  document.getElementById('bottomNav').style.display = 'none';
+  const titles = {
+    structure: '🏗️ Social Structure',
+    inequality: '📊 Inequality Sim',
+    urbanrural: '🌆 Urban vs Rural',
+    culture: '🎭 Culture Explorer',
+    change: '🔄 Social Change'
+  };
+  document.getElementById('simDetailTitle').textContent = titles[type];
+  document.getElementById('simContent').innerHTML = getSim(type);
+  showScreen('sim-detail');
+  document.getElementById('bottomNav').style.display = 'none';
+
+  if (type === 'inequality') initInequalitySim();
+  if (type === 'change') animateTimeline();
+}
+
+function getSim(type) {
+  switch(type) {
+    case 'structure': return getStructureSim();
+    case 'inequality': return getInequalitySim();
+    case 'urbanrural': return getUrbanRuralSim();
+    case 'culture': return getCultureSim();
+    case 'change': return getChangeSim();
+    default: return '<p>Coming soon</p>';
+  }
+}
+
+function getStructureSim() {
+  return `
+    <div class="content-card">
+      <h3>🏗️ Social Structure Visualizer</h3>
+      <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px">Explore how Indian society is structured across different dimensions of hierarchy.</p>
+    </div>
+    <div class="structure-viz">
+      <h3 style="font-size:14px; margin-bottom:16px">Caste Hierarchy (Traditional Varna System)</h3>
+      <div class="structure-svg-wrap">
+        <svg viewBox="0 0 300 280" width="100%" style="max-width:320px">
+          <!-- Triangle layers -->
+          <polygon points="150,10 280,250 20,250" fill="none" stroke="rgba(108,99,255,0.3)" stroke-width="1.5"/>
+          <!-- Brahmin -->
+          <polygon points="150,10 190,75 110,75" fill="rgba(247,183,49,0.3)" stroke="#F7B731" stroke-width="1.5"/>
+          <text x="150" y="55" text-anchor="middle" font-size="11" fill="#F7B731" font-weight="700">BRAHMIN</text>
+          <text x="150" y="68" text-anchor="middle" font-size="9" fill="rgba(247,183,49,0.7)">Priests & Scholars</text>
+          <!-- Kshatriya -->
+          <polygon points="110,80 190,80 220,140 80,140" fill="rgba(255,101,132,0.2)" stroke="#FF6584" stroke-width="1.5"/>
+          <text x="150" y="108" text-anchor="middle" font-size="11" fill="#FF6584" font-weight="700">KSHATRIYA</text>
+          <text x="150" y="122" text-anchor="middle" font-size="9" fill="rgba(255,101,132,0.7)">Warriors & Rulers</text>
+          <!-- Vaishya -->
+          <polygon points="80,145 220,145 245,195 55,195" fill="rgba(67,197,158,0.2)" stroke="#43C59E" stroke-width="1.5"/>
+          <text x="150" y="168" text-anchor="middle" font-size="11" fill="#43C59E" font-weight="700">VAISHYA</text>
+          <text x="150" y="182" text-anchor="middle" font-size="9" fill="rgba(67,197,158,0.7)">Traders & Farmers</text>
+          <!-- Shudra -->
+          <polygon points="55,200 245,200 278,248 22,248" fill="rgba(108,99,255,0.2)" stroke="#6C63FF" stroke-width="1.5"/>
+          <text x="150" y="225" text-anchor="middle" font-size="11" fill="#6C63FF" font-weight="700">SHUDRA</text>
+          <text x="150" y="239" text-anchor="middle" font-size="9" fill="rgba(108,99,255,0.7)">Labourers & Servants</text>
+        </svg>
+      </div>
+    </div>
+    <div class="structure-viz" style="margin-top:12px">
+      <h3 style="font-size:14px; margin-bottom:16px">Class Structure in Modern India</h3>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        ${[
+          {label:'Upper Class (≈5%)', color:'#F7B731', width:30, desc:'Industrialists, large landowners, top professionals'},
+          {label:'Upper Middle Class (≈15%)', color:'#43C59E', width:50, desc:'Managers, doctors, engineers, senior officials'},
+          {label:'Lower Middle Class (≈25%)', color:'#4ECDC4', width:70, desc:'Small business, government employees, teachers'},
+          {label:'Working Class (≈35%)', color:'#6C63FF', width:85, desc:'Industrial workers, service sector, artisans'},
+          {label:'Lower Class / Poor (≈20%)', color:'#FF6584', width:100, desc:'Agricultural labourers, informal sector, landless'}
+        ].map(item => `
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px">
+              <span style="color:${item.color}; font-weight:700">${item.label}</span>
+            </div>
+            <div style="height:28px; background:rgba(255,255,255,0.05); border-radius:6px; overflow:hidden; margin-bottom:2px">
+              <div style="height:100%; width:${item.width}%; background:linear-gradient(90deg, ${item.color}80, ${item.color}40); border-radius:6px; display:flex; align-items:center; padding:0 10px">
+                <span style="font-size:10px; color:rgba(255,255,255,0.7)">${item.desc}</span>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="content-card" style="margin-top:12px">
+      <h3>💡 Key Concepts</h3>
+      <ul class="key-points">
+        <li><strong>Social stratification</strong> creates a hierarchy of groups with unequal access to resources</li>
+        <li><strong>Ascribed status</strong> (caste, birth family) cannot be changed; <strong>achieved status</strong> (education, career) can</li>
+        <li><strong>Social mobility</strong> in India is improving but remains constrained by caste and class</li>
+        <li>India's <strong>Constitution</strong> outlaws caste discrimination and provides affirmative action</li>
+      </ul>
+    </div>
+  `;
+}
+
+function getInequalitySim() {
+  return `
+    <div class="content-card">
+      <h3>📊 Inequality Distribution Simulator</h3>
+      <p style="font-size:13px; color:var(--text-secondary)">Adjust the sliders to see how different factors create inequality in society.</p>
+    </div>
+    <div class="inequality-controls">
+      <div class="sim-slider-wrap">
+        <label><span>Income Inequality (Gini)</span><span id="giniVal" style="color:var(--accent)">0.5</span></label>
+        <input type="range" min="0.1" max="0.9" step="0.05" value="0.5" id="giniSlider" oninput="updateIneq()">
+      </div>
+      <div class="sim-slider-wrap">
+        <label><span>Education Access (%)</span><span id="eduVal" style="color:var(--teal)">50%</span></label>
+        <input type="range" min="10" max="100" step="5" value="50" id="eduSlider" oninput="updateIneq()">
+      </div>
+      <div class="sim-slider-wrap">
+        <label><span>Caste Discrimination (0-10)</span><span id="casteVal" style="color:var(--gold)">5</span></label>
+        <input type="range" min="0" max="10" step="1" value="5" id="casteSlider" oninput="updateIneq()">
+      </div>
+      <div class="inequality-bars" id="ineqBars">
+        <!-- Bars rendered by JS -->
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-top:6px">
+        <span style="font-size:10px; color:var(--text-muted)">Poorest 20%</span>
+        <span style="font-size:10px; color:var(--text-muted)">Richest 20%</span>
+      </div>
+    </div>
+    <div class="content-card" id="ineqInsight">
+      <h3>📈 Sociological Insight</h3>
+      <p id="insightText" style="font-size:14px; color:var(--text-secondary); line-height:1.6"></p>
+    </div>
+  `;
+}
+
+function initInequalitySim() {
+  updateIneq();
+}
+
+function updateIneq() {
+  const gini = parseFloat(document.getElementById('giniSlider').value);
+  const edu = parseInt(document.getElementById('eduSlider').value);
+  const caste = parseInt(document.getElementById('casteSlider').value);
+
+  document.getElementById('giniVal').textContent = gini.toFixed(2);
+  document.getElementById('eduVal').textContent = edu + '%';
+  document.getElementById('casteVal').textContent = caste;
+
+  // Generate wealth distribution bars (quintiles)
+  const barsDiv = document.getElementById('ineqBars');
+  const colors = ['#FF6584','#F7B731','#43C59E','#4ECDC4','#6C63FF'];
+  // Simulate distribution using gini-influenced curve
+  const shares = simulateDistribution(gini);
+  const maxH = 100;
+  barsDiv.innerHTML = shares.map((s, i) => `
+    <div class="ineq-bar" style="height:${(s/shares[4])*maxH}px; background:${colors[i]}; opacity:0.8" title="Quintile ${i+1}: ${(s*100).toFixed(1)}% of wealth"></div>
+  `).join('');
+
+  // Insight text
+  let insight = '';
+  if (gini > 0.6) insight = '⚠️ High inequality. The top 20% control a disproportionate share of wealth. This mirrors conditions in highly unequal societies. Karl Marx would see this as evidence of capitalist exploitation.';
+  else if (gini > 0.35) insight = '⚡ Moderate inequality. Some inequality exists but middle classes are present. This represents much of South Asia today. Education access is key to social mobility.';
+  else insight = '✅ Lower inequality. Wealth more evenly distributed, suggesting stronger redistributive policies (like Scandinavian social democracies).';
+  if (caste > 6) insight += ' Caste discrimination further compounds economic inequality — those in lower castes face structural barriers regardless of economic improvement.';
+  if (edu < 30) insight += ' Low education access traps communities in poverty cycles, reducing social mobility across generations.';
+  document.getElementById('insightText').textContent = insight;
+}
+
+function simulateDistribution(gini) {
+  // Simplified Lorenz curve approximation
+  const base = [0.05, 0.1, 0.15, 0.25, 0.45]; // Equal-ish
+  return base.map((b, i) => {
+    const factor = 1 + (gini - 0.3) * (i / 2 - 0.5) * 2;
+    return Math.max(0.02, b * factor);
+  });
+}
+
+function getUrbanRuralSim() {
+  const metrics = [
+    {label:'Literacy Rate', urban:93, rural:68, color:'#6C63FF'},
+    {label:'Healthcare Access', urban:88, rural:45, color:'#43C59E'},
+    {label:'Income Level', urban:85, rural:40, color:'#F7B731'},
+    {label:'Internet Access', urban:78, rural:28, color:'#4ECDC4'},
+    {label:'Girls Education', urban:82, rural:52, color:'#FF6584'},
+    {label:'Social Mobility', urban:70, rural:35, color:'#A55EEA'}
+  ];
+  return `
+    <div class="content-card">
+      <h3>🌆 Urban vs Rural Comparison</h3>
+      <p style="font-size:13px; color:var(--text-secondary)">Comparing social indicators across urban and rural India. Data is indicative.</p>
+    </div>
+    <div class="ur-compare">
+      <div class="ur-side" style="border:1px solid rgba(108,99,255,0.3)">
+        <h4 style="color:var(--primary)">🏙️ Urban</h4>
+        <div class="ur-metrics">
+          ${metrics.map(m => `
+            <div class="ur-metric">
+              <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:3px">
+                <span style="color:var(--text-secondary)">${m.label}</span>
+                <span style="color:${m.color}; font-weight:700">${m.urban}%</span>
+              </div>
+              <div class="ur-metric-bar">
+                <div class="ur-metric-fill" style="width:${m.urban}%; background:${m.color}"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="ur-side" style="border:1px solid rgba(255,101,132,0.3)">
+        <h4 style="color:var(--accent)">🌾 Rural</h4>
+        <div class="ur-metrics">
+          ${metrics.map(m => `
+            <div class="ur-metric">
+              <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:3px">
+                <span style="color:var(--text-secondary)">${m.label}</span>
+                <span style="color:${m.color}; font-weight:700">${m.rural}%</span>
+              </div>
+              <div class="ur-metric-bar">
+                <div class="ur-metric-fill" style="width:${m.rural}%; background:${m.color}"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="content-card" style="margin-top:12px">
+      <h3>💡 Sociological Analysis</h3>
+      <ul class="key-points">
+        <li>Urban-rural divide reflects <strong>uneven development</strong> and resource distribution</li>
+        <li>Rural communities maintain stronger <strong>primary group</strong> ties (family, community) but have less access to services</li>
+        <li><strong>Rural-urban migration</strong> is accelerating as people seek economic opportunities in cities</li>
+        <li>J&K's rural areas (especially tribal Gujjar-Bakerwal communities) face particular <strong>educational disadvantages</strong></li>
+        <li>Government schemes (MGNREGS, PM Awas) aim to bridge this gap through <strong>social policy</strong></li>
+      </ul>
+    </div>
+  `;
+}
+
+function getCultureSim() {
+  const cultures = [
+    {flag:'🕌', name:'Kashmiri', family:'Joint/Extended family; patrilineal descent', marriage:'Endogamous; mahr system; walima feast', festivals:'Eid ul-Fitr, Eid ul-Adha, Navroz', values:'Hospitality (mehman-nawazi), respect for elders, Sufi traditions', color:'#6C63FF'},
+    {flag:'🏯', name:'Rajasthani', family:'Joint family; patriarchal; caste-based', marriage:'Arranged; endogamous caste; dowry prevalent', festivals:'Teej, Gangaur, Pushkar Fair, Diwali', values:'Rajput honour (izzat), hospitality, warrior heritage', color:'#F7B731'},
+    {flag:'🌴', name:'Kerala', family:'Historically matrilineal (Nair); now mostly nuclear', marriage:'Cross-cousin marriage; bride price (in some communities)', festivals:'Onam, Vishu, Thrissur Pooram', values:'Education emphasis, gender equality relatively higher, arts tradition', color:'#43C59E'},
+    {flag:'🎵', name:'Bengali', family:'Extended family; patrilineal in most communities', marriage:'Arranged; endogamous; sindur and conch shell bangles', festivals:'Durga Puja, Eid, Saraswati Puja, Pohela Boishakh', values:'Literary and artistic tradition, intellectual culture, Tagore influence', color:'#FF6584'},
+    {flag:'🌾', name:'Punjabi', family:'Joint family; strong clan (gotra) system', marriage:'Exogamous within gotra; lavish celebrations', festivals:'Baisakhi, Lohri, Gurpurab, Eid (Muslim Punjabis)', values:'Industriousness, warmth, community solidarity, bhangra tradition', color:'#A55EEA'},
+    {flag:'🏝️', name:'Tamil', family:'Patrilineal; extended; caste-based hierarchies', marriage:'Cross-cousin marriage preferred; traditional rituals', festivals:'Pongal, Diwali, Karthigai Deepam, Tamil New Year', values:'Classical traditions (Tamil Sangam literature), temple culture, Dravidian pride', color:'#4ECDC4'}
+  ];
+
+  return `
+    <div class="content-card">
+      <h3>🎭 Cultural Diversity Explorer</h3>
+      <p style="font-size:13px; color:var(--text-secondary)">India's extraordinary cultural diversity. Click any culture to explore.</p>
+    </div>
+    <div class="culture-cards">
+      ${cultures.map((c, i) => `
+        <div class="culture-item" onclick="showCulture(${i})" style="--c-color:${c.color}; border-color:rgba(255,255,255,0.1)">
+          <div class="flag">${c.flag}</div>
+          <h4>${c.name}</h4>
+          <p>Click to explore</p>
+        </div>
+      `).join('')}
+    </div>
+    <div class="culture-detail" id="cultureDetail">
+      <!-- Filled on click -->
+    </div>
+    <div class="content-card" style="margin-top:12px">
+      <h3>💡 Cultural Relativism</h3>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.6">
+        Sociologists use <strong>cultural relativism</strong> to understand each culture on its own terms without judging it by external standards. 
+        India's diversity — over 1,600 languages, hundreds of marriage customs, varied kinship systems — is a living laboratory for understanding how culture shapes social life differently across contexts.
+      </p>
+    </div>
+  `;
+}
+
+// Make showCulture globally accessible
+window.showCulture = function(i) {
+  const cultures = [
+    {flag:'🕌', name:'Kashmiri', family:'Joint/Extended family; patrilineal descent; multiple generations sharing household', marriage:'Endogamous within community; mahr (bride gift) system; walima feast celebration', festivals:'Eid ul-Fitr, Eid ul-Adha, Navroz (Persian New Year), Shab-e-Barat', values:'Hospitality (mehman-nawazi), respect for elders, Sufi spiritual traditions, carpet weaving heritage', color:'#6C63FF'},
+    {flag:'🏯', name:'Rajasthani', family:'Joint family structure; strongly patriarchal; caste-based social organization', marriage:'Arranged marriages; strictly endogamous within caste; dowry (dahej) system; elaborate ceremonies', festivals:'Teej, Gangaur, Pushkar Camel Fair, Diwali, Holi', values:'Rajput honour code (izzat), legendary hospitality, warrior heritage, desert resilience', color:'#F7B731'},
+    {flag:'🌴', name:'Kerala', family:'Historically matrilineal (Nair community marumakkathayam); now mostly nuclear urban families', marriage:'Cross-cousin marriage traditionally preferred; various bride price traditions; Sadhya feast', festivals:'Onam (harvest), Vishu, Thrissur Pooram elephant festival, Christmas (25% Christian)', values:'Strong emphasis on education, relatively higher gender equality, Kathakali dance-drama tradition', color:'#43C59E'},
+    {flag:'🎵', name:'Bengali', family:'Extended family important; patrilineal; strong literary and intellectual culture', marriage:'Arranged; endogamous within caste/community; sindur (vermillion) and shankha (conch bangles) for married women', festivals:'Durga Puja (biggest celebration), Eid, Saraswati Puja, Pohela Boishakh (New Year)', values:'Literary and artistic tradition; Rabindranath Tagore\'s influence; intellectual culture; fish cuisine', color:'#FF6584'},
+    {flag:'🌾', name:'Punjabi', family:'Joint family; strong clan (gotra) and biradari (brotherhood) systems; patriarchal but women active', marriage:'Exogamous within gotra; lavish celebrations; anand karaj (Sikh ceremony) or nikah (Muslim)', festivals:'Baisakhi (harvest/New Year), Lohri (winter solstice), Gurpurab, Eid', values:'Industriousness, legendary warmth and generosity, community solidarity, bhangra cultural pride', color:'#A55EEA'},
+    {flag:'🏝️', name:'Tamil', family:'Patrilineal dominant; extended family; caste-based hierarchies persist in rural areas', marriage:'Cross-cousin marriage (murai kalyanam) preferred in some communities; elaborate traditional rituals', festivals:'Pongal (harvest), Diwali, Karthigai Deepam, Tamil New Year (Chithirai)', values:'Classical Tamil Sangam literature (2000+ years), temple architecture, Dravidian identity, Carnatic music', color:'#4ECDC4'}
+  ];
+  const c = cultures[i];
+  const detail = document.getElementById('cultureDetail');
+  detail.className = 'culture-detail show';
+  detail.innerHTML = `
+    <div style="border-left:3px solid ${c.color}; padding-left:14px">
+      <div style="font-size:32px; margin-bottom:8px">${c.flag}</div>
+      <h3 style="font-size:18px; font-weight:700; color:${c.color}; margin-bottom:14px">${c.name} Culture</h3>
+      ${[
+        {icon:'👨‍👩‍👧‍👦', label:'Family Structure', val:c.family},
+        {icon:'💒', label:'Marriage Practices', val:c.marriage},
+        {icon:'🎉', label:'Key Festivals', val:c.festivals},
+        {icon:'💎', label:'Core Values', val:c.values}
+      ].map(item => `
+        <div style="margin-bottom:12px">
+          <div style="font-size:12px; color:${c.color}; font-weight:700; margin-bottom:4px">${item.icon} ${item.label}</div>
+          <div style="font-size:13px; color:var(--text-secondary); line-height:1.5">${item.val}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+};
+
+function getChangeSim() {
+  const events = [
+    {year:'1947', title:'Independence & Partition', desc:'Massive social disruption; communal violence; refugee crisis; birth of new nation-states; social reconstruction', impact:'Revolutionary'},
+    {year:'1950', title:'Indian Constitution', desc:'Formal equality; abolition of untouchability; adult franchise; rights framework; reservation system', impact:'Revolutionary'},
+    {year:'1960s', title:'Green Revolution', desc:'Agricultural transformation; chemical fertilizers; high-yield varieties; food security but environmental costs; rural class differentiation', impact:'Major'},
+    {year:'1970s', title:'Social Movements', desc:'JP Movement; Chipko environmental protest; Dalit Panthers; women\'s movement; assertion of marginalized groups', impact:'Major'},
+    {year:'1991', title:'Economic Liberalization', desc:'Privatization; foreign investment; new middle class growth; consumerism; widening urban-rural gap; new inequalities', impact:'Major'},
+    {year:'2000s', title:'IT Revolution & Globalization', desc:'Call centres; outsourcing economy; urban migration; new aspirations; digital divide; English premium', impact:'Major'},
+    {year:'2010s', title:'Social Media & Digital India', desc:'Political mobilization online; #MeToo; farmer protests; new public sphere; fake news challenge; digital literacy gap', impact:'Growing'},
+    {year:'2020s', title:'COVID-19 & Post-Pandemic', desc:'Reverse migration; mental health crisis; accelerated digitization; work-from-home; educational disruption; exposure of healthcare inequalities', impact:'Ongoing'}
+  ];
+  const colors = {Revolutionary:'#FF6584', Major:'#F7B731', Growing:'#43C59E', Ongoing:'#6C63FF'};
+  return `
+    <div class="content-card">
+      <h3>🔄 Social Change Timeline</h3>
+      <p style="font-size:13px; color:var(--text-secondary)">Key turning points in India's social transformation since Independence.</p>
+    </div>
+    <div class="change-timeline" id="changeTimeline">
+      ${events.map((e, i) => `
+        <div class="timeline-event" style="animation-delay:${i*0.15}s">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px">
+            <div class="timeline-year">${e.year}</div>
+            <span style="font-size:10px; padding:2px 8px; border-radius:10px; background:rgba(255,255,255,0.05); color:${colors[e.impact]}">${e.impact}</span>
+          </div>
+          <div class="timeline-event-title">${e.title}</div>
+          <div class="timeline-event-desc">${e.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="content-card" style="margin-top:12px">
+      <h3>💡 Theories of Social Change</h3>
+      <ul class="key-points">
+        <li><strong>Evolutionary:</strong> Society progresses through stages (Comte, Spencer)</li>
+        <li><strong>Conflict:</strong> Change driven by class struggle and power (Marx)</li>
+        <li><strong>Cyclical:</strong> Civilizations rise and fall (Ibn Khaldun, Toynbee)</li>
+        <li><strong>Modernization:</strong> Traditional → modern through development (Parsons)</li>
+      </ul>
+    </div>
+  `;
+}
+
+function animateTimeline() {
+  setTimeout(() => {
+    document.querySelectorAll('.timeline-event').forEach((el, i) => {
+      setTimeout(() => { el.style.opacity = '1'; }, i * 150);
+    });
+  }, 300);
+}
+
+// ============================================================
+//  THINKERS GALLERY
+// ============================================================
+function renderThinkersGallery() {
+  document.getElementById('thinkersCount').textContent = ALL_THINKERS.length + ' Sociologists';
+  document.getElementById('thinkersGallery').innerHTML = ALL_THINKERS.map((t, i) => `
+    <div class="gallery-card" onclick="openThinker(${i})">
+      <div class="gallery-avatar">${t.emoji}</div>
+      <div class="gallery-name">${t.name}</div>
+      <div class="gallery-period">${t.period}</div>
+      <div style="font-size:10px; color:var(--text-muted); margin-bottom:6px">${t.origin}</div>
+      <span class="gallery-tag">${t.tag}</span>
+    </div>
+  `).join('');
+}
+
+function openThinker(i) {
+  const t = ALL_THINKERS[i];
+  document.getElementById('modalContent').innerHTML = `
+    <div style="text-align:center; margin-bottom:16px">
+      <div style="font-size:48px; margin-bottom:8px">${t.emoji}</div>
+      <div class="modal-title">${t.name}</div>
+      <div class="modal-sub">${t.period} • ${t.origin}</div>
+      <span class="gallery-tag" style="font-size:12px">${t.tag}</span>
+    </div>
+    <div class="modal-body">${t.bio}</div>
+  `;
+  document.getElementById('thinkerModal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('thinkerModal')) closeThinkerModal();
+}
+function closeThinkerModal() {
+  document.getElementById('thinkerModal').classList.remove('open');
+}
+
+// ============================================================
+//  MASTER QUIZ
+// ============================================================
+function startAllChaptersQuiz() {
+  const allQ = CHAPTERS.flatMap(ch => ch.quiz);
+  // Shuffle and take 15
+  const shuffled = allQ.sort(() => Math.random() - 0.5).slice(0, 15);
+  currentChapterId = 'master';
+  currentQuiz = { questions: shuffled, current: 0, score: 0, answered: false };
+  previousScreen = 'home';
+
+  // Open a temp chapter detail for quiz
+  document.getElementById('chapterHero').innerHTML = `
+    <div>
+      <div class="chapter-hero-emoji">🎯</div>
+      <div class="chapter-hero-num">Master Quiz • All Chapters</div>
+      <div class="chapter-hero-title">Sociology Master Quiz</div>
+      <div class="chapter-hero-desc">15 random questions from all 8 chapters. Test your complete understanding!</div>
+    </div>
+  `;
+  document.querySelector('#chapter-detail .chapter-hero').style.borderLeftColor = 'var(--gold)';
+
+  // Show only quiz tab
+  document.querySelectorAll('.tab-btn').forEach(b => b.style.display = 'none');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-quiz-tab').classList.add('active');
+  renderQuestion();
+
+  showScreen('chapter-detail');
+}
+
+// ============================================================
+//  PROGRESS MANAGEMENT
+// ============================================================
+function getCompletedChapters() {
+  return JSON.parse(localStorage.getItem('sociology_completed') || '[]');
+}
+function markChapterStarted(id) {
+  // No-op, just for future tracking
+}
+function markChapterCompleted(id) {
+  if (!id || id === 'master') return;
+  const completed = getCompletedChapters();
+  if (!completed.includes(id)) {
+    completed.push(id);
+    localStorage.setItem('sociology_completed', JSON.stringify(completed));
+  }
+}
+function saveQuizScore(chapterId, score) {
+  const scores = JSON.parse(localStorage.getItem('sociology_scores') || '{}');
+  const key = chapterId || 'master';
+  if (!scores[key] || score > scores[key]) scores[key] = score;
+  const allScores = JSON.parse(localStorage.getItem('sociology_all_scores') || '[]');
+  allScores.push(score);
+  localStorage.setItem('sociology_scores', JSON.stringify(scores));
+  localStorage.setItem('sociology_all_scores', JSON.stringify(allScores));
+}
+function updateProgress() {
+  const completed = getCompletedChapters();
+  const allScores = JSON.parse(localStorage.getItem('sociology_all_scores') || '[]');
+  const avgScore = allScores.length ? Math.round(allScores.reduce((a,b)=>a+b,0)/allScores.length) : 0;
+  document.getElementById('statChapters').textContent = completed.length;
+  document.getElementById('statQuizzes').textContent = allScores.length;
+  document.getElementById('statScore').textContent = avgScore + '%';
+  document.getElementById('mainProgressBar').style.width = ((completed.length / 8) * 100) + '%';
+  document.getElementById('headerProgress').textContent = completed.length + '/8 Chapters';
+}
+function resetProgress() {
+  if (confirm('Reset all progress? This cannot be undone.')) {
+    localStorage.removeItem('sociology_completed');
+    localStorage.removeItem('sociology_scores');
+    localStorage.removeItem('sociology_all_scores');
+    renderChapters();
+    updateProgress();
+    alert('Progress reset successfully!');
+  }
+}
+
+// ============================================================
+//  UTILS
+// ============================================================
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
+}
+
+// ============================================================
+//  SERVICE WORKER
+// ============================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+  });
+}
+
+// ============================================================
+//  BOOT
+// ============================================================
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

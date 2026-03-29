@@ -1,0 +1,256 @@
+{
+  "class": "11",
+  "subject": "Sociology",
+  "board": "JKBOSE",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Introducing Sociology",
+      "emoji": "🔬",
+      "color": "#6C63FF",
+      "description": "Understanding the scientific study of society, social behaviour, and human relationships.",
+      "content": "Sociology is the systematic study of human society and social behaviour. It examines how social structures, institutions, and forces affect human thought and behaviour. Auguste Comte, who coined the term 'sociology' in 1838, envisioned it as the 'queen of all sciences.' Sociology looks at the big picture of society and tries to understand what holds societies together and what causes them to change or fall apart.",
+      "keyPoints": [
+        "Sociology studies society and social relationships scientifically",
+        "Auguste Comte coined the term 'sociology' in 1838",
+        "It examines social structures, patterns, and institutions",
+        "Sociology bridges the individual and society",
+        "It uses both qualitative and quantitative research methods"
+      ],
+      "thinkers": [
+        { "name": "Auguste Comte", "contribution": "Father of Sociology; coined the term 'sociology'; proposed Positivism", "period": "1798-1857" },
+        { "name": "Emile Durkheim", "contribution": "Social facts, Division of Labour, Suicide study; established sociology as a formal academic discipline", "period": "1858-1917" },
+        { "name": "Max Weber", "contribution": "Interpretive sociology (Verstehen); Protestant Ethic and Spirit of Capitalism", "period": "1864-1920" },
+        { "name": "Karl Marx", "contribution": "Class conflict, Historical materialism, Alienation theory", "period": "1818-1883" }
+      ],
+      "caseStudy": {
+        "title": "Durkheim's Study of Suicide",
+        "content": "Emile Durkheim's 1897 study of suicide demonstrated that even the most personal act is shaped by social forces. He found that suicide rates differed by religion, marital status, and social integration. Protestants had higher rates than Catholics; unmarried people higher than married. This showed that social facts — external forces like norms and values — powerfully shape individual behaviour."
+      },
+      "quiz": [
+        { "question": "Who is known as the 'Father of Sociology'?", "options": ["Karl Marx", "Auguste Comte", "Max Weber", "Emile Durkheim"], "answer": "Auguste Comte", "explanation": "Auguste Comte coined the term 'sociology' in 1838 and is considered its founder." },
+        { "question": "Which book did Emile Durkheim write about suicide as a social phenomenon?", "options": ["Das Kapital", "Suicide", "The Protestant Ethic", "Social Contract"], "answer": "Suicide", "explanation": "Durkheim's 1897 book 'Suicide' showed that suicide rates are influenced by social factors, not just personal ones." },
+        { "question": "What term did Max Weber use for his interpretive method of understanding social action?", "options": ["Positivism", "Functionalism", "Verstehen", "Dialectics"], "answer": "Verstehen", "explanation": "Weber's 'Verstehen' (German for 'understanding') emphasized empathetic interpretation of social actions." },
+        { "question": "What is a 'social fact' according to Durkheim?", "options": ["Personal beliefs", "Natural events", "External forces that shape individual behaviour", "Economic factors"], "answer": "External forces that shape individual behaviour", "explanation": "Social facts are external, coercive forces like norms, laws, and customs that constrain individual actions." },
+        { "question": "Which perspective views society as a system of interrelated parts working together?", "options": ["Conflict Theory", "Functionalism", "Symbolic Interactionism", "Feminism"], "answer": "Functionalism", "explanation": "Functionalism, associated with Durkheim and Parsons, views society as a system where each part serves a function." }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Understanding Society",
+      "emoji": "🏘️",
+      "color": "#FF6584",
+      "description": "Exploring social structure, social groups, institutions, and the layers of society.",
+      "content": "Society is a complex web of social relationships, institutions, and structures. It is not simply a collection of individuals but a system of relationships that gives those individuals meaning and identity. Social structure refers to the recurring patterns of behaviour and relationships that persist over time. Social groups — ranging from families to nations — form the basic building blocks of society. Understanding society means looking at both the macro level (large institutions) and micro level (everyday interactions).",
+      "keyPoints": [
+        "Society is more than just a collection of individuals",
+        "Social structure includes norms, roles, statuses, and institutions",
+        "Social groups range from primary (family) to secondary (work, school)",
+        "Status can be ascribed (given at birth) or achieved (earned)",
+        "Roles are expected behaviours associated with a particular status"
+      ],
+      "thinkers": [
+        { "name": "Herbert Spencer", "contribution": "Organic analogy of society; Social Darwinism", "period": "1820-1903" },
+        { "name": "Talcott Parsons", "contribution": "Structural Functionalism; AGIL model of social systems", "period": "1902-1979" },
+        { "name": "Erving Goffman", "contribution": "Dramaturgical theory; impression management in social interaction", "period": "1922-1982" }
+      ],
+      "caseStudy": {
+        "title": "Caste as Social Structure in India",
+        "content": "The Indian caste system is one of the world's oldest examples of social stratification. Originally based on occupation, it became a hereditary system dividing society into hierarchical groups. This ascribed status system shows how social structures can persist for centuries, shaping access to resources, opportunities, and social mobility. Modern India's constitutional protections and affirmative action policies represent efforts to reform this deep social structure."
+      },
+      "quiz": [
+        { "question": "What is 'ascribed status'?", "options": ["Status earned through achievement", "Status assigned at birth", "Status based on wealth", "Status gained through education"], "answer": "Status assigned at birth", "explanation": "Ascribed status is assigned at birth based on factors like caste, race, or gender that the individual cannot control." },
+        { "question": "Primary groups are characterized by:", "options": ["Formal relationships", "Large size", "Intimate, face-to-face relationships", "Contract-based interactions"], "answer": "Intimate, face-to-face relationships", "explanation": "Primary groups like families have close, personal, long-lasting relationships." },
+        { "question": "Herbert Spencer compared society to:", "options": ["A machine", "A living organism", "A river", "A computer"], "answer": "A living organism", "explanation": "Spencer used the organic analogy, comparing society's parts to organs in a body." },
+        { "question": "What is a 'role' in sociology?", "options": ["A person's rank in society", "Expected behaviours associated with a status", "A group's cultural practices", "An individual's personality"], "answer": "Expected behaviours associated with a status", "explanation": "A role is the set of behaviours, rights, and obligations expected of someone in a particular social position." },
+        { "question": "Which sociologist developed the concept of 'impression management'?", "options": ["Karl Marx", "Max Weber", "Erving Goffman", "Auguste Comte"], "answer": "Erving Goffman", "explanation": "Goffman's dramaturgical theory described social life as a performance where we manage impressions others have of us." }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Social Institutions: Family, Marriage and Kinship",
+      "emoji": "👨‍👩‍👧‍👦",
+      "color": "#43C59E",
+      "description": "Examining family structures, marriage systems, and kinship networks across cultures.",
+      "content": "The family is the most fundamental of all social institutions. It is a universal institution found in every known society, though its forms vary widely. Family serves crucial functions: socialization of children, regulation of sexual behaviour, economic cooperation, emotional support, and transmission of cultural heritage. Marriage is the socially sanctioned union that forms the basis of family, while kinship refers to the network of social relationships based on blood, marriage, or adoption.",
+      "keyPoints": [
+        "Family is a universal institution but takes different forms across cultures",
+        "Nuclear family: parents and their children; Extended family: multiple generations",
+        "Marriage forms: Monogamy (one spouse), Polygyny (multiple wives), Polyandry (multiple husbands)",
+        "Endogamy: marriage within a group; Exogamy: marriage outside a group",
+        "Kinship is reckoned through patrilineal, matrilineal, or bilateral descent"
+      ],
+      "thinkers": [
+        { "name": "George Peter Murdock", "contribution": "Cross-cultural study of family; identified universal functions of family", "period": "1897-1985" },
+        { "name": "Claude Lévi-Strauss", "contribution": "Alliance theory; incest taboo as basis of social organization", "period": "1908-2009" },
+        { "name": "Friedrich Engels", "contribution": "Origin of Family, Private Property and the State; family as economic institution", "period": "1820-1895" }
+      ],
+      "caseStudy": {
+        "title": "The Joint Family System in Kashmir",
+        "content": "The traditional Kashmiri joint family (wudar) exemplifies an extended family structure where multiple generations live together, share resources, and make collective decisions. With the economic pressures of modernization and urbanization, many Kashmiri families are transitioning to nuclear units. This case illustrates how family structures respond to broader socioeconomic changes while maintaining cultural continuity through festivals, language, and shared practices."
+      },
+      "quiz": [
+        { "question": "A family consisting of parents and their unmarried children is called:", "options": ["Extended family", "Nuclear family", "Joint family", "Clan"], "answer": "Nuclear family", "explanation": "The nuclear family is the basic family unit consisting of a married couple and their children." },
+        { "question": "Marriage with multiple wives is called:", "options": ["Monogamy", "Polyandry", "Polygyny", "Endogamy"], "answer": "Polygyny", "explanation": "Polygyny is a form of polygamy where a man has more than one wife simultaneously." },
+        { "question": "The rule requiring marriage within one's own social group is called:", "options": ["Exogamy", "Endogamy", "Monogamy", "Hypergamy"], "answer": "Endogamy", "explanation": "Endogamy requires marrying within one's caste, tribe, or community." },
+        { "question": "Tracing descent through the mother's line is called:", "options": ["Patrilineal", "Bilateral", "Matrilineal", "Unilateral"], "answer": "Matrilineal", "explanation": "Matrilineal descent traces family membership and inheritance through the mother's side." },
+        { "question": "The incest taboo, according to Lévi-Strauss, serves to:", "options": ["Punish offenders", "Force people to marry outside their group, creating alliances", "Protect genetic diversity only", "Maintain religious purity"], "answer": "Force people to marry outside their group, creating alliances", "explanation": "Lévi-Strauss argued the incest taboo forces exogamy, creating social bonds between different groups." }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Culture and Socialization",
+      "emoji": "🎭",
+      "color": "#F7B731",
+      "description": "Understanding how culture shapes human behaviour and how individuals learn to become members of society.",
+      "content": "Culture is the totality of learned, socially transmitted customs, knowledge, material objects, and behaviour. It is what distinguishes one society from another and provides a shared framework for understanding the world. Culture consists of both material elements (tools, buildings, technology) and non-material elements (beliefs, values, norms, language). Socialization is the lifelong process through which individuals learn the culture of their society and develop a sense of self. Agents of socialization — family, peer groups, schools, media — transmit cultural knowledge across generations.",
+      "keyPoints": [
+        "Culture is learned (not innate) and shared among members of a society",
+        "Material culture: physical objects; Non-material culture: beliefs, values, norms",
+        "Socialization is lifelong: primary (childhood) and secondary (adult)",
+        "Agents: family, peers, school, religion, media, workplace",
+        "Cultural relativism: judging cultures by their own standards"
+      ],
+      "thinkers": [
+        { "name": "Edward Tylor", "contribution": "First anthropological definition of culture as a complex whole", "period": "1832-1917" },
+        { "name": "Margaret Mead", "contribution": "Culture shapes gender roles; cross-cultural study of childhood", "period": "1901-1978" },
+        { "name": "George Herbert Mead", "contribution": "Self develops through social interaction; 'I' and 'Me' concept", "period": "1863-1931" }
+      ],
+      "caseStudy": {
+        "title": "Socialization Through Kashmiri Folk Traditions",
+        "content": "In Kashmir, folk traditions like Rouf dance, Hafiza music, and the oral recitation of Shah-i-Hamadan's teachings serve as powerful socialization tools. Children learn cultural values — hospitality (mehman-nawazi), respect for elders, and community solidarity — through participation in festivals like Eid, Navroz, and local shrines. These informal socialization processes transmit Kashmiri identity across generations, even as formal schooling introduces broader national and global values."
+      },
+      "quiz": [
+        { "question": "Which of the following is an example of NON-material culture?", "options": ["Buildings", "Tools", "Norms and values", "Clothing"], "answer": "Norms and values", "explanation": "Non-material culture includes intangible elements like beliefs, values, norms, language, and rituals." },
+        { "question": "The process by which children learn the culture of their society is called:", "options": ["Enculturation", "Socialization", "Assimilation", "Acculturation"], "answer": "Socialization", "explanation": "Primary socialization during childhood is when we learn basic cultural norms, language, and values." },
+        { "question": "Who first defined culture as 'that complex whole which includes knowledge, belief, art, morals, law, custom'?", "options": ["Margaret Mead", "Edward Tylor", "Claude Lévi-Strauss", "Ruth Benedict"], "answer": "Edward Tylor", "explanation": "Edward Tylor provided the first anthropological definition of culture in his 1871 work 'Primitive Culture'." },
+        { "question": "Judging other cultures by the standards of one's own culture is called:", "options": ["Cultural relativism", "Ethnocentrism", "Multiculturalism", "Assimilation"], "answer": "Ethnocentrism", "explanation": "Ethnocentrism is the tendency to view one's own culture as superior and to judge other cultures by its standards." },
+        { "question": "George Herbert Mead's concept of 'self' involves:", "options": ["Biological instincts only", "The 'I' (spontaneous self) and 'Me' (social self)", "Only unconscious drives", "Fixed personality traits"], "answer": "The 'I' (spontaneous self) and 'Me' (social self)", "explanation": "Mead saw the self as emerging from social interaction, with the 'I' being our spontaneous response and 'Me' being our internalized social expectations." }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Doing Sociology: Research Methods",
+      "emoji": "📊",
+      "color": "#4ECDC4",
+      "description": "Learning the tools and techniques sociologists use to study society scientifically.",
+      "content": "Sociological research uses systematic methods to gather evidence about social life. Unlike everyday observations, sociological research is rigorous, systematic, and subject to scrutiny. The research process involves formulating a research question, reviewing existing literature, choosing a methodology, collecting data, analyzing data, and drawing conclusions. Sociologists use both quantitative methods (surveys, statistics) and qualitative methods (interviews, ethnography, case studies). The choice of method depends on the research question and the type of data needed.",
+      "keyPoints": [
+        "Research begins with a clear question or hypothesis",
+        "Quantitative: surveys, questionnaires, statistical analysis",
+        "Qualitative: interviews, observation, ethnography, case studies",
+        "Triangulation: using multiple methods for reliability",
+        "Ethics: informed consent, confidentiality, avoiding harm"
+      ],
+      "thinkers": [
+        { "name": "Emile Durkheim", "contribution": "Established positivist research methodology; suicide study as model", "period": "1858-1917" },
+        { "name": "Max Weber", "contribution": "Interpretive (Verstehen) methodology; value-free research ideal", "period": "1864-1920" },
+        { "name": "Bronisław Malinowski", "contribution": "Participant observation and ethnographic fieldwork", "period": "1884-1942" }
+      ],
+      "caseStudy": {
+        "title": "Survey Research on Education in J&K",
+        "content": "A sociological survey of educational attainment in Jammu & Kashmir might use questionnaires distributed to households across urban Srinagar, rural Kashmir Valley, and tribal Gujjar-Bakerwal communities. The quantitative data (literacy rates, enrollment figures) would be complemented by in-depth interviews capturing qualitative dimensions: barriers to girls' education, impact of conflict on schooling, and aspirations of first-generation learners. This mixed-methods approach provides both statistical breadth and human depth."
+      },
+      "quiz": [
+        { "question": "Which research method involves the researcher living within the community being studied?", "options": ["Survey", "Experiment", "Participant observation", "Content analysis"], "answer": "Participant observation", "explanation": "Participant observation involves the researcher immersing themselves in a community to understand it from the inside." },
+        { "question": "A hypothesis in research is:", "options": ["A proven fact", "A testable prediction about the relationship between variables", "A research question", "A literature review"], "answer": "A testable prediction about the relationship between variables", "explanation": "A hypothesis is a tentative, testable statement about expected findings that guides research." },
+        { "question": "Using multiple research methods to check findings is called:", "options": ["Replication", "Triangulation", "Sampling", "Generalization"], "answer": "Triangulation", "explanation": "Triangulation involves using multiple methods or data sources to cross-check findings and improve validity." },
+        { "question": "Which type of data can be expressed in numbers and analyzed statistically?", "options": ["Qualitative data", "Ethnographic data", "Quantitative data", "Biographical data"], "answer": "Quantitative data", "explanation": "Quantitative data is numerical data that can be measured, counted, and analyzed using statistical methods." },
+        { "question": "Informed consent in research means:", "options": ["The researcher is knowledgeable", "Participants agree after being fully informed of the study's purpose and risks", "The institution approves the study", "Data is kept confidential"], "answer": "Participants agree after being fully informed of the study's purpose and risks", "explanation": "Informed consent is a key ethical principle ensuring participants voluntarily agree to participate with full knowledge of the study." }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Social Change and Social Order",
+      "emoji": "🔄",
+      "color": "#A55EEA",
+      "description": "Examining how societies transform over time and the forces that maintain social stability.",
+      "content": "Social change refers to significant alteration over time in behaviour patterns, cultural values, norms, and social institutions. Change can be slow and evolutionary or rapid and revolutionary. Modernization, industrialization, urbanization, and globalization are major forces of change in contemporary societies. Social order, on the other hand, refers to the stability and continuity of social life maintained through shared norms, values, social control, and institutions. The tension between change and order is a central theme in sociology.",
+      "keyPoints": [
+        "Social change can be evolutionary (gradual) or revolutionary (rapid)",
+        "Forces of change: technology, globalization, social movements, conflict",
+        "Modernization theory: societies move from traditional to modern",
+        "Social control: formal (law, police) and informal (norms, gossip)",
+        "Collective behaviour: crowds, social movements, revolutions"
+      ],
+      "thinkers": [
+        { "name": "Karl Marx", "contribution": "Class conflict as engine of historical change; capitalism leads to socialism", "period": "1818-1883" },
+        { "name": "Max Weber", "contribution": "Rationalization and bureaucratization as key features of modernity", "period": "1864-1920" },
+        { "name": "Emile Durkheim", "contribution": "Mechanical to organic solidarity; anomie during rapid change", "period": "1858-1917" }
+      ],
+      "caseStudy": {
+        "title": "Social Change in Post-2019 Kashmir",
+        "content": "The reorganization of Jammu & Kashmir in 2019 brought rapid, externally-driven social change. Alongside political changes, the spread of internet connectivity (despite intermittent restrictions), growth of e-commerce, and expansion of formal employment have accelerated modernization. Traditional crafts like Pashmina and carpet-weaving compete with industrial production. Youth aspirations are shifting toward professional careers. This case illustrates how macro political decisions intersect with everyday social change."
+      },
+      "quiz": [
+        { "question": "Durkheim's concept of 'anomie' refers to:", "options": ["Strong social norms", "A state of normlessness during rapid social change", "Traditional solidarity", "Organic interdependence"], "answer": "A state of normlessness during rapid social change", "explanation": "Anomie describes a condition where social norms break down, leaving individuals without clear guidance, often during rapid change." },
+        { "question": "According to Marx, the primary driver of social change is:", "options": ["Ideas and values", "Great leaders", "Class conflict and economic relations", "Natural disasters"], "answer": "Class conflict and economic relations", "explanation": "Marx argued that conflict between economic classes (bourgeoisie vs. proletariat) drives historical change." },
+        { "question": "Formal social control includes:", "options": ["Gossip and ridicule", "Laws, police, and courts", "Cultural norms", "Family pressure"], "answer": "Laws, police, and courts", "explanation": "Formal social control uses codified laws and official institutions to regulate behaviour." },
+        { "question": "Weber described the increasing dominance of rational calculation in modern society as:", "options": ["Anomie", "Class conflict", "Rationalization", "Secularization"], "answer": "Rationalization", "explanation": "Weber saw rationalization — replacing tradition with efficiency and calculation — as the defining feature of modernity." },
+        { "question": "The shift from rural agricultural to urban industrial society is called:", "options": ["Globalization", "Secularization", "Urbanization", "Modernization"], "answer": "Modernization", "explanation": "Modernization encompasses urbanization, industrialization, and the shift from traditional to rational-legal authority." }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Environment and Society",
+      "emoji": "🌍",
+      "color": "#2ECC71",
+      "description": "Exploring the relationship between human society and the natural environment.",
+      "content": "The relationship between society and environment is reciprocal and complex. Human societies depend on natural resources for survival and economic development, while human activities profoundly transform the environment. Environmental sociology examines how social factors drive environmental problems and how environmental conditions shape social life. Issues like climate change, deforestation, water scarcity, and pollution are fundamentally social problems requiring social solutions. Environmental justice concerns the unequal distribution of environmental burdens on marginalized communities.",
+      "keyPoints": [
+        "Society and nature are in a dynamic, reciprocal relationship",
+        "Industrialization and capitalism drive environmental degradation",
+        "Environmental justice: poor and marginalized bear disproportionate burdens",
+        "Chipko Movement: India's grassroots environmental movement",
+        "Sustainable development: meeting present needs without compromising future generations"
+      ],
+      "thinkers": [
+        { "name": "Murray Bookchin", "contribution": "Social ecology; environmental problems rooted in social hierarchy", "period": "1921-2006" },
+        { "name": "Vandana Shiva", "contribution": "Ecofeminism; critique of Green Revolution; Chipko Movement", "period": "1952-present" },
+        { "name": "Ulrich Beck", "contribution": "Risk society; modern society produces and distributes risks", "period": "1944-2015" }
+      ],
+      "caseStudy": {
+        "title": "Dal Lake: Environment and Society in Kashmir",
+        "content": "Dal Lake in Srinagar exemplifies the society-environment nexus. Home to the iconic houseboat community (Hanjis), it has sustained a unique floating civilization for centuries. However, population growth, urban encroachment, tourism pressure, and inadequate waste management have severely degraded the lake. Weeds, sewage, and sedimentation have reduced its area by half. Restoration efforts involve engineering (dredging), policy (encroachment removal), and community engagement — showing that environmental problems require integrated social solutions."
+      },
+      "quiz": [
+        { "question": "The Chipko Movement in India was primarily about:", "options": ["Water rights", "Protecting forests from commercial logging", "Land reform", "Air pollution"], "answer": "Protecting forests from commercial logging", "explanation": "The Chipko Movement (1973) involved villagers hugging trees to prevent logging, pioneering environmental activism in India." },
+        { "question": "Ulrich Beck's concept of 'risk society' suggests:", "options": ["Medieval societies were risky", "Modern societies generate and distribute new, manmade risks", "Risk is equally distributed", "Technology eliminates risks"], "answer": "Modern societies generate and distribute new, manmade risks", "explanation": "Beck argued that industrial modernization creates new risks (pollution, nuclear hazards) that are central to modern social life." },
+        { "question": "Environmental justice is concerned with:", "options": ["Protecting endangered species", "Equal distribution of environmental burdens across society", "Industrial development", "Scientific research"], "answer": "Equal distribution of environmental burdens across society", "explanation": "Environmental justice addresses how pollution and environmental hazards disproportionately affect poor and minority communities." },
+        { "question": "Sustainable development means:", "options": ["No development allowed", "Development that meets present needs without compromising future generations' ability to meet their needs", "Only using renewable energy", "Stopping industrialization"], "answer": "Development that meets present needs without compromising future generations' ability to meet their needs", "explanation": "This is the Brundtland Commission's (1987) definition of sustainable development." },
+        { "question": "Ecofeminism links environmental destruction to:", "options": ["Overpopulation", "Patriarchy and the domination of both women and nature", "Technology", "Capitalism alone"], "answer": "Patriarchy and the domination of both women and nature", "explanation": "Ecofeminism, associated with thinkers like Vandana Shiva, argues that the same patriarchal logic drives both the oppression of women and exploitation of nature." }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Social Inequality and Social Justice",
+      "emoji": "⚖️",
+      "color": "#E74C3C",
+      "description": "Understanding the dimensions of inequality in society and the pursuit of a just social order.",
+      "content": "Social inequality refers to the unequal distribution of resources, opportunities, and rewards in society. It manifests in multiple dimensions: class (economic inequality), caste (ritualized hierarchy), gender, race, religion, and region. In India, caste and class intersect in complex ways, creating layered disadvantages. Social justice is the principle that every person deserves equal economic, political, and social rights. It involves not just equal treatment but addressing historical injustices through affirmative action, legal protections, and structural reforms.",
+      "keyPoints": [
+        "Inequality exists in class, caste, gender, race, and regional dimensions",
+        "India's Constitution outlaws caste discrimination and provides reservations",
+        "Gender inequality: patriarchy, wage gap, violence against women",
+        "Poverty: absolute (below survival threshold) and relative (below societal average)",
+        "Social mobility: vertical (up/down class ladder) and horizontal (same level)"
+      ],
+      "thinkers": [
+        { "name": "B.R. Ambedkar", "contribution": "Caste annihilation; architect of Indian Constitution; Dalit rights", "period": "1891-1956" },
+        { "name": "Pierre Bourdieu", "contribution": "Capital (economic, social, cultural); habitus; field theory of inequality", "period": "1930-2002" },
+        { "name": "John Rawls", "contribution": "Theory of Justice; veil of ignorance; difference principle", "period": "1921-2002" }
+      ],
+      "caseStudy": {
+        "title": "Reservations Policy and Social Justice in India",
+        "content": "India's system of reservations (affirmative action) for Scheduled Castes, Scheduled Tribes, and Other Backward Classes in education and government employment represents a structural approach to addressing historical inequality. Ambedkar argued that formal equality was insufficient; substantive equality required compensating for centuries of exclusion. Debates continue about the scope, beneficiaries, and effectiveness of reservations — raising fundamental questions about the balance between merit, equality of opportunity, and historical justice."
+      },
+      "quiz": [
+        { "question": "Which term describes the unequal distribution of resources, power, and prestige in society?", "options": ["Social mobility", "Social stratification", "Social control", "Socialization"], "answer": "Social stratification", "explanation": "Social stratification refers to the hierarchical arrangement of individuals and groups in society based on wealth, power, and prestige." },
+        { "question": "B.R. Ambedkar's most significant political contribution was:", "options": ["Leading the independence movement", "Drafting India's Constitution and fighting for Dalit rights", "Establishing socialism in India", "Creating the non-aligned movement"], "answer": "Drafting India's Constitution and fighting for Dalit rights", "explanation": "Ambedkar chaired the drafting committee of India's Constitution and was a lifelong advocate for the rights of untouchables (Dalits)." },
+        { "question": "Pierre Bourdieu's concept of 'cultural capital' refers to:", "options": ["Money and financial assets", "Social connections and networks", "Knowledge, skills, and education that confer social advantage", "Political power"], "answer": "Knowledge, skills, and education that confer social advantage", "explanation": "Cultural capital includes educational credentials, cultural knowledge, and tastes that give individuals advantages in social fields." },
+        { "question": "The 'glass ceiling' refers to:", "options": ["A type of architecture", "Invisible barriers preventing women from reaching top positions", "Transparent government", "Economic barriers for immigrants"], "answer": "Invisible barriers preventing women from reaching top positions", "explanation": "The glass ceiling metaphor describes invisible but real barriers that prevent women and minorities from advancing to senior positions." },
+        { "question": "John Rawls' 'veil of ignorance' is a thought experiment designed to:", "options": ["Show that inequality is natural", "Determine just principles without knowing one's place in society", "Prove that knowledge is power", "Understand social structures"], "answer": "Determine just principles without knowing one's place in society", "explanation": "Rawls asked: what principles would you choose if you didn't know whether you'd be rich or poor, male or female? This reveals principles of justice." }
+      ]
+    }
+  ]
+}

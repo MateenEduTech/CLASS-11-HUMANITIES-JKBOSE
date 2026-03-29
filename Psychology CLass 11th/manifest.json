@@ -1,0 +1,26 @@
+{
+  "name": "Class 11 Psychology - JKBOSE",
+  "short_name": "Psych XI",
+  "description": "JKBOSE Class 11 Psychology Interactive Learning App by Mateen Yousuf",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0f0c29",
+  "theme_color": "#6c63ff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%230f0c29' rx='20'/><circle cx='96' cy='96' r='70' fill='%236c63ff' opacity='0.3'/><path d='M96 40C70 35 48 55 46 78C44 95 50 110 62 120C50 132 48 148 58 162C68 175 86 180 100 174C106 182 110 186 120 186C130 186 134 182 140 174C154 180 172 175 182 162C192 148 190 132 178 120C190 110 196 95 194 78C192 55 170 35 144 40C138 36 118 32 96 40Z' fill='%23a78bfa' opacity='0.8'/><text x='96' y='140' fill='white' font-size='48' text-anchor='middle' font-family='serif'>Ψ</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%230f0c29' rx='50'/><text x='256' y='320' fill='%236c63ff' font-size='280' text-anchor='middle' font-family='serif'>Ψ</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["education"],
+  "lang": "en",
+  "scope": "/",
+  "screenshots": []
+}
